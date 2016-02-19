@@ -48,16 +48,38 @@ Thumbnails have always been a strong visual cue for the user to find relevant co
 \end{figure}
 
 
-\subsection{The moving thumbnail}
+\section{The moving thumbnail}
 
-With the rise of video as medium, new opportunities arise to attract users to specific content. Instead of using a static frame from the video, it is possible to extract a small portion of the video and use that as a \textit{moving thumbnail}. The moving thumbnail is a small video in both dimensions and length, that acts as a substitution for a regular thumbnail. In every way, the moving thumbnail is the same as a regular static thumbnail with the exception that it contains `moving images'.
+With the rise of video as a way of communication and distributing news content, new opportunities arise to attract users to specific content. Instead of using a static frame from the video, it is possible to extract a small portion of the video and use that as a \textit{moving thumbnail}. The moving thumbnail is a small video in both dimensions and length, that acts as a substitution for a regular thumbnail. In every way, the moving thumbnail is the same as a regular static thumbnail with the exception that it contains `moving images'.
 
 Static thumbnails have different purposes in news media websites in relationship to the content: it can try to accurately describe the content, or it can attempt to seduce a user to view the full content (which is what we can call a teaser). The chosen role of the thumbnail depends heavily on the type of content, the strategic goals of the media company and the location of where the thumbnail is used. Since the moving thumbnail replaces the static thumbnail, it should serve the same purpose.
 
-To pick the best (static) thumbnail for a desired goal, a number of systems exist to aid an editor into selecting a thumbnail. The most simple system features a time selector and a preview window in which the editor is able to select a frame on a certain time to use as thumbnail. Other systems use different video analysation techniques to propose a set of suitable options to the editor. In order to use a moving thumbnail as a replacement for the static thumbnail, the selection and creation should be accessible by editors.
+To pick the best (static) thumbnail for a desired goal, a number of systems exist to aid an editor into selecting a thumbnail. The most simple system features a time selector and a preview window in which the editor is able to select a frame on a certain time to use as thumbnail. Other systems use different video analysation techniques to propose a set of suitable options to the editor. In order to use a moving thumbnail as a replacement for the static thumbnail, the creation of these moving thumbnails should be fast and convenient.
+
+\subsection{New challenges for moving thumbnails}
+
+Thumbnails are not the main focus of the page, and will not be started by a user action like a regular video would by clicking a play button. The users attention might also not directly be focussed on the moving thumbnail, and sometimes even multiple moving thumbnails may show on a page. These issues are also present in static thumbnails, but since they have no dimension of time, this does not present itself as an issue. The workings and design of a moving thumbnail should account for this lack of initial focus.
+
+A static thumbnail will show only a single frame of the original video, revealing little of the actual content. A moving thumbnail however, might already show the punch line of the video, eliminating the need for a user to click through to the full video. For end-users, this might not impose as a problem, however media companies gain their revenues by serving advertisements before a video, or next to an article. This highlights the need to create moving thumbnails that tease the user, instead of showing a summary.
+
+A more technical challenge is the design of the moving thumbnail in relation to processing power, internet speeds and device limitations. Even small videos can be significantly larger in file size than static thumbnails, and may consume more processing power, especially on mobile devices. The technical details of the moving thumbnail should consider these limitations.
+
+\subsection{Automatic generation of moving thumbnails}
+
+Creating moving thumbnails manually for every video can be a time consuming task, even when presented with various editing tools that allow quick trimming. In order to solve this problem,  automatic generation of moving thumbnails is essential for the use and implementation of this new concept.
+
+The system that automatically generates moving thumbnails from a video has to take several requirements into account. First of all, the system should generate a moving thumbnail that is suitable for viewing by a human being in the context it will be used (like an overview page). The moving thumbnail should tease the user to view the full video, thus not revealing the punch line, but trigger interest by the user.
 
 
-\subsection{Technical challenges}
+
+\section{Literature study}
+
+\subsection{Video navigation}
+
+\subsection{Static thumbnail generation}
+
+\subsection{Video summarisation}
+
 
 It is important to note that thumbnails are not the main content of a page. They are used to assist the user in navigating a page and scanning content, and should be available to the user at all times, wether he just landed on the page, or is still viewing the page after a few minutes.
 
@@ -71,12 +93,6 @@ Online content management systems (or video management systems) offer functional
 Unlike static image thumbnails, the moving thumbnail videos have a set length and will stop when the end is reached. In order to create a continues moving thumbnail, the video will loop infinitely to make sure the user will always see a moving thumbnail. In addition, the video will automatically start playing when the webpage is loaded and will contain no audio. The latter is done to avoid sudden unexpected sounds that may annoy the user when they visit the page, and to allow multiple moving thumbnails playing at the same time. 
 
 \section{Problem statement}
-
-With the introduction of the moving thumbnail, a number of new problems arise, one of them being the creation of these moving thumbnails.
-
-Static thumbnails for videos are often manually picked from a list of proposed frames from the video. These proposed frames are generated using techniques like key frame extraction \cite{Dirfaux:2000iu} and require little extra manual labour to select an attractive thumbnail.
-
-In order to generate a moving thumbnail, a portion of the original video has to be selected. This can be done by hand, using a video editor to make things easier. However, this introduces a lot of extra manual labour, especially when a newspaper publishes a lot of videos. In order to effectively use moving thumbnails in practise, we have to automatically generate the moving thumbnail.
 
 \subsection{Requirements of automatic generation}
 \label{sec: requirements of automatic generation}
