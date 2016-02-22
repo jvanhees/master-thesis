@@ -71,10 +71,11 @@ Creating moving thumbnails manually for every video can be a time consuming task
 The system that automatically generates moving thumbnails from a video has to take several requirements into account. Examples of these requirements are that the video should be suited for small dimensions or that the user is invited to watch the whole video. These specific requirements should be defined in a later state, based on existing previous research in the field of static thumbnail generation, video navigation and video summarisation.
 
 \section{Problem statement}
+\label{sec:problem statement}
 
 As of today, there is no system that generates moving thumbnails with the goal to tease the user to view the full video. The specifications and requirements for a moving thumbnail are unclear, a method to measure the effectiveness of the output of the system does not exist for this particular case, and since the concept is new, there is no data available to accurately train a system for this purpose.
 
-The absence of data creates the core of this research: The goal is to build a system that generates moving thumbnails and evaluates the results automatically to validate the output and allows for rapid improvements without user testing. The automatic evaluation can not rely on real world data (since it does not exist yet) and functions as some sort of sanity check. When the system scores acceptable on the automatic evaluation, the results are implemented in an end user test scenario to evaluate the system and gain real world data for the purpose of generating moving thumbnails.
+The absence of data leads the core of this research: The goal is to build a system that generates moving thumbnails and evaluates the results automatically to validate the output and allows for rapid improvements without user testing. The automatic evaluation can not rely on real world data (since it does not exist yet) and functions as some sort of sanity check. When the system scores acceptable on the automatic evaluation, the results are implemented in an end user test scenario to evaluate the system and gain real world data for the purpose of generating moving thumbnails.
 
 The research question is as follows:
 
@@ -92,6 +93,24 @@ The user testing that follows allows us to check wether we have actually succeed
 
 By answering these questions, we can describe a system that automatically generates moving thumbnails and evaluates its results, which are validated by a real world survey.
 
+\subsection{Context}
+
+The origin of the new concept of moving thumbnails lies at media companies, who constantly try to seek new ways to improve their website and the way users navigate their news. At Blue Billywig, we received a request to offer a way to show moving thumbnails, created manually by the editors. After investigating this new opportunity, it was decided that an automatic way of generating these moving thumbnails was required.
+
+Blue Billywig is a company that builds and maintains a video management systems, in which its customers can upload videos, edit metadata, adjust the way these videos are displayed and publish the videos on their website. In a lot of ways, the systems works the same way as the populair video site YouTube does \cite{YouTube:A-l2msAp}, only focussed on the use by companies and without a community.
+
+\section{Approach}
+
+As mentioned in section \ref{sec:problem statement}, the research can be divided into three closely related subjects. The first subject is about the moving thumbnail generator itself, a system that uses various features to determine what to use from an input video to create a moving thumbnail as output. The second subject is about a validator that automatically validates the output of the system, to check the integrity of the generated moving thumbnails. The third subject is about the user test scenario that tests the output of the generator with actual users, which results can in turn be used to compare the validator results with the actual user testing, and show real world effectiveness of the thumbnail generator. This workflow is shown in figure \ref{fig:workflow}. These tree subjects combined form a study that covers all grounds in this new concept of automatically generating thumbnails.
+
+\begin{figure}[h]
+  \label{fig:workflow}
+  \includegraphics[width=\linewidth]{images/thesis-system.pdf}
+  \caption{Schematic workflow overview of the complete system, showing feedback directions on the generator and evaluation.}
+\end{figure}
+
+The dataset that will be used will be chosen on the availability of the data, the domain that the research aims for (news media) and the amount of metadata that is needed to gain accurate results. Blue Billywig has a number of customers that have data related to the research, properly annotated with relevant metadata and in satisfying quantity. Another advantage of using an `in-house' dataset is the accessibility of the data and video files. Blue Billywig encodes every video file to a number of different formats to allow playback on any device and internet connection. This preparation of data might significantly increase the progress of the study.
+
 \section{Literature study}
 
 Since the generation of moving thumbnails is a new concept, there is no directly related literature. However, it relates close to a number of other domains: Video navigation and interfaces, static thumbnail generation and video summarisation.
@@ -100,8 +119,15 @@ Since the generation of moving thumbnails is a new concept, there is no directly
 
 There are a lot of interfaces designed to assist humans in navigating a video library. A summary by \textcite{Schoeffmann:2010iw} describes over 40 different interfaces that use different techniques to allow convenient browsing through a collection of videos. These range from displaying a key frame best describing the video, or a collection of keyframes with their sizes related to the importance of the frame. Most of these interfaces have some sort of system that automatically determines what to display on the screen, taken into consideration the different conditions in which the system is used.
 
+A study by \textcite{Hurst:2011jx} describes a user study to the recognition of video using different thumbnail sizes, numbers and various movement in the thumbnails. The study shows that users are able to handle multiple small thumbnails on mobile devices, especially when the thumbnails included motion.
+
+Since one of the goals of the moving thumbnail is to improve the navigation of users in a news media website, video navigation literature could especially prove useful in the design and implementation of moving thumbnails in overview pages.
 
 \subsection{Static thumbnail generation}
+
+The issue of video navigation using thumbnails has been an active topic of research. In \citeyear{Kim:2015co}, a study by \textcite{Kim:2015co} describes a system that automatically combines video frames to generate a thumbnail containing more information that a single frame. Another study describes thumbnail candidate selection using image quality evaluation \cite{Zhang:2014jg}. A combination of internal and external analysation of the video content to select thumbnails is used by a study by \textcite{Liu:2015ux}. The techniques and analysation methods used in these systems can possibly be of use when evaluating the generated moving thumbnails.
+
+Many systems that generate thumbnails use a ranking of different frames to propose a suitable thumbnail \cite{Choi:2015gm,Zhang:2012eo,Gao:2009dx}. In static thumbnail generation, this ranking can be used to select the best thumbnail. However, in moving thumbnail generation (or other video navigation interfaces) the ranking can be used to create a composition of the video. This creates opportunities to generate moving thumbnails that consist of different shots from the original video.
 
 \subsection{Video summarisation}
 
@@ -111,7 +137,15 @@ Techniques for video summarisation can be divided into three different categorie
 
 The knowledge gained from video summarisation can be used to generate and extract relevant parts from a video, and those in turn can be used to create moving thumbnails. The difference between video summarisations and moving thumbnails has to be highlighted in order to modify (or use techniques from) video summarisation techniques in order to use them for another purpose. Various frameworks and surveys on different techniques highlight the differences and effectiveness in domains and content \cite{Money:2008fn,Ajmal:2012hi}, which might be useful in the design of the moving thumbnail generator.
 
----
+\section{Planning}
+
+Development of the system will be planned in a scrum-like planning, implemented in the scrum planning of Blue Billywig. This means that the planning is divided into sprints of two weeks. The planning, as shown in figure \ref{}, describes a number of topics that should be covered in those sprints. The columns `BB' describes the sprint numbers as used in the Blue Billywig sprint planning.
+
+Working on the master thesis document itself is done throughout the whole planning, and has no defined deadlines other than the draft versions in sprint 9 and 10. 
+
+\subsection{Plan B}
+
+One of the highest priorities in the system is the user study. Without the user study, the results of the system, as well as the effectiveness of the validator cannot be measured. Thus, it is important that the user study is ready in sprint 6 to gather enough data to gain significance. Sprint 5 is mostly used to improve the overal system, and can be changed when the workflow isn't properly set up in sprint 4. The overal planning can be extended with one sprint by removing one of the draft versions of the master thesis. However, this should be an extreme measure when the system has severe delays and the system can not be validated yet.
 
 %It is important to note that thumbnails are not the main content of a page. They are used to assist the user in navigating a page and scanning content, and should be available to the user at all times, wether he just landed on the page, or is still viewing the page after a few minutes.
 %
@@ -191,8 +225,6 @@ The knowledge gained from video summarisation can be used to generate and extrac
 %Since the system has to learn wether certain videos (or video fragments) are fit to function as a teaser, it requires known training data. The training data is a very key component in the dataset, since it will eventually decide what features in the video affect its popularity. First, this means that training data should be available at all, for example in the form of number of views on the video.
 %
 %Secondly, this data has to be reliable. Videos on YouTube are often getting watched since the uploader has a lot of 'subscribers', the custom video thumbnail might be very inviting or because the title contains effective keywords. All these factors have nothing to do with the actual quality of the video, and might result in false training data. It is therefor important that the training data is justified and that the use of it is supported with solid arguments.
-
-\section{Planning}
 
 
 
