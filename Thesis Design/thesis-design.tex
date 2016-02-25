@@ -38,9 +38,9 @@ Jorick van Hees \\
 
 With the introduction of high speed internet and the introduction of video sharing platforms, the use of online video increased dramatically and is one of the main media content formats used on the web today, with increasing popularity in news media, business matters, education and the social web. According to \textcite{Cisco:2015wm}, 64 percent of the consumer internet traffic in 2014 was online video.
 
-News media website navigation often exists of article pages and overview pages like the front page, designed to allow easy navigation to the article pages. The overview pages link to the article using a title, a small description and a visual preview. The visual preview is a small visual representation, or \textit{thumbnail}, of the content, that is only a few centimeters in size. The thumbnail should engage the user to follow the link to view the full article and is often the only visual reference.
+News media website navigation often exists of article pages and overview pages like the front page, designed to allow easy navigation to the article pages. The overview pages link to the article using a title, a small description and a visual preview. This visual preview, or thumbnail, is a small visual representation of the content. The thumbnail is only a few centimeters in size, depending on the implementation in the interface. The thumbnail should engage the user to follow the link to view the full article and is often the only visual reference.
 
-Thumbnails have always been a strong visual cue for the user to find relevant content. A study from \textcite{Dziadosz:2002cl} in 2002 regarding thumbnails in their search engine results, showed that users made more accurate decisions when a thumbnail of the result was presented next to the textual result. In general, images tend to pull the audience to the content; it's what newspapers are doing for years with the big frontpage images. The contents of these thumbnails exist of stock photos, actual photos from the event, or other designed images containing company logos, previews of graphs and other relevant visuals. Overview pages linking to multiple news articles often use these thumbnails to improve the visual appearance of the website, but also try to tempt the user into viewing the article. These images have always been static, but with the increase of broadband internet speeds and reliability (even on mobile devices), opportunities arise to create moving thumbnails. These thumbnails may improve the user experience and could increase the chances of users watching the full article.
+Thumbnails have always been a strong visual cue for the user to find relevant content. A study from \textcite{Dziadosz:2002cl} in 2002 regarding thumbnails in their search engine results, showed that users made more accurate decisions when a thumbnail of the result was presented next to the textual result. In general, images tend to pull the audience to the content; it's what newspapers are doing for years with the big frontpage images. The contents of these thumbnails exist of stock photos, actual photos from the event, or other designed images containing company logos, previews of graphs and other relevant visuals. Overview pages linking to multiple news articles often use these thumbnails to improve the visual appearance of the website, but also try to invite the user into viewing the article. These images have always been static, but with the increase of broadband internet speeds and reliability (even on mobile devices), opportunities arise to create moving thumbnails. These thumbnails may improve the user experience and could increase the chances of users watching the full article.
 
 \begin{figure}[h]
   \includegraphics[width=\linewidth]{images/belfast-telegraph-thumbnail}
@@ -50,11 +50,11 @@ Thumbnails have always been a strong visual cue for the user to find relevant co
 
 \section{The moving thumbnail}
 
-With the rise of video as a way of communication and distributing news content, new opportunities arise to attract users to specific content. Instead of using a static frame from the video, it is possible to extract a small portion of the video and use that as a \textit{moving thumbnail}. The moving thumbnail is a small video in both dimensions and length, that acts as a substitution for a regular thumbnail. In every way, the moving thumbnail is the same as a regular static thumbnail with the exception that it contains `moving images'.
+In a lot of ways, the moving thumbnail is the same as a regular static thumbnail with the exception that it contains `moving images'. It is located in the same positions on websites and behaves the same way when the user interacts with it (a click on the thumbnail directs the user to the article). Depending on the medium of the full content (an article, video or image), the thumbnail is often a summarised substitution.
 
-Static thumbnails have different purposes in news media websites in relationship to the content: it can try to accurately describe the content, or it can attempt to seduce a user to view the full content (which is what we can call a teaser). The chosen role of the thumbnail depends heavily on the type of content, the strategic goals of the media company and the location of where the thumbnail is used. Since the moving thumbnail replaces the static thumbnail, it should serve the same purpose.
+Static thumbnails have different purposes in news media websites in relationship to the content: it can try to accurately describe the content, or it can attempt to invite the user to view the full content (which is what we can call a teaser). The chosen role of the thumbnail depends heavily on the type of content, the strategic goals of the media company and the location of where the thumbnail is used. Since the moving thumbnail replaces the static thumbnail, it should serve the same purpose.
 
-To pick the best (static) thumbnail for a desired goal, a number of systems exist to aid an editor into selecting a thumbnail. The most simple system features a time selector and a preview window in which the editor is able to select a frame on a certain time to use as thumbnail. Other systems use different video analysation techniques to propose a set of suitable options to the editor. In order to use a moving thumbnail as a replacement for the static thumbnail, the creation of these moving thumbnails should be fast and convenient.
+To pick the best (static) thumbnail for a desired goal, a number of systems exist to aid an editor into selecting a thumbnail. The most simple system features a time selector and a preview window in which the editor is able to select a frame on a certain time to use as thumbnail. Other systems use different video analysis techniques to propose a set of suitable options to the editor. In order to use a moving thumbnail as a replacement for the static thumbnail, the creation of these moving thumbnails should be fast and convenient.
 
 \subsection{New challenges for moving thumbnails}
 
@@ -64,16 +64,12 @@ A static thumbnail will show only a single frame of the original video, revealin
 
 A more technical challenge is the design of the moving thumbnail in relation to processing power, internet speeds and device limitations. Even small videos can be significantly larger in file size than static thumbnails, and may consume more processing power, especially on mobile devices. The technical details of the moving thumbnail should consider these limitations.
 
-\subsection{Automatic generation of moving thumbnails}
-
-Creating moving thumbnails manually for every video can be a time consuming task, even when presented with various editing tools that allow quick trimming. In order to solve this problem,  automatic generation of moving thumbnails is essential for the use and implementation of this new concept.
-
-The system that automatically generates moving thumbnails from a video has to take several requirements into account. Examples of these requirements are that the video should be suited for small dimensions or that the user is invited to watch the whole video. These specific requirements should be defined in a later state, based on existing previous research in the field of static thumbnail generation, video navigation and video summarisation.
-
 \section{Problem statement}
 \label{sec:problem statement}
 
-As of today, there is no system that generates moving thumbnails with the goal to tease the user to view the full video. The specifications and requirements for a moving thumbnail are unclear, a method to measure the effectiveness of the output of the system does not exist for this particular case, and since the concept is new, there is no data available to accurately train a system for this purpose.
+Creating moving thumbnails manually for every video can be a time consuming task, even when presented with various editing tools that allow quick trimming. In order to solve this problem,  automatic generation of moving thumbnails is essential for the use and implementation of this new concept.
+
+To the best of our knowledge, there is no system that generates moving thumbnails with the goal to invite the user to view the full video. The specifications and requirements for a moving thumbnail are unclear, a method to measure the effectiveness of the output of the system does not exist for this particular case, and since the concept is new, there is no data available to accurately train a system for this purpose.
 
 The absence of data leads the core of this research: The goal is to build a system that generates moving thumbnails and evaluates the results automatically to validate the output and allows for rapid improvements without user testing. The automatic evaluation can not rely on real world data (since it does not exist yet) and functions as some sort of sanity check. When the system scores acceptable on the automatic evaluation, the results are implemented in an end user test scenario to evaluate the system and gain real world data for the purpose of generating moving thumbnails.
 
@@ -81,13 +77,15 @@ The research question is as follows:
 
 \textbf{How can we build a system that automatically generates moving thumbnails that invite the user to view the full video?}
 
-The following subquestions will support the main research questions:
-
-\textit{How can the automatic thumbnail generator be automatically evaluated?}
+The system that automatically generates moving thumbnails from a video has to take several factors into account. These factors range from specifications like size, length and audio, to more content focussed factors: Does the moving thumbnail accurately reflect the full video and does it invite users to actually do so? These factors form an important subject in the design of the system. They will be based on existing previous research in the field of static thumbnail generation, video navigation and video summarisation. These factors lead to the first subquestion:
 
 \textit{What features play a role in the automatic generation of moving thumbnails?}
 
-The user testing that follows allows us to check wether we have actually succeeded in building such a system. This results in the following subquestion:
+There is no data at hand that allows us to benchmark to our moving thumbnails. This means that there is no way of telling that changes made to our system improve the result. In order to solve this issue, we need to include an automatic evaluation that gives us a guideline when improving the system. The need for an automatic evaluation is a result of the available resources for real world user testing. This leads us to the second subquestion:
+
+\textit{How can the automatic thumbnail generator be automatically evaluated?}
+
+Since the automatic evaluation only offers a guideline and will have no definitive answer to our main question, a real world user study will be done to conclude the research. The result of this study can confirm and validate the results of the automatic evaluation, and will benchmark the generated moving thumbnails with actual users. This concludes into our final subquestion:
 
 \textit{How does the output of the system behave in a real world scenario?}
 
@@ -101,7 +99,7 @@ Blue Billywig is a company that builds and maintains a video management systems,
 
 \section{Approach}
 
-As mentioned in section \ref{sec:problem statement}, the research can be divided into three closely related subjects. The first subject is about the moving thumbnail generator itself, a system that uses various features to determine what to use from an input video to create a moving thumbnail as output. The second subject is about a validator that automatically validates the output of the system, to check the integrity of the generated moving thumbnails. The third subject is about the user test scenario that tests the output of the generator with actual users, which results can in turn be used to compare the validator results with the actual user testing, and show real world effectiveness of the thumbnail generator. This workflow is shown in figure \ref{fig:workflow}. These tree subjects combined form a study that covers all grounds in this new concept of automatically generating thumbnails.
+As mentioned in section \ref{sec:problem statement}, the research can be divided into three closely related subjects. The first subject is the moving thumbnail generator itself, a system that uses various features to determine what to use from an input video to create a moving thumbnail as output. The second subject is a validator that automatically validates the output of the system, to check the integrity of the generated moving thumbnails. The third subject is the user test scenario that tests the output of the generator with actual users, which results can in turn be used to compare the validator results with the actual user testing, and show real world effectiveness of the thumbnail generator. This workflow is shown in figure \ref{fig:workflow}. These three subjects combined form a study that covers all grounds in this new concept of automatically generating thumbnails.
 
 \begin{figure}[h]
   \label{fig:workflow}
@@ -109,7 +107,9 @@ As mentioned in section \ref{sec:problem statement}, the research can be divided
   \caption{Schematic workflow overview of the complete system, showing feedback directions on the generator and evaluation.}
 \end{figure}
 
-The dataset that will be used will be chosen on the availability of the data, the domain that the research aims for (news media) and the amount of metadata that is needed to gain accurate results. Blue Billywig has a number of customers that have data related to the research, properly annotated with relevant metadata and in satisfying quantity. Another advantage of using an `in-house' dataset is the accessibility of the data and video files. Blue Billywig encodes every video file to a number of different formats to allow playback on any device and internet connection. This preparation of data might significantly increase the progress of the study.
+\subsection{The dataset}
+
+The dataset that will be used has a number of specific requirements. In our scenario, the moving thumbnail will be primarily used on article overview pages on news websites. This means that the dataset will include only videos from that domain, most preferably from a single selected news agency. Since there are multiple ways to generate video summaries, using internal and external data from the video, the dataset should provide in both ways. This means that the internal data (meaning the video itself) should be easily be accessible, and that external data (meaning metadata like title, tag and description) should be present. The required size of the dataset should be around the hundreds of videos, based on earlier research in video summarisation \cite{Almeida:2012be,Christel:2004in,Money:2008fn}.
 
 \section{Literature study}
 
@@ -125,7 +125,7 @@ Since one of the goals of the moving thumbnail is to improve the navigation of u
 
 \subsection{Static thumbnail generation}
 
-The issue of video navigation using thumbnails has been an active topic of research. In \citeyear{Kim:2015co}, a study by \textcite{Kim:2015co} describes a system that automatically combines video frames to generate a thumbnail containing more information that a single frame. Another study describes thumbnail candidate selection using image quality evaluation \cite{Zhang:2014jg}. A combination of internal and external analysation of the video content to select thumbnails is used by a study by \textcite{Liu:2015ux}. The techniques and analysation methods used in these systems can possibly be of use when evaluating the generated moving thumbnails.
+The issue of video navigation using thumbnails has been an active topic of research. In \citeyear{Kim:2015co}, a study by \textcite{Kim:2015co} describes a system that automatically combines video frames to generate a thumbnail containing more information that a single frame. Another study describes thumbnail candidate selection using image quality evaluation \cite{Zhang:2014jg}. A combination of internal and external analysis of the video content to select thumbnails is used by a study by \textcite{Liu:2015ux}. The techniques and analysation methods used in these systems can possibly be of use when evaluating the generated moving thumbnails.
 
 Many systems that generate thumbnails use a ranking of different frames to propose a suitable thumbnail \cite{Choi:2015gm,Zhang:2012eo,Gao:2009dx}. In static thumbnail generation, this ranking can be used to select the best thumbnail. However, in moving thumbnail generation (or other video navigation interfaces) the ranking can be used to create a composition of the video. This creates opportunities to generate moving thumbnails that consist of different shots from the original video.
 
@@ -133,7 +133,7 @@ Many systems that generate thumbnails use a ranking of different frames to propo
 
 Video summarisation is the domain that is closest to the concept of the moving thumbnail, since a moving thumbnail is basically a video summarisation with a few major differences. The length of a video summary would depend on the contents of the actual video, an hour long video would need a longer summary to contain all concepts in the video than a summary for a minute long video. The moving thumbnail however, should ideally always be around the same size, since it only has to attract users to view the full video, instead of showing what the video is about.
 
-Techniques for video summarisation can be divided into three different categories: Internal analysation, external analysation and a hybrid of the two. Internal analysation techniques use information that is gained from analysing the video itself, while external analysation uses the information available outside the video (metadata like title, description or tags). The hybrid techniques combine both internal and external analysation \cite{Money:2008fn}.
+Techniques for video summarisation can be divided into three different categories: Internal analysis, external analysis and a hybrid of the two. Internal analysis techniques use information that is gained from analysing the video itself, while external analysis uses the information available outside the video (metadata like title, description or tags). The hybrid techniques combine both internal and external analysis \cite{Money:2008fn}.
 
 The knowledge gained from video summarisation can be used to generate and extract relevant parts from a video, and those in turn can be used to create moving thumbnails. The difference between video summarisations and moving thumbnails has to be highlighted in order to modify (or use techniques from) video summarisation techniques in order to use them for another purpose. Various frameworks and surveys on different techniques highlight the differences and effectiveness in domains and content \cite{Money:2008fn,Ajmal:2012hi}, which might be useful in the design of the moving thumbnail generator.
 
