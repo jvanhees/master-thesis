@@ -5,6 +5,8 @@
 \usepackage{makeidx}
 \usepackage{rotating}
 
+\usepackage{booktabs}
+\usepackage{multirow}
 
 \usepackage[
 backend=biber,
@@ -113,21 +115,17 @@ The dataset that will be used has a number of specific requirements. In our scen
 
 \section{Literature study}
 
-Since the generation of moving thumbnails is a new concept, there is no directly related literature. However, it relates close to a number of other domains: Video navigation and interfaces, static thumbnail generation and video summarisation.
+The generation of moving thumbnails is a new concept, relating close to a number of other domains: Video navigation and interfaces, static thumbnail generation and video summarisation.
 
 \subsection{Video navigation}
 
-There are a lot of interfaces designed to assist humans in navigating a video library. A summary by \textcite{Schoeffmann:2010iw} describes over 40 different interfaces that use different techniques to allow convenient browsing through a collection of videos. These range from displaying a key frame best describing the video, or a collection of keyframes with their sizes related to the importance of the frame. Most of these interfaces have some sort of system that automatically determines what to display on the screen, taken into consideration the different conditions in which the system is used.
-
-A study by \textcite{Hurst:2011jx} describes a user study to the recognition of video using different thumbnail sizes, numbers and various movement in the thumbnails. The study shows that users are able to handle multiple small thumbnails on mobile devices, especially when the thumbnails included motion.
-
-Since one of the goals of the moving thumbnail is to improve the navigation of users in a news media website, video navigation literature could especially prove useful in the design and implementation of moving thumbnails in overview pages.
+There are a lot of interfaces designed to assist humans in navigating a video library. A summary by \textcite{Schoeffmann:2010iw} describes over 40 different interfaces that use different techniques to allow convenient browsing through a collection of videos. These range from displaying a key frame best describing the video, or a collection of keyframes with their sizes related to the importance of the frame. Most of these interfaces have some sort of system that automatically determines what to display on the screen, taken into consideration the different conditions in which the system is used. A study by \textcite{Hurst:2011jx} describes a user study to the recognition of video using different thumbnail sizes, numbers and various movement in the thumbnails. The study shows that users are able to handle multiple small thumbnails on mobile devices, especially when the thumbnails included motion. Since one of the goals of the moving thumbnail is to improve the navigation of users in a news media website, video navigation literature could especially prove useful in the design and implementation of moving thumbnails in overview pages.
 
 \subsection{Static thumbnail generation}
 
-The issue of video navigation using thumbnails has been an active topic of research. In \citeyear{Kim:2015co}, a study by \textcite{Kim:2015co} describes a system that automatically combines video frames to generate a thumbnail containing more information that a single frame. Another study describes thumbnail candidate selection using image quality evaluation \cite{Zhang:2014jg}. A combination of internal and external analysis of the video content to select thumbnails is used by a study by \textcite{Liu:2015ux}. The techniques and analysation methods used in these systems can possibly be of use when evaluating the generated moving thumbnails.
+The issue of video navigation using thumbnails has been an active topic of research. A \citeyear{Kim:2015co} study by \textcite{Kim:2015co} describes a system that automatically combines video frames to generate a thumbnail containing more information that a single frame. Another study describes thumbnail candidate selection using image quality evaluation \cite{Zhang:2014jg}. A combination of internal and external analysis of the video content to select thumbnails is used by a study by \textcite{Liu:2015ux}. The techniques and analysation methods used in these systems can possibly be of use when evaluating the generated moving thumbnails.
 
-Many systems that generate thumbnails use a ranking of different frames to propose a suitable thumbnail \cite{Choi:2015gm,Zhang:2012eo,Gao:2009dx}. In static thumbnail generation, this ranking can be used to select the best thumbnail. However, in moving thumbnail generation (or other video navigation interfaces) the ranking can be used to create a composition of the video. This creates opportunities to generate moving thumbnails that consist of different shots from the original video.
+Many systems that generate thumbnails use a ranking of different frames to propose a suitable thumbnail \cite{Choi:2015gm,Zhang:2012eo,Gao:2009dx}. In static thumbnail generation, this ranking can be used to select the best thumbnail. In moving thumbnail generation (or other video navigation interfaces) the ranking can be used to create a composition of the video. This creates opportunities to generate moving thumbnails that consist of different shots from the original video.
 
 \subsection{Video summarisation}
 
@@ -139,15 +137,53 @@ The knowledge gained from video summarisation can be used to generate and extrac
 
 \section{Planning}
 
-Development of the system will be planned in a scrum-like planning, implemented in the scrum planning of Blue Billywig. This means that the planning is divided into sprints of two weeks. The planning, as shown in figure \ref{}, describes a number of topics that should be covered in those sprints. The columns `BB' describes the sprint numbers as used in the Blue Billywig sprint planning.
+Development of the system will be planned in a scrum-like planning, implemented in the scrum planning of Blue Billywig. This means that the planning is divided into sprints of two weeks. The planning, as shown in table \ref{table:planning} on page \pageref{table:planning}, describes a number of topics that should be covered in those sprints. The column `BB' describes the sprint numbers as used in the Blue Billywig sprint planning.
 
-Working on the master thesis document itself is done throughout the whole planning, and has no defined deadlines other than the draft versions in sprint 9 and 10. 
+Working on the master thesis document itself is done throughout the whole planning, and has no defined deadlines other than the draft versions in sprint 9 and 10. It should be noted that most subjects are addressed in each sprint, with a main focus on certain subjects as described in the `Main focus' column.
 
 \subsection{Plan B}
 
-One of the highest priorities in the system is the user study. Without the user study, the results of the system, as well as the effectiveness of the validator cannot be measured. Thus, it is important that the user study is ready in sprint 6 to gather enough data to gain significance. Sprint 5 is mostly used to improve the overal system, and can be changed when the workflow isn't properly set up in sprint 4. The overal planning can be extended with one sprint by removing one of the draft versions of the master thesis. However, this should be an extreme measure when the system has severe delays and the system can not be validated yet.
+One of the highest priorities in the system is the user study. Without the user study, the results of the system, as well as the effectiveness of the validator cannot be measured. Thus, it is important that the user study is ready in sprint 6 to gather enough data to gain significance. Sprint 5 is mostly used to improve the overal system, and can be changed when the workflow isn't properly set up in sprint 4. The overall planning can be extended with one sprint by removing one of the draft versions of the master thesis. However, this should be an extreme measure when the system has severe delays and the system can not be validated yet.
 
 \printbibliography
 
 \balancecolumns
+
+\begin{table*}[]
+\centering
+\caption{Planning}
+\label{table:planning}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llcll}
+\hline
+\textbf{Date}                 & \textbf{Week} & \textbf{Sprint}              & \textbf{BB}                    & \textbf{Main focus}                                                                               \\ \hline
+Friday, February 12, 2016     & 7             & \multirow{2}{*}{\textbf{1}}  & \multirow{2}{*}{5.46}          & \multirow{2}{*}{Thesis design setup, dataset acquisition, useable feature search in literature}   \\
+Friday, February 19, 2016     & 8             &                              &                                &                                                                                                   \\
+Friday, February 26, 2016     & 9             & \multirow{2}{*}{\textbf{2}}  & \multirow{2}{*}{5.47}          & \multirow{2}{*}{Dataset acquisition \& analysis, feature extraction library, workflow setup}      \\
+Friday, March 4, 2016         & 10            &                              &                                &                                                                                                   \\
+Friday, March 11, 2016        & 11            & \multirow{2}{*}{\textbf{3}}  & \multirow{2}{*}{5.48}          & \multirow{2}{*}{Dataset preperation, feature libraries in workflow, dataset analysis in workflow} \\
+Friday, March 18, 2016        & 12            &                              &                                &                                                                                                   \\
+Friday, March 25, 2016        & 13            & \multirow{2}{*}{\textbf{4}}  & \multirow{2}{*}{5.49}          & \multirow{2}{*}{Literature on features, first full workflow \& results}                           \\
+Friday, April 1, 2016         & 14            &                              &                                &                                                                                                   \\
+Friday, April 8, 2016         & 15            & \multirow{2}{*}{\textbf{5}}  & \multirow{2}{*}{5.50}          & \multirow{2}{*}{Improvements in overal system design, feedback loop implementation.}              \\
+Friday, April 15, 2016        & 16            &                              &                                &                                                                                                   \\
+Friday, April 22, 2016        & 17            & \multirow{2}{*}{\textbf{6}}  & \multirow{2}{*}{5.51}          & \multirow{2}{*}{User study test design, system output preparation.}                               \\
+Friday, April 29, 2016        & 18            &                              &                                &                                                                                                   \\
+Friday, May 6, 2016           & 19            & \multirow{2}{*}{\textbf{7}}  & \multirow{2}{*}{5.52}          & \multirow{2}{*}{User study}                                                                       \\
+Friday, May 13, 2016          & 20            &                              &                                &                                                                                                   \\
+\textbf{Friday, May 20, 2016} & \textbf{21}   & \multirow{2}{*}{\textbf{8}}  & \multirow{2}{*}{\textbf{5.53}} & \multirow{2}{*}{\textbf{Mid-term presentation, second reader + defence date}}                     \\
+Friday, May 27, 2016          & 22            &                              &                                &                                                                                                   \\
+Friday, June 3, 2016          & 23            & \multirow{2}{*}{\textbf{9}}  & \multirow{2}{*}{5.54}          & \multirow{2}{*}{Thesis draft version 1, User study evaluation}                                    \\
+Friday, June 10, 2016         & 24            &                              &                                &                                                                                                   \\
+Friday, June 17, 2016         & 25            & \multirow{2}{*}{\textbf{10}} & \multirow{2}{*}{5.55}          & \multirow{2}{*}{Thesis draft version 2, discussion, final touches, presentation.}                 \\
+Friday, June 24, 2016         & 26            &                              &                                &                                                                                                   \\
+\textbf{Friday, July 1, 2016} & \textbf{27}   & \textbf{11}                  & \textbf{5.56}                  & \textbf{Master Thesis Deadline}                                                                   \\
+Friday, July 8, 2016          & 28            & \textbf{}                    &                                & \textit{Defence}                                                                                  \\
+Friday, July 15, 2016         & 29            & \textbf{}                    &                                & \textit{Defence}                                                                                  \\
+Friday, July 22, 2016         & 30            & \textbf{}                    &                                & \textit{Defence}                                                                                  \\
+Friday, July 29, 2016         & 31            & \textbf{}                    &                                & \textit{Defence}                                                                                  \\ \hline
+\end{tabular}
+}
+\end{table*}
+
 \end{document}
