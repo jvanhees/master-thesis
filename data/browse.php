@@ -1,6 +1,7 @@
 <?php
 if(isset($_GET['c'])){ $count = $_GET['c']; } else { $count = 200; }
 if(isset($_GET['p'])){ $page = $_GET['p']; } else { $page = 0; }
+$GLOBALS['defaultMediaAssetPath'] = 'https://d2vt09yn8fcn7w.cloudfront.net';
 $file = file_get_contents('data.json');
 $data = json_decode($file);
 $i = $page * $count;
@@ -28,6 +29,19 @@ function format_tags($c){
 		return '';
 	}
 }
+function format_preview($c){
+	if(isset($c->assets)){
+		$assets = json_decode($c->assets);
+		foreach($assets as $asset){
+			if($asset->mediatype == 'MP4_MAIN'){
+				return '<a href="#" onclick="openVideo(\''.$GLOBALS['defaultMediaAssetPath'].$asset->src.'\')" href="#">'.$asset->mediatype.'</a>';
+			}
+		}
+		return $assets[0]->mediatype;
+	} else {
+		return '';
+	}
+}
 
 $clips = array_slice($data->items, $page * $count, ($page * $count) + $count);
 
@@ -43,6 +57,11 @@ Page <?=$page?> (<?=$page * $count?> - <?=($page * $count) + $count?>)
 <div class="pager">
 	<a href="?p=<?=$page-1 ?>">Prev</a> - <a href="?p=<?=$page+1 ?>">Next</a>
 </div>
+<script type="text/javascript">
+function openVideo(url){
+	window.open(url, 'Preview', 'width=480, height=360'); return false;
+}
+</script>
 <table>
 	<thead>
 		<tr>
@@ -53,6 +72,7 @@ Page <?=$page?> (<?=$page * $count?> - <?=($page * $count) + $count?>)
 			<td>Length</td>
 			<td>Published date</td>
 			<td>Tags</td>
+			<td>Preview</td>
 		</tr>
 	</thead>
 	<tbody>
@@ -69,6 +89,7 @@ Page <?=$page?> (<?=$page * $count?> - <?=($page * $count) + $count?>)
 			<td><?=format_length($c->length_int)?></td>
 			<td><?=format_date($c->published_date)?></td>
 			<td><?=format_tags($c)?></td>
+			<td><?=format_preview($c)?></td>
 		</tr>
 		<?php } ?>
 	</tbody>
