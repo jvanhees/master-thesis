@@ -69,8 +69,38 @@ function lengthDistribution(element_id) {
 	chart.draw(data, options);
 };
 
+function mostUsed(element_id) {
+	var json = $.ajax({
+		url: "parsers/mostUsed.php",
+		dataType: "json",
+		async: false
+	}).responseText;
+	var options = {
+		title: 'Tag usage',
+		chartArea: {width: '80%'},
+		legend: { position: 'none' },
+		height: 500,
+		hAxis: {
+			title: 'Horizontal'
+		},
+		vAxis: {
+			title: 'Vertical'
+		}
+	};
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Tag');
+	data.addColumn('number', 'Count');
+	data.addRows(JSON.parse(json));
+	
+	var chart = new google.visualization.ColumnChart(document.getElementById(element_id));
+	
+
+	chart.draw(data, options);
+};
+
 
 function drawChart() {
 	tagDistribution('tag-dist');
 	lengthDistribution('length-dist');
+	mostUsed('most-used');
 }
