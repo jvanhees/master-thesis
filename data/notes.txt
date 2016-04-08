@@ -10,3 +10,5 @@ Queries:
 curl --globoff "https://landmark.bbvms.com/api/jsearch?limit=3000&query=(status:published%20AND%20mediatype:video%20AND%20type:MediaClip%20AND%20length_int:[0%20TO%20600]%20AND%20-title:%22Property%20View%22%20AND%20-title:CelebSpy%20AND%20-title:balltalk%20AND%20-description:balltalk%20AND%20title:[*%20TO%20*])" -o data.json
 
 https://landmark.bbvms.com/api/jsearch?limit=0&query=(status:published%20AND%20mediatype:video%20AND%20type:MediaClip%20AND%20length_int:[0%20TO%20600]%20AND%20cat:%22Irish%20Examiner%22%20AND%20-title:balltalk%20AND%20-description:balltalk%20AND%20title:[*%20TO%20*])&facetfield[]=catSort
+
+Gensim    LDA

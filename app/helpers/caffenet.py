@@ -5,6 +5,8 @@ import caffe
 
 caffe_root = '/Users/JVH/Development/caffe/'
 
+channels = 3
+
 # Load model
 if os.path.isfile(caffe_root + 'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel'):
     print 'CaffeNet found.'
@@ -64,3 +66,13 @@ def classify(image):
     output_prob = output['prob'][0]  # the output probability vector for the first image in the batch
     
     return output_prob
+
+def setImageSize(x, y):
+    net.blobs['data'].reshape(net.blobs['data'].shape[0], # batch size, dont change when setting img size
+                              channels,
+                              x, y)                       # Default size is 227x227
+
+def setImageCount(count):
+    net.blobs['data'].reshape(count, # batch size
+                              channels,
+                              net.blobs['data'].shape[2], net.blobs['data'].shape[3])  # Keep old image size
