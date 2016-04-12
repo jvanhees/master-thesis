@@ -30,6 +30,11 @@ foreach($data->items as $clip){
 </head>
 <body>
 <a href="browse.php">Browse clips</a>
+<pre>
+<?php
+print_r(json_decode($data->items[0]->assets));
+?>
+</pre>
 <h1>Stats</h1>
 <table>
 	<tr>
