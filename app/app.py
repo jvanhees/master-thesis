@@ -1,25 +1,36 @@
+# Suppress GLOG output for python bindings
+# unless explicitly requested in environment
+import os
+if 'GLOG_minloglevel' not in os.environ:
+    # Hide INFO and WARNING, show ERROR and FATAL
+    os.environ['GLOG_minloglevel'] = '2'
+    _unset_glog_level = True
+else:
+    _unset_glog_level = False
+
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 import pylab
 import timeit
 
-import helpers.caffenet as caffenet
+from classes.video import Video
+from classes.caffenet import CaffeNet
 
-import helpers.video as video
+video = Video('../data/video/2441814.mp4')
+frame = video.getFrame(5)
 
-#labels = caffenet.getLabels()
-#result = caffenet.classify('data/cat-wallpaper-38.jpg');
+if frame is False:
+    sys.exit("Unable to read frame")
 
-# sort top five predictions from softmax output
-#top_inds = result.argsort()[::-1][:5]  # reverse sort and take five largest items
-#print 'probabilities and labels:'
-#print zip(result[top_inds], labels[top_inds])
-
-# print 'output label:', labels[output_prob.argmax()]
-
-# Timer
-# print timeit.timeit(net.forward, number=1)
-
-video.loadVideo('data/vid.mp4')
-video.getFrames(25)
 video.closeVideo()
+
+video.showFrame(frame)
+
+net = CaffeNet()
+vectors = net.classify(frame)
+top_ind = net.getTopConcepts(vectors)
+
+print(net.getLabeledConcepts(vectors, top_ind))
+
+raw_input("Press Enter to exit...")

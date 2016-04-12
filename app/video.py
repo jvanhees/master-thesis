@@ -1,16 +1,14 @@
 import numpy as np
 import cv2
 
-print cv2.__version__
-
 cap = cv2.VideoCapture(0)
 
 # Define the codec and create VideoWriter object
 fourcc = cv2.VideoWriter_fourcc(*'MJPG')
 
-fps = cap.get(cv2.CAP_PROP_FPS)
-width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
-height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+fps = cap.get(cv2.CV_CAP_PROP_FPS)
+width = cap.get(cv2.CV_CAP_PROP_FRAME_WIDTH)
+height = cap.get(cv2.CV_CAP_PROP_FRAME_HEIGHT)
 
 #out = cv2.VideoWriter('output.avi',fourcc, fps, (int(width),int(height)))
 
@@ -19,7 +17,7 @@ while(cap.isOpened()):
     if ret==True:
         frame = cv2.resize(frame, (int(width / 2), int(height / 2)))
         
-        gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+        gray = cv2.cvtColor(frame,cv2.CV_COLOR_BGR2GRAY)
         gray = np.float32(gray)
         dst = cv2.cornerHarris(gray,2,3,0.04)
         
