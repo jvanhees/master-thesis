@@ -4,7 +4,6 @@ Only published clips (means no ckuos that were never published to the world)
 Only clips shorter than 10 minutes
 Excluded clips featuring the following in the title: BallTalk, "property view", celebspy -> mostly garbage interviews
 
-
 Queries:
 
 curl --globoff "https://landmark.bbvms.com/api/jsearch?limit=3000&query=(status:published%20AND%20mediatype:video%20AND%20type:MediaClip%20AND%20length_int:[0%20TO%20600]%20AND%20-title:%22Property%20View%22%20AND%20-title:CelebSpy%20AND%20-title:balltalk%20AND%20-description:balltalk%20AND%20title:[*%20TO%20*])" -o data.json
