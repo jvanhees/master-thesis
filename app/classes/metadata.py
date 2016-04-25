@@ -11,48 +11,68 @@ class Metadata:
     
     stoplist = set('for a of the and to in'.split())
     
-    def __init__(self, metadataFile):
+    def __init__(self, metadataFile, cache=True):
         
+        self.cache = cache
         self.file = metadataFile
         
         self.data = None
+        self.lsi = None
         
         self.__texts = []
         self.__dictionary = None
         self.__corpus = None
         self.__tmpLocation = 'tmp/'
         
-        self.lsi = None
-        
+        self.__loadData()
+        self.__loadDictionary()
+        self.__loadCorpus()
         self.__loadModel()
+    
+    
+    
+    def getVectorsByClip(self, clip):
+        texts = self.prepareClip(clip)
+        vec_bow = self.__dictionary.doc2bow(texts)
+        vec_lsi = self.lsi[vec_bow] # convert the query to LSI space
+        
+        print(vec_lsi)
+    
+    
+    def prepareString(self, document):
+        # Remove words from stoplist, lowercase string and split in list of words (tokens)
+        ret = [word for word in document.lower().split() if word not in self.stoplist]
+        return ret
+    
+    
+    # Returns text string with all relevant metadata fields
+    def prepareClip(self, clip):
+        # Add all relevant string to list
+        clipDocs = []
+        if 'title' in clip:
+            clipDocs.append(clip['title'])
+        if 'description' in clip:
+            clipDocs.append(clip['description'])
+        if 'cat' in clip:
+            clipDocs.append(' '.join(clip['cat']))
+        # Join list of string to form text blob
+        string = ' '.join(clipDocs)
+        # Return tokens
+        return self.prepareString(string)
+    
     
     def __loadData(self):
         with open(self.file) as data_file:
-            self.data = json.load(data_file)
+            self.data = json.load(data_file)['items']
     
     
     def __buildCorpus(self):
-        self.documents = []
-        for clip in self.data['items']:
-            if 'title' in clip:
-                self.documents.append(clip['title'])
-            if 'description' in clip:
-                self.documents.append(clip['description'])
-            if 'cat' in clip:
-                self.documents.append(' '.join(clip['cat']))
-                
-        texts = [[word for word in document.lower().split() if word not in self.stoplist] for document in self.documents]
+        if self.__dictionary == None:
+            self.__loadDictionary()
         
-        frequency = defaultdict(int)
-        for text in texts:
-            for token in text:
-                frequency[token] += 1
-                
-        self.__texts = [[token for token in text if frequency[token] > 1] for text in texts]
-        
-        self.__dictionary = corpora.Dictionary(texts)
-        
-        corpus = [self.__dictionary.doc2bow(text) for text in texts]
+        # Create a bag of words corpus for all texts
+        corpus = [self.__dictionary.doc2bow(text) for text in self.__texts]
+        # Save for later use
         corpora.MmCorpus.serialize(self.__tmpLocation + 'corpus.mm', corpus)
         
         return corpus
@@ -61,26 +81,66 @@ class Metadata:
     def __loadCorpus(self):
         if self.data == None:
             self.__loadData()
-            
-        if os.path.isfile(self.__tmpLocation + 'corpus.mm'):
+        
+        # Load from file, or generate with data
+        if os.path.isfile(self.__tmpLocation + 'corpus.mm') and self.cache == True:
             self.__corpus = corpora.MmCorpus(self.__tmpLocation + 'corpus.mm')
         else:
             self.__corpus = self.__buildCorpus()
     
         
     def __createModel(self):
-        tfidf = models.TfidfModel(self.__corpus) # step 1 -- initialize a model
+        # check if we have a corpus
+        if self.__corpus == None:
+            self.__loadCorpus()
+        
+        # Create tfidf (term frequency inverse document frequency)
+        tfidf = models.TfidfModel(self.__corpus)
         corpus_tfidf = tfidf[self.__corpus]
         
+        # Train LSI (Latent semantic indexing) transformation
         lsi = models.LsiModel(corpus_tfidf, id2word=self.__dictionary, num_topics=200) # initialize an LSI transformation
         corpus_lsi = lsi[corpus_tfidf] # create a double wrapper over the original corpus: bow->tfidf->fold-in-lsi
-        
+        # Save for later use
         lsi.save(self.__tmpLocation + 'model.lsi')
-        return lsi
         
+        return lsi
+    
     
     def __loadModel(self):
-        if os.path.isfile(self.__tmpLocation + 'model.lsi'):
+         # Load from file, or generate with data
+        if os.path.isfile(self.__tmpLocation + 'model.lsi') and self.cache == True:
             self.lsi = models.LsiModel.load(self.__tmpLocation + 'model.lsi')
         else:
             self.lsi = self.__createModel()
+    
+    
+    def __createDictionary(self):
+        self.documents = []
+        # Create list with all clip token lists
+        for clip in self.data:
+            self.documents.append(self.prepareClip(clip))
+        
+        # Calculate frequency of words
+        frequency = defaultdict(int)
+        for text in self.documents:
+            for token in text:
+                frequency[token] += 1
+        
+        # Remove words (tokens) that occur only once
+        self.__texts = [[token for token in text if frequency[token] > 1] for text in self.documents]
+        
+        # Build dictionary with these words
+        dictionary = corpora.Dictionary(self.__texts)
+        
+        dictionary.save(self.__tmpLocation + 'dictionary.dict')
+        return dictionary
+    
+    
+    def __loadDictionary(self):
+         # Load from file, or generate with data
+        if os.path.isfile(self.__tmpLocation + 'dictionary.dict') and self.cache == True:
+            self.__dictionary = corpora.Dictionary()
+            self.__dictionary.load(self.__tmpLocation + 'dictionary.dict')
+        else:
+            self.__dictionary = self.__createDictionary()
