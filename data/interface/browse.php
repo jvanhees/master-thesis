@@ -2,8 +2,18 @@
 if(isset($_GET['c'])){ $count = $_GET['c']; } else { $count = 200; }
 if(isset($_GET['p'])){ $page = $_GET['p']; } else { $page = 0; }
 $GLOBALS['defaultMediaAssetPath'] = 'https://d2vt09yn8fcn7w.cloudfront.net';
+
 $file = file_get_contents('data.json');
 $data = json_decode($file);
+
+// Get CSV thumbnail data
+$thumbnails = array_map('str_getcsv', file('thumbnails.csv'));
+array_walk($thumbnails, function(&$a) use ($thumbnails) {
+  $a = array_combine($thumbnails[0], $a);
+});
+array_shift($thumbnails); # remove column header
+
+
 $i = $page * $count;
 function format($c, $key){
 	if(isset($c->{$key})){
@@ -43,6 +53,15 @@ function format_preview($c){
 	}
 }
 
+function format_thumbnail($c, $thumbnails){
+	foreach($thumbnails as $thumbnail){
+		if($thumbnail['id'] == $c->id){
+			return '<a target="_blank" href="http://landmark.bbvms.com/mediaclip/'.$c->id.'/pthumbnail/default/default.jpg">Thumb</a>';
+		}
+	}
+	return '';
+}
+
 $clips = array_slice($data->items, $page * $count, ($page * $count) + $count);
 
 ?>
@@ -73,6 +92,7 @@ function openVideo(url){
 			<td>Published date</td>
 			<td>Tags</td>
 			<td>Preview</td>
+			<td>Thumb</td>
 		</tr>
 	</thead>
 	<tbody>
@@ -90,6 +110,7 @@ function openVideo(url){
 			<td><?=format_date($c->published_date)?></td>
 			<td><?=format_tags($c)?></td>
 			<td><?=format_preview($c)?></td>
+			<td><?=format_thumbnail($c, $thumbnails)?></td>
 		</tr>
 		<?php } ?>
 	</tbody>
