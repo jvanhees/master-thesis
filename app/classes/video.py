@@ -17,10 +17,16 @@ class Video:
         
         success, frame = self.cap.read()
         if success:
+            print 'Succesfully read videofile ' + videoFile
             self.channels = frame.shape[2]
         else:
-            return false
-        
+            raise NameError('Could not read video file ' + videoFile)
+    
+    
+    def __del__(self):
+        self.closeVideo()
+
+    
     # Returns a single frame that is prepared for caffe
     def getFrame(self, frameNumber):
         self.cap.set(cv2.cv.CV_CAP_PROP_POS_FRAMES, frameNumber)
