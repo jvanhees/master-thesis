@@ -4,6 +4,8 @@ from pprint import pprint
 from gensim import corpora, models, similarities
 from collections import defaultdict
 
+from data import DataProvider, Clip
+
 class Metadata:
     
     # Todo:
@@ -11,12 +13,18 @@ class Metadata:
     
     stoplist = set('for a of the and to in'.split())
     
-    def __init__(self, metadataFile, cache=True):
+    def __init__(self, data, cache=None):
         
-        self.cache = cache
-        self.file = metadataFile
+        if cache == None:
+            self.cache = True
+        else:
+            self.cache = cache
         
-        self.data = None
+        if data != None:
+            self.data = data
+        else:
+            raise NameError('No data provided!')
+        
         self.lsi = None
         
         self.__texts = []
@@ -24,7 +32,6 @@ class Metadata:
         self.__corpus = None
         self.__tmpLocation = 'tmp/'
         
-        self.__loadData()
         self.__loadDictionary()
         self.__loadCorpus()
         self.__loadModel()
@@ -36,7 +43,7 @@ class Metadata:
         vec_bow = self.__dictionary.doc2bow(texts)
         vec_lsi = self.lsi[vec_bow] # convert the query to LSI space
         
-        print(vec_lsi)
+        return vec_lsi
     
     
     def prepareString(self, document):
@@ -47,23 +54,10 @@ class Metadata:
     
     # Returns text string with all relevant metadata fields
     def prepareClip(self, clip):
-        # Add all relevant string to list
-        clipDocs = []
-        if 'title' in clip:
-            clipDocs.append(clip['title'])
-        if 'description' in clip:
-            clipDocs.append(clip['description'])
-        if 'cat' in clip:
-            clipDocs.append(' '.join(clip['cat']))
-        # Join list of string to form text blob
-        string = ' '.join(clipDocs)
+        clipObject = Clip(clip)
+        string = clipObject.getMetadataBlob()
         # Return tokens
         return self.prepareString(string)
-    
-    
-    def __loadData(self):
-        with open(self.file) as data_file:
-            self.data = json.load(data_file)['items']
     
     
     def __buildCorpus(self):
