@@ -17,22 +17,35 @@ import cv2
 
 from classes.video import Video
 from classes.caffenet import CaffeNet
+from classes.metadata import Metadata
+from classes.data import DataProvider, Clip
 
-video = Video('../data/video/2428764.mp4')
-if video is False:
-    sys.exit("Unable to read video")
-    
-frames = video.getFrames(25)
+data = DataProvider()
+clips = data.getClips()
+
+metadataModel = Metadata(clips, cache=False)
+
+clip = Clip(clips[1])
+
+vector = metadataModel.getVectorsByClip(clip.getClip())
+
+video = Video(clip.getVideoFile())
+# Video analysis
+frame = video.getFrame(25)
 
 net = CaffeNet()
 
-predictions = net.classify(frames)
+predictions = net.classify([frame])
 
-for index, prediction in enumerate(predictions):
-    top_ind = net.getTopConcepts(prediction)
-    labels = net.getLabeledConcepts(prediction, top_ind)
-    
-    print(str(index) + ': ' + labels[0][1] + '(' + str(labels[0][0]) + ')')
-        
+print len(predictions[0])
+print len(vector)
 
-raw_input("Press Enter to exit...")
+# for index, prediction in enumerate(predictions):
+#     top_ind = net.getTopConcepts(prediction)
+#     labels = net.getLabeledConcepts(prediction, top_ind)
+#
+#
+#     print(str(index) + ': ' + labels[0][1] + '(' + str(labels[0][0]) + ')')
+
+
+# raw_input("Press Enter to exit...")
