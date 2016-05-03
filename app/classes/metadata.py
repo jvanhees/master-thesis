@@ -3,6 +3,7 @@ import json
 from pprint import pprint
 from gensim import corpora, models, similarities
 from collections import defaultdict
+import numpy as np
 
 from data import DataProvider, Clip
 
@@ -37,10 +38,10 @@ class Metadata:
         self.__loadModel()
     
     
-    
     def getVectorsByClip(self, clip):
         texts = self.prepareClip(clip)
         vec_bow = self.__dictionary.doc2bow(texts)
+        
         vec_lsi = self.lsi[vec_bow] # convert the query to LSI space
         
         return vec_lsi
@@ -60,6 +61,9 @@ class Metadata:
         return self.prepareString(string)
     
     
+    def vectorsToArray(self, vectors):
+        return np.array([x[1] for x in vectors])
+    
     def __buildCorpus(self):
         if self.__dictionary == None:
             self.__loadDictionary()
@@ -73,9 +77,6 @@ class Metadata:
     
     
     def __loadCorpus(self):
-        if self.data == None:
-            self.__loadData()
-        
         # Load from file, or generate with data
         if os.path.isfile(self.__tmpLocation + 'corpus.mm') and self.cache == True:
             self.__corpus = corpora.MmCorpus(self.__tmpLocation + 'corpus.mm')
