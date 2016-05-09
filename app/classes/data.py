@@ -2,6 +2,7 @@ import json
 import csv
 import os.path
 import urllib
+import cv2
 
 class DataProvider:
     
@@ -74,6 +75,15 @@ class Clip:
         return ' '.join(self.getMetadata())
     
     
+    def getThumbnailFrame(self):
+        thumbnailUrl = self.getThumbnail()
+        
+        if thumbnailUrl:
+            return cv2.imread(thumbnailUrl, flags=cv2.IMREAD_COLOR)
+        else:
+            return False
+        
+    
     def getThumbnail(self):
         if 'thumbnail' in self.clip:
             ext = os.path.splitext(self.clip['thumbnail']['sourcepath'])[1]
@@ -82,11 +92,21 @@ class Clip:
             if os.path.isfile(fileName) == False:
                 # Does not exist, so fetch it from online
                 print "No thumbnail, fetching..."
-                thumbnail = urllib.URLopener()
-                # Gets 403 Forbidden
-                thumbnail.retrieve('https://d2vt09yn8fcn7w.cloudfront.net/' + self.clip['thumbnail']['sourcepath'], fileName)
+                self._downloadThumbnail(fileName)
             
             return self.thumbFolder + self.clipId + '.jpg'
             
         else:
+            print "No thumbnail found..."
             return False
+    
+    
+    def _downloadThumbnail(self, fileName):
+        thumbnail = urllib.URLopener()
+        # Cloudfront: Gets 403 Forbidden
+        # url = 'https://d2vt09yn8fcn7w.cloudfront.net' + self.clip['thumbnail']['sourcepath']
+        # pthumbnail:
+        url = 'http://landmark.bbvms.com/mediaclip/' + self.clipId + '/pthumbnail/default/default.jpg'
+        
+        print url
+        thumbnail.retrieve(url, fileName)
