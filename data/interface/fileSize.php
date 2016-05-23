@@ -1,5 +1,6 @@
 <?php
 $GLOBALS['defaultMediaAssetPath'] = 'https://d2vt09yn8fcn7w.cloudfront.net';
+$GLOBALS['log'] = fopen('log.txt', 'w');
 $prefix = $GLOBALS['defaultMediaAssetPath'];
 $file = file_get_contents('data.json');
 $data = json_decode($file);
@@ -15,9 +16,12 @@ foreach($data->items as $clip){
 		$size = curl_get_file_size($url);
 		$total += $size;
 
-		shellprint($i.'/'.$clipCount.': '.formatBytes($size).' ('.formatBytes($total).')');
-		
-		file_put_contents('files/'.$clip->id.'.mp4', fopen($url, 'r'));
+		if(file_exists('files/'.$clip->id.'.mp4')){
+			shellprint($i.'/'.$clipCount.': '.formatBytes($size).' ('.formatBytes($total).')');
+			file_put_contents('files/'.$clip->id.'.mp4', fopen($url, 'r'));
+		} else {
+			shellprint($i.'/'.$clipCount.': Already exists!');
+		}
 		
 	} else {
 		shellprint($i.'/'.$clipCount.': No asset found!');
@@ -31,6 +35,7 @@ foreach($data->items as $clip){
 
 shellprint('TOTAL FILESIZE = '.formatBytes($total));
 
+fclose($GLOBALS["log"]);
 
 function getSmallestAsset($assets, $width, $height){
 	if(!$assets){ return false; }
@@ -103,6 +108,7 @@ function formatBytes($bytes){
 }
 
 function shellprint($string){
+	fwrite($GLOBALS['log'], $string."\n");
     echo($string . "\n");
 }
 ?>
