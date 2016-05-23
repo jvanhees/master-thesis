@@ -58,7 +58,6 @@ class Clip:
     
     # Returns relevant metadata
     def getMetadata(self):
-        print self.clip
         ret = []
         if 'title' in self.clip:
             ret.append(self.clip['title'])
@@ -70,6 +69,14 @@ class Clip:
         return ret
     
     
+    # Returns clip title
+    def getTitle(self):
+        if 'title' in self.clip:
+            return self.clip['title']
+        else:
+            return 'n/a'
+        
+        
     # Returns relevant metadata as single text blob
     def getMetadataBlob(self):
         return ' '.join(self.getMetadata())

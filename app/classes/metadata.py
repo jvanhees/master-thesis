@@ -41,7 +41,6 @@ class Metadata:
     def getVectorsByClip(self, clip):
         texts = self.prepareClip(clip)
         vec_bow = self.__dictionary.doc2bow(texts)
-        
         vec_lsi = self.lsi[vec_bow] # convert the query to LSI space
         
         return vec_lsi
@@ -55,8 +54,7 @@ class Metadata:
     
     # Returns text string with all relevant metadata fields
     def prepareClip(self, clip):
-        clipObject = Clip(clip)
-        string = clipObject.getMetadataBlob()
+        string = clip.getMetadataBlob()
         # Return tokens
         return self.prepareString(string)
     
@@ -95,7 +93,7 @@ class Metadata:
         
         # Train LSI (Latent semantic indexing) transformation
         lsi = models.LsiModel(corpus_tfidf, id2word=self.__dictionary, num_topics=200) # initialize an LSI transformation
-        corpus_lsi = lsi[corpus_tfidf] # create a double wrapper over the original corpus: bow->tfidf->fold-in-lsi
+        #corpus_lsi = lsi[corpus_tfidf] # create a double wrapper over the original corpus: bow->tfidf->fold-in-lsi
         # Save for later use
         lsi.save(self.__tmpLocation + 'model.lsi')
         
@@ -113,7 +111,8 @@ class Metadata:
     def __createDictionary(self):
         self.documents = []
         # Create list with all clip token lists
-        for clip in self.data:
+        for c in self.data:
+            clip = Clip(c)
             self.documents.append(self.prepareClip(clip))
         
         # Calculate frequency of words
@@ -135,7 +134,9 @@ class Metadata:
     def __loadDictionary(self):
          # Load from file, or generate with data
         if os.path.isfile(self.__tmpLocation + 'dictionary.dict') and self.cache == True:
+            print 'Loading dictionary...'
             self.__dictionary = corpora.Dictionary()
             self.__dictionary.load(self.__tmpLocation + 'dictionary.dict')
         else:
+            print 'Creating dictionary...'
             self.__dictionary = self.__createDictionary()

@@ -1,0 +1,28 @@
+0. Abstract
+* 2. Introduction - Start writing
+	2.1 Problem statement
+	2.2 Previous work
+	2.3 Research questions
+3. Video thumbnails
+	3.1 Static thumbnails
+	3.2 Requirements / purpose
+4. Pipeline setup
+*	4.1 Used data
+*	4.2 Implementation (frameworks, Caffe, Gensim, SVM, etc)
+	4.3 Evaluation for supervised learning
+	4.4 Implementation
+5. User experiments
+	5.1 Internal experiments
+	5.2 User surver
+	5.3 Real-world test
+6. Results
+	6.1 Automatic evaluation results
+	6.2 User study results
+7. Conclusion
+	7.1 Summary / conclusion
+
++- 10 pages
+
+Address future work in presentation
+
+Address technology and 'work done' in presentation, merge 4.4 and 4.2 in paper

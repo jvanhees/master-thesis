@@ -1,5 +1,8 @@
 import numpy as np
 import cv2
+import warnings
+from scipy import spatial
+
 from caffenet import CaffeNet
 from video import Video
 from data import Clip
@@ -10,12 +13,13 @@ frames = 25
 # Evaluate frames for a specific clip.
 class Evaluate:
     
+    # Init caffenet for evaluation
+    net = CaffeNet()
+    
     def __init__(self, clip):
-        print "Starting evaluation for clip " + clip['id']
+        print "Starting evaluation for clip " + clip.clipId
         # Get mediaclip thumbnail image
-        self.clip = Clip(clip)
-        # Init caffenet for evaluation
-        self.net = CaffeNet()
+        self.clip = clip
         # We need thumbnail concepts
         try:
             self.thumbnailConcepts = self.getThumbnailConcepts()
@@ -23,32 +27,43 @@ class Evaluate:
             self.video = Video(self.clip.getVideoFile())
             self.noEval = False
         except:
+            print 'Unable to find thumbnail, no evaluation possible.'
             self.noEval = True
-            raise Warning('No thumbnail was found, no evaluation possible')
 
     
+    # Evaluate frames
+    # Evaluate an array of frames
+    # Returns: corrosponding array of boolean values, corrosponding array of vectors from CaffeNet
+    def eval(self, frames):
+        result = np.zeros(frames.shape[0])
+        if self.noEval:
+            return result
+    
+        vectors = self.net.classify(frames)
+        for idx, vector in enumerate(vectors):
+            # Compare mediaclip thumbnail concepts with frame concepts
+            
+            # Cosine distance
+            dist = 1 - spatial.distance.cosine(vector, self.thumbnailConcepts)
+            
+            result[idx] = dist
+        
+        return result, vectors
+        
+        
     # Evaluate a specific frame from the video
     # Returns True / False
-    # Accepts video, framenumber
+    # Accepts framenumber
     def evalFrame(self, frameNumber):
         if self.noEval:
-            raise Warning('No evaluation possible, will always return false')
+            warnings.warn('No evaluation possible, will always return false')
             return False
         
         # Get concepts for frame with caffenet
         frame = self.video.getFrame(frameNumber)
         
-        frameConcepts = self.net.classify([frame])
-        
-        # Compare mediaclip thumbnail concepts with frame concepts
-        dist = np.linalg.norm(frameConcepts[0] - self.thumbnailConcepts)
-        
-        if dist < 0.3:
-            return True
-        else:
-            return False
-        
-        # Decide True / False
+        return self.eval([frame])[0]
+    
     
     
     # Get concepts for mediaclip thumbnail image with caffenet
@@ -59,4 +74,9 @@ class Evaluate:
             frame = self.net.loadImage(thumbnail)
             return self.net.classify([frame])[0]
         else:
-            return False
+            raise Warning('No thumbnail found!')
+    
+    
+    # Returns true when we can do evaluation, false when we can not
+    def canEval(self):
+        return not self.noEval

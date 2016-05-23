@@ -11,3 +11,33 @@ curl --globoff "https://landmark.bbvms.com/api/jsearch?limit=3000&query=(status:
 https://landmark.bbvms.com/api/jsearch?limit=0&query=(status:published%20AND%20mediatype:video%20AND%20type:MediaClip%20AND%20length_int:[0%20TO%20600]%20AND%20cat:%22Irish%20Examiner%22%20AND%20-title:balltalk%20AND%20-description:balltalk%20AND%20title:[*%20TO%20*])&facetfield[]=catSort
 
 Gensim    LDA
+
+
+
+Evaluation:
+Calculate relative to other values
+
+Multiple SVMs for every features vector:
+- Early fusion: Concatenate vectors
+- Late fusion: Aggregate results from SVMs:
+	Borda count (add rankings to eachtother) - use when a decent distribution
+	Average between ranks - Use if there is a clear 'winner'
+
+Experiment with different models, evaluations, different weights between SVM rankings
+
+
+Second reader
+	- Jan van Gemert
+	- Mihir Jain
+	- Stevan Rudinac
+	- Masoud Mazloom
+
+
+Thesis:
+
+Focus on why the video thumbnail is a new topic, and different to other existing tasks (like event detection / video summarisation)
+Advantage of new task: Set own 
+
+
+Event detection:
+Compare 5 seconds parts with whole video
