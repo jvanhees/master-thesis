@@ -19,12 +19,13 @@ import getopt
 from classes.video import Video
 from classes.caffenet import CaffeNet
 from classes.metadata import Metadata
-from classes.data import DataProvider, Clip
-from classes.evaluation import Evaluate
+from classes.data import DataProvider
+from classes.clip import Clip
+from classes.concept_evaluation import ConceptEvaluation
 from pipeline import Pipeline
 
 #metadataModel = Metadata(clips, cache=False)
 
 pipeline = Pipeline()
 
-pipeline.buildModel()
+pipeline.buildEventModel()

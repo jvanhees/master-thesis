@@ -1,13 +1,23 @@
 import numpy as np
 import cv2
 import math
+import os.path
 from skimage import img_as_float
 
 frames = 25
 
 class Video:
     
-    def __init__(self, videoFile):
+    def __init__(self, videoFile, cache=None):
+        self.videoFile = videoFile
+        
+        if cache is None:
+            self.cache = True
+        else:
+            self.cache = cache
+        
+        self.__tmpLocation = 'tmp/'
+        
         self.cap = cv2.VideoCapture(videoFile)
         
         self.fps = self.cap.get(cv2.cv.CV_CAP_PROP_FPS)
@@ -25,7 +35,7 @@ class Video:
     
     def __del__(self):
         self.closeVideo()
-
+        
     
     # Returns a single frame that is prepared for caffe
     def getFrame(self, frameNumber):
@@ -35,6 +45,7 @@ class Video:
             return self.prepareForCaffe(frame)
         else:
             return False
+    
     
     # Returns an array of frames prepared for use in Caffe
     def getFrames(self, interval, start=None):

@@ -5,7 +5,8 @@ from gensim import corpora, models, similarities
 from collections import defaultdict
 import numpy as np
 
-from data import DataProvider, Clip
+from data import DataProvider
+from clip import Clip
 
 class Metadata:
     

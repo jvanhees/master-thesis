@@ -4,8 +4,10 @@ import matplotlib.pyplot as plt
 from classes.video import Video
 from classes.caffenet import CaffeNet
 from classes.metadata import Metadata
-from classes.data import DataProvider, Clip
-from classes.evaluation import Evaluate
+from classes.data import DataProvider
+from classes.clip import Clip
+from classes.concept_evaluation import ConceptEvaluation
+from classes.event_evaluation import EventEvaluation
 
 class Pipeline:
     
@@ -22,7 +24,22 @@ class Pipeline:
         self.frameInterval = interval
     
     
-    def buildModel(self, numberOfClips=None):
+    def buildEventModel(self):
+        
+        for idx, val in enumerate(self.clips):
+            
+            clip = Clip(val)
+            eventEval = EventEvaluation(clip)
+            concepts = clip.getConcepts()
+            results = eventEval.eval(concepts)
+        
+            plt.plot(results)
+            plt.title('Similarity between frames and full video: ' + clip.getTitle())
+            plt.show()
+        
+        
+    
+    def buildConceptModel(self, numberOfClips=None):
         if numberOfClips == None:
             numberOfClips = len(self.clips)
         
@@ -34,17 +51,13 @@ class Pipeline:
             # Instantiate clip
             clip = Clip(val)
             # Instantiate evaluation
-            evaluation = Evaluate(clip)
+            conceptEval = ConceptEvaluation(clip)
             # Evaluate every frame at once
-            if evaluation.canEval():
-                
-                # Load video
-                video = Video(clip.getVideoFile())
-                # Get the frame for every second in video
-                frames = video.getFrames(25)
+            if conceptEval.canEval():
+                concepts = clip.getConcepts()
                 
                 # Add the result to the results array
-                results, vectors = evaluation.eval(frames)
+                results, vectors = conceptEval.eval(concepts)
                 
                 #plt.plot(results)
                 #plt.title('Similarity between frames and thumbnail for video: ' + clip.getTitle())
@@ -62,7 +75,8 @@ class Pipeline:
                     
                 # Populate global data with items from this clip
                 allResults.extend(results)
-    
+                
+                
             if idx > numberOfClips:
                 break
             

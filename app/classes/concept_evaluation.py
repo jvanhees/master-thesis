@@ -5,41 +5,36 @@ from scipy import spatial
 
 from caffenet import CaffeNet
 from video import Video
-from data import Clip
+from clip import Clip
 
 
 frames = 25
 
 # Evaluate frames for a specific clip.
-class Evaluate:
-    
-    # Init caffenet for evaluation
-    net = CaffeNet()
+class ConceptEvaluation:
     
     def __init__(self, clip):
         print "Starting evaluation for clip " + clip.clipId
         # Get mediaclip thumbnail image
         self.clip = clip
         # We need thumbnail concepts
-        try:
-            self.thumbnailConcepts = self.getThumbnailConcepts()
-            # Load the clip into our video processor
-            self.video = Video(self.clip.getVideoFile())
-            self.noEval = False
-        except:
+        self.thumbnailConcepts = self.clip.getThumbnailConcepts()
+        
+        if self.thumbnailConcepts is False:
             print 'Unable to find thumbnail, no evaluation possible.'
             self.noEval = True
+        else:
+            self.noEval = False
 
     
     # Evaluate frames
     # Evaluate an array of frames
     # Returns: corrosponding array of boolean values, corrosponding array of vectors from CaffeNet
-    def eval(self, frames):
-        result = np.zeros(frames.shape[0])
+    def eval(self, vectors):
+        result = np.zeros(vectors.shape[0])
         if self.noEval:
             return result
     
-        vectors = self.net.classify(frames)
         for idx, vector in enumerate(vectors):
             # Compare mediaclip thumbnail concepts with frame concepts
             
@@ -48,7 +43,7 @@ class Evaluate:
             
             result[idx] = dist
         
-        return result, vectors
+        return result
         
         
     # Evaluate a specific frame from the video
@@ -65,18 +60,7 @@ class Evaluate:
         return self.eval([frame])[0]
     
     
-    
-    # Get concepts for mediaclip thumbnail image with caffenet
-    def getThumbnailConcepts(self):
-        thumbnail = self.clip.getThumbnail()
-        
-        if thumbnail != False:
-            frame = self.net.loadImage(thumbnail)
-            return self.net.classify([frame])[0]
-        else:
-            raise Warning('No thumbnail found!')
-    
-    
     # Returns true when we can do evaluation, false when we can not
     def canEval(self):
         return not self.noEval
+    
