@@ -25,12 +25,10 @@ class Video:
         self.width = self.cap.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT)
         
-        success, frame = self.cap.read()
-        if success:
+        self.success, frame = self.cap.read()
+        if self.success:
             print 'Succesfully read videofile ' + videoFile
             self.channels = frame.shape[2]
-        else:
-            raise NameError('Could not read video file ' + videoFile)
     
     
     def __del__(self):
@@ -41,16 +39,16 @@ class Video:
     def getFrame(self, frameNumber):
         self.cap.set(cv2.cv.CV_CAP_PROP_POS_FRAMES, frameNumber)
         success, frame = self.cap.read()
-        if success:
-            return self.prepareForCaffe(frame)
-        else:
-            return False
-    
+        return self.prepareForCaffe(frame)    
     
     # Returns an array of frames prepared for use in Caffe
     def getFrames(self, interval, start=None):
         if start is None:
             start = 0
+                    
+        # Return empty array if we can't read video
+        # if self.success is False:
+        #     return False
         
         # Calculate number of frames that will be returned
         it = int(math.floor(self.frames / interval))
@@ -75,3 +73,5 @@ class Video:
     
     def prepareForCaffe(self, frame):
         return cv2.cvtColor(frame, cv2.COLOR_BGR2RGB).astype('float') / 255
+    
+    

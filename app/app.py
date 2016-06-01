@@ -28,4 +28,5 @@ from pipeline import Pipeline
 
 pipeline = Pipeline()
 
-pipeline.buildEventModel()
+#pipeline.buildConceptModel()
+pipeline.buildModels()

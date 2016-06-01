@@ -30,7 +30,7 @@ class EventEvaluation:
     # Evaluate an array of frames
     # Returns: corrosponding array of boolean values, corrosponding array of vectors from CaffeNet
     def eval(self, vectors):
-        meanVector = self.getVideoVector()
+        mean = self.getMean(vectors)
         
         result = np.zeros(vectors.shape[0])
     
@@ -38,16 +38,14 @@ class EventEvaluation:
             # Compare mediaclip thumbnail concepts with frame concepts
             
             # Cosine distance
-            dist = 1 - spatial.distance.cosine(vector, meanVector)
+            dist = 1 - spatial.distance.cosine(vector, mean)
             
             result[idx] = dist
         
         return result
     
     
-    def getVideoVector(self):
-        # Get vectors
-        vectors = self.clip.getConcepts()
+    def getMean(self, vectors):
         # Calculate mean of vectors
-        result = np.mean(vectors, axis=0)
-        return result
+        mean = np.mean(vectors, axis=0)
+        return mean

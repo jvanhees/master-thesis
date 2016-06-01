@@ -15,6 +15,7 @@ class Clip:
     net = CaffeNet()
     
     def __init__(self, clip=None, vidFolder=None, thumbFolder=None):
+        
         if clip != None:
             self.clipId = clip['id']
             self.clip = clip
@@ -26,7 +27,7 @@ class Clip:
         else:
             self.vidFolder = vidFolder
         
-        if vidFolder == None:
+        if thumbFolder == None:
             self.thumbFolder = 'data/thumbnails/'
         else:
             self.thumbFolder = thumbFolder
@@ -36,7 +37,11 @@ class Clip:
         self.__tmpLocation = 'tmp/'
         
         self.cache = True
+        
     
+    def hasVideo(self):
+        self.video = Video(self.getVideoFile())
+        return self.video.success
     
     def getClip(self):
         return self.clip
@@ -51,9 +56,9 @@ class Clip:
     
     
     def getFrames(self):
-        video = Video(self.getVideoFile())
-        return video.getFrames(self.interval, self.start)
-    
+        self.video = Video(self.getVideoFile())
+        return self.video.getFrames(self.interval, self.start)
+            
     
     def getConcepts(self):
         fileName = self.__tmpLocation + self.clipId + '_' + str(self.interval) + '.concepts.npy'
@@ -118,14 +123,14 @@ class Clip:
     def getThumbnail(self):
         if 'thumbnail' in self.clip:
             ext = os.path.splitext(self.clip['thumbnail']['sourcepath'])[1]
-            fileName = self.thumbFolder + self.clipId + ext
+            fileName = str(self.thumbFolder) + str(self.clipId) + str(ext)
             
             if os.path.isfile(fileName) == False:
                 # Does not exist, so fetch it from online
                 print "No thumbnail, fetching..."
                 self._downloadThumbnail(fileName)
             
-            return self.thumbFolder + self.clipId + '.jpg'
+            return str(self.thumbFolder) + str(self.clipId) + '.jpg'
             
         else:
             print "No thumbnail found..."

@@ -31,7 +31,7 @@ class ConceptEvaluation:
     # Evaluate an array of frames
     # Returns: corrosponding array of boolean values, corrosponding array of vectors from CaffeNet
     def eval(self, vectors):
-        result = np.zeros(vectors.shape[0])
+        result = []
         if self.noEval:
             return result
     
@@ -41,7 +41,12 @@ class ConceptEvaluation:
             # Cosine distance
             dist = 1 - spatial.distance.cosine(vector, self.thumbnailConcepts)
             
-            result[idx] = dist
+            if dist > 0.5:
+                classification = 1
+            else:
+                classification = 0
+            
+            result.append(dist)
         
         return result
         

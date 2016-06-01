@@ -43,9 +43,7 @@ class Metadata:
         texts = self.prepareClip(clip)
         vec_bow = self.__dictionary.doc2bow(texts)
         vec_lsi = self.lsi[vec_bow] # convert the query to LSI space
-        
         return vec_lsi
-    
     
     def prepareString(self, document):
         # Remove words from stoplist, lowercase string and split in list of words (tokens)
