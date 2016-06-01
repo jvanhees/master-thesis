@@ -1,0 +1,64 @@
+\documentclass{../resources/acm_proc_article-sp}
+
+\usepackage{todonotes}
+\usepackage{fontspec}
+\usepackage{makeidx}
+\usepackage{rotating}
+
+\usepackage{booktabs}
+\usepackage{multirow}
+
+\usepackage[
+backend=biber,
+style=numeric,
+sorting=none
+]{biblatex}
+\addbibresource{../resources/lib.bib}
+ 
+\setmonofont{DejaVu Sans Mono}
+ 
+\pagenumbering{arabic}
+
+\begin{document}
+
+\title{Generating video thumbnails, a replacement for video preview images}
+\subtitle{Master Thesis Information Studies}
+
+\author{
+Jorick van Hees \\
+\texttt{\textbf{Blue Billywig}}\titlenote{Blue Billywig, Catharina van Renneslaan 20, 1217 CX Hilversum, The Netherlands} \\
+\texttt{jorick.vanhees@student.uva.nl} \\
+\texttt{UvA Student Nr.: 10894020} \\
+\texttt{VU Student Nr.: 2567527}
+}
+
+\maketitle
+
+\category{Computing methodologies}{Computer vision}{Video thumbnails}
+
+\section{Introduction}
+
+Thumbnail images for videos are used all over the web. They are small, static representations of videos, and provide a visual preview of the video itself. In combination with a title and description, they form one of the most common interfaces when dealing with a collection of videos. They increase the accuracy when conducting searches in video databases, improve the aesthetics of an overview page, and can increase engagement when using appealing thumbnails.
+
+News media websites often have an overview page (like a front page) that display links to articles containing a video. These links are often presented using the title, a textual description and a thumbnail from the video. This thumbnail is often the only visual reference to the video, and is used to engage the user and improve the `click-through ratio'.
+
+With the increase of broadband internet speeds and reliability (even on mobile devices), opportunities arise to use short videos as thumbnails. These video thumbnails could increase engagement and user experience compared to static thumbnails.
+
+In order to use video thumbnails in current production workflows as a replacement for static thumbnails, a similar system has to be designed for video thumbnails. In this work, we will propose a way to automatically generate a selection of video thumbnail candidates, based on event detection and concept recognition. The system is then evaluated with a user study, in which the engagement of a video thumbnail is tested against a static thumbnail variant.
+
+TODO: Specifically include research question and subquestions?
+
+TODO - Do I need to explain this in the introduction?
+Manually analysing a video in order to find a proper thumbnail is a time consuming task which an editor doesn't want to be bothered (todo: right word?) with. This is especially true when multiple videos are published each hour. To improve workflow and convenience when selecting a thumbnail, a machine can propose multiple candidates to the editor. This will save time and increases convenience. Such a workflow currently exists for static thumbnails using various algorithms.
+
+
+\subsection{Related work - TODO}
+
+Work in the field of video summarisation has a lot of common ground with the generation of video thumbnails. Both use similar data to extract the desired information from a video and its metadata, the same techniques in computer vision is used to process the data and the end result could be very similar. 
+
+One could argue that the results from video summarisation could be used in some implementations of the video thumbnails. However, the use cases in both domains are vastly different in terms of user engagement. In general, a summary tries to accurately describe the contents of the video, which eliminates the need to view the full video. In turn, the goal of the thumbnail is to engage the user to view the full video. It tries to show just enough to trigger the user to view the remaining content. The vastly different goal of the video thumbnail has such an impact, that the generation of video thumbnails deserves its own separate task.
+
+
+
+
+\end{document}
