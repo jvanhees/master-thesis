@@ -6,7 +6,7 @@ import numpy as np
 import sys
 import os.path
 
-from video import Video
+from video import VideoReader
 from caffenet import CaffeNet
 
 class Clip:
@@ -40,8 +40,8 @@ class Clip:
         
     
     def hasVideo(self):
-        self.video = Video(self.getVideoFile())
-        return self.video.success
+        self.videoReader = VideoReader(self.getVideoFile())
+        return self.videoReader.success
     
     def getClip(self):
         return self.clip
@@ -56,8 +56,8 @@ class Clip:
     
     
     def getFrames(self):
-        self.video = Video(self.getVideoFile())
-        return self.video.getFrames(self.interval, self.start)
+        self.videoReader = VideoReader(self.getVideoFile())
+        return self.videoReader.getFrames(self.interval, self.start)
             
     
     def getConcepts(self):
@@ -136,6 +136,10 @@ class Clip:
             print "No thumbnail found..."
             return False
     
+    
+    def createVideoFragment(self, startTime, length):
+        self.videoReader.createVideo(startTime, length, str(self.clipId), 'output/')
+        
     
     def setInterval(self, interval):
         self.interval = int(interval)

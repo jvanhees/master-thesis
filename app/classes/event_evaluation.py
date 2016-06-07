@@ -29,8 +29,13 @@ class EventEvaluation:
     # Evaluate frames
     # Evaluate an array of frames
     # Returns: corrosponding array of boolean values, corrosponding array of vectors from CaffeNet
+    
+    # TODO:
+    # Use frames over timespan (thus: frame n, n+1, n+2, n+3, n+4)
+    # Create a bag-of-fragments from all frames
+    # Compare normalized frame to max-pooled of entire video
     def eval(self, vectors):
-        mean = self.getMean(vectors)
+        maxVector = self.getMax(vectors)
         
         result = np.zeros(vectors.shape[0])
     
@@ -38,7 +43,7 @@ class EventEvaluation:
             # Compare mediaclip thumbnail concepts with frame concepts
             
             # Cosine distance
-            dist = 1 - spatial.distance.cosine(vector, mean)
+            dist = 1 - spatial.distance.cosine(vector, maxVector)
             
             result[idx] = dist
         
@@ -49,3 +54,9 @@ class EventEvaluation:
         # Calculate mean of vectors
         mean = np.mean(vectors, axis=0)
         return mean
+    
+    
+    def getMax(self, vectors):
+        # Calculate mean of vectors
+        maxVector = np.amax(vectors, axis=0)
+        return maxVector

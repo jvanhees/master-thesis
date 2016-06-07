@@ -31,24 +31,19 @@ class ConceptEvaluation:
     # Evaluate an array of frames
     # Returns: corrosponding array of boolean values, corrosponding array of vectors from CaffeNet
     def eval(self, vectors):
-        result = []
+        results = []
         if self.noEval:
-            return result
+            return results
     
         for idx, vector in enumerate(vectors):
             # Compare mediaclip thumbnail concepts with frame concepts
             
             # Cosine distance
-            dist = 1 - spatial.distance.cosine(vector, self.thumbnailConcepts)
+            dist = 1 - spatial.distance.cosine(vector, self.thumbnailConcepts)    
             
-            if dist > 0.5:
-                classification = 1
-            else:
-                classification = 0
-            
-            result.append(dist)
+            results.append(dist)
         
-        return result
+        return results
         
         
     # Evaluate a specific frame from the video

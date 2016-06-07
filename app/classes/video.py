@@ -6,7 +6,7 @@ from skimage import img_as_float
 
 frames = 25
 
-class Video:
+class VideoReader:
     
     def __init__(self, videoFile, cache=None):
         self.videoFile = videoFile
@@ -73,5 +73,3 @@ class Video:
     
     def prepareForCaffe(self, frame):
         return cv2.cvtColor(frame, cv2.COLOR_BGR2RGB).astype('float') / 255
-    
-    

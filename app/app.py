@@ -28,5 +28,5 @@ from pipeline import Pipeline
 
 pipeline = Pipeline()
 
-#pipeline.buildConceptModel()
-pipeline.buildModels()
+pipeline.buildConceptModel()
+#pipeline.buildModels()

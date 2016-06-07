@@ -27,6 +27,19 @@ class Pipeline:
         self.frameInterval = interval
     
     
+    def thresholdResults(self, values, thresholdPercentage):
+        threshold = np.percentile(values, (100.0 - thresholdPercentage))
+        results = []
+        # Get top 10 percent, so get values that are bigger than the 100 - 10 = 90th percentile
+        for idx, val in enumerate(values):
+            if val > threshold:
+                results.append(1)
+            else:
+                results.append(0)
+        
+        return results
+    
+    
     def buildModels(self):
         # Prepare results list
         allResults = []
@@ -101,9 +114,13 @@ class Pipeline:
                 # Add the result to the results array
                 results = conceptEval.eval(concepts)
                 
-                #plt.plot(results)
-                #plt.title('Similarity between frames and thumbnail for video: ' + clip.getTitle())
-                #plt.show()                
+                classes = self.thresholdResults(results, 10.0)
+                
+                print results;
+                plt.plot(results)
+                plt.plot(classes)
+                plt.title('Similarity between frames and thumbnail for video: ' + clip.getTitle())
+                plt.show()             
 
                 # Combine concept vectors and metadata vector
                 # We need to concatenate the metadata vector to the vectors for ALL frames
