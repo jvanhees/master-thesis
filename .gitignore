@@ -3,3 +3,4 @@ Thesis Design/Thesis voorstellen.pdf
 *.pyc
 *.mp4
 app/tmp
+app/data/thumbnails
