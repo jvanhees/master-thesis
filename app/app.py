@@ -16,17 +16,10 @@ import timeit
 import cv2
 import getopt
 
-from classes.video import Video
-from classes.caffenet import CaffeNet
-from classes.metadata import Metadata
-from classes.data import DataProvider
-from classes.clip import Clip
-from classes.concept_evaluation import ConceptEvaluation
 from pipeline import Pipeline
 
 #metadataModel = Metadata(clips, cache=False)
 
 pipeline = Pipeline()
 
-pipeline.buildConceptModel()
-#pipeline.buildModels()
+pipeline.buildModel(50)

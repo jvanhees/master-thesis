@@ -27,7 +27,6 @@ class VideoReader:
         
         self.success, frame = self.cap.read()
         if self.success:
-            print 'Succesfully read videofile ' + videoFile
             self.channels = frame.shape[2]
     
     

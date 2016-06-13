@@ -37,6 +37,7 @@ class Clip:
         self.__tmpLocation = 'tmp/'
         
         self.cache = True
+        self.concepts = None
         
     
     def hasVideo(self):
@@ -60,19 +61,26 @@ class Clip:
         return self.videoReader.getFrames(self.interval, self.start)
             
     
-    def getConcepts(self):
+    def getConcepts(self, start=None, end=None, indexes=None):        
         fileName = self.__tmpLocation + self.clipId + '_' + str(self.interval) + '.concepts.npy'
         # Check if a file with concepts with this interval already exists
-        try:
-            concepts = np.load(fileName)
-        except (IOError):
-            # No file found, so get concepts and save them
-            frames = self.getFrames()
-            concepts = self.net.classify(frames)
-            np.save(fileName, concepts)
+        if self.concepts == None:
+            try:
+                self.concepts = np.load(fileName)
+            except (IOError):
+                # No file found, so get concepts and save them
+                frames = self.getFrames()
+                self.concepts = self.net.classify(frames)
+                np.save(fileName, self.concepts)
         
-        return concepts
+        if start != None and end != None and indexes == None:
+            return self.concepts[start:end]
         
+        if indexes != None:
+            return np.take(self.concepts, indexes, axis=0)
+            
+        return self.concepts
+    
     
     # Get concepts for mediaclip thumbnail image with caffenet
     def getThumbnailConcepts(self):
@@ -127,13 +135,11 @@ class Clip:
             
             if os.path.isfile(fileName) == False:
                 # Does not exist, so fetch it from online
-                print "No thumbnail, fetching..."
                 self._downloadThumbnail(fileName)
             
             return str(self.thumbFolder) + str(self.clipId) + '.jpg'
             
         else:
-            print "No thumbnail found..."
             return False
     
     
