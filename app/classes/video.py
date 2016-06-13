@@ -63,7 +63,9 @@ class VideoReader:
         return frames
         
             
-    def showFrame(self, frame):
+    def showFrame(self, frameNumber):
+        self.cap.set(cv2.cv.CV_CAP_PROP_POS_FRAMES, frameNumber)
+        success, frame = self.cap.read()
         cv2.imshow('Frame',frame)
     
     def closeVideo(self):

@@ -5,6 +5,7 @@ import sys
 sys.dont_write_bytecode = True
 
 from sklearn import svm, grid_search, datasets
+from sklearn.externals import joblib
 
 from classes.metadata import Metadata
 from classes.data import DataProvider
@@ -26,6 +27,10 @@ class Pipeline:
         # Percentage of candidates to set correct
         self.percentile = 25.0
         
+        self.svmFile = 'tmp/svm.pkl'
+        
+        self.getMetadata()
+        
         
     def getMetadata(self):
         self.metadata = Metadata(self.clips, False)
@@ -33,11 +38,10 @@ class Pipeline:
     def setFrameInterval(self, interval):
         self.frameInterval = interval
     
-    def gatherData(self, numberOfClips):
+    def gatherData(self):
         allVectors = []
         allClasses = []
         
-        self.getMetadata()
         # Build data that we use to train SVM model
         for idx, val in enumerate(self.clips):
             
@@ -54,22 +58,7 @@ class Pipeline:
                 print logIndicator+'Unable to evaluate.'
                 continue
             
-            metadataVector = self.metadata.getVectorsByClip(clip)
-            if len(metadataVector) is 0:
-                print logIndicator+'No metadata available.'
-                continue
-            
-            metadataVectorArray = self.metadata.vectorsToArray(metadataVector)
-            
-            candidatesGen = Candidates(clip, self.kModifier)
-            
-            # Returns candidate starting frame numbers
-            candidateList = candidatesGen.get(self.fragmentLength)
-        
-            # Get average concept vector for every candidate fragment
-            concepts = np.zeros( (len(candidateList),1000) )            
-            for idx, candidateIndex in enumerate(candidateList):
-                concepts[idx] = self.getFragmentConcepts(clip, candidateIndex)
+            concepts, metadataVector = self.gatherClipData(clip)
             
             results = clipEval.eval(concepts)
             
@@ -83,42 +72,101 @@ class Pipeline:
                 
             # Populate global data with items from this clip
             allClasses.extend(classes)
-            
-            if idx > numberOfClips:
-                break
         
         vectorsArray = np.array(allVectors)
         classesArray = np.array(allClasses)
         return vectorsArray, classesArray
     
     
-    def buildModel(self, numberOfClips=None):
-        if numberOfClips == None:
-            numberOfClips = len(self.clips)
+    def gatherClipData(self, clip):
+        metadataVector = self.metadata.getVectorsByClip(clip)
+        if len(metadataVector) is 0:
+            raise NameError(logIndicator+'No metadata available.')
         
+        metadataVectorArray = self.metadata.vectorsToArray(metadataVector)
+        
+        candidatesGen = Candidates(clip, self.kModifier)
+        
+        # Returns candidate starting frame numbers
+        candidateList = candidatesGen.get(self.fragmentLength)
+        
+        # Get average concept vector for every candidate fragment
+        concepts = np.zeros( (len(candidateList),1000) )
+        for idx, candidateIndex in enumerate(candidateList):
+            concepts[idx] = self.getFragmentConcepts(clip, candidateIndex)
+            
+                
+        return concepts, metadataVectorArray, candidateList
+        
+    
+    def getData(self):
         try:
             allVectors = np.load('tmp/allVectors.npy')
             allResults = np.load('tmp/allResults.npy')
         except (IOError):
-            allVectors, allResults = self.gatherData(numberOfClips)
+            allVectors, allResults = self.gatherData()
             np.save('tmp/allVectors.npy', allVectors)
             np.save('tmp/allResults.npy', allResults)
         
+        return allVectors, allResults
+    
+    
+    def getParams(self):
+        allVectors, allResults = self.getData()        
         
         # Start building model with allVectors and allResults
         # Do a grid search to the best C and gamma for both linear and rbf kernels
-        
-        print allResults
-        
         SVM = svm.SVC(cache_size=1000)
         param_grid = [
-            {'C': [1000, 10000, 100000], 'gamma': [1, 10, 100], 'kernel': ['rbf']}, # Gaussian kernel
+            {'C': [100, 1000, 10000, 100000], 'gamma': [10, 100, 1000], 'kernel': ['rbf']}, # Gaussian kernel
         ]
         grid = grid_search.GridSearchCV(SVM, param_grid, n_jobs=-1, verbose=1, cv=10, refit=True)
         print 'Training SVM Model with '+str(len(allVectors))+' classified frames...'
         grid.fit(allVectors, allResults)
         
         print 'Best params: '+str(grid.best_params_)+' with score: '+str(grid.best_score_)
+        
+        return grid.best_params_
+    
+    
+    def buildSVM(self, params):
+        allVectors, allResults = self.getData()
+        
+        params['probability'] = True
+        params['verbose'] = True
+        
+        self.SVM = svm.SVC()
+        self.SVM.set_params(**params)
+        self.SVM.fit(allVectors, allResults)
+    
+    
+    def loadSVM(self, params):
+        try:
+            self.SVM = joblib.load(self.svmFile)
+            print 'Loading SVM'
+        except (IOError):
+            print 'Building SVM'
+            self.buildSVM(params)
+            save = joblib.dump(self.SVM, self.svmFile, compress=9)
+    
+    
+    def predict(self, clipId):
+        clip = Clip(clipId, "/Volumes/Jorick van Hees/video-data/files/")
+        if not clip.hasVideo():
+            raise NameError(logIndicator+'Clip has no video.')
+        
+        vectors = []        
+        concepts, metadataVector, candidateList = self.gatherClipData(clip)
+        for concept in concepts:
+            vectors.append(np.concatenate([concept, metadataVector]))
+        
+        vectorArray = np.array(vectors)
+        
+        #for candidate in candidateList:
+            #clip.videoReader.showFrame(candidate * self.frameInterval)
+            #raw_input("Press Enter to continue...")
+        
+        return self.SVM.decision_function(vectorArray)
     
     
     def getFragmentConcepts(self, clip, start):

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # Suppress GLOG output for python bindings
 # unless explicitly requested in environment
 import os
@@ -16,10 +18,22 @@ import timeit
 import cv2
 import getopt
 
+sys.dont_write_bytecode = True
+
 from pipeline import Pipeline
+from classes.data import DataProvider
 
 #metadataModel = Metadata(clips, cache=False)
 
 pipeline = Pipeline()
 
-pipeline.buildModel(50)
+params = pipeline.getParams()
+
+data = DataProvider()
+
+#params = {'kernel': 'rbf', 'C': 10000, 'gamma': 100}
+#print params
+
+pipeline.loadSVM(params)
+
+print pipeline.predict(data.getClip('2521541'))
