@@ -1,0 +1,32 @@
+Measure 3 things with the survey:
+
+- Engagement
+Does the (video)thumbnail improve the willingness to click on the article summary?
+
+- Appeal
+Does the (video)thumbnail improve the overal look and feel of the article summary?
+
+- Informativeness
+Does the user feel better informed over the article?
+
+
+
+A/B test with 3 possible scenarios:
+- Title + description + video placeholder (?)
+- Title + description + thumbnail
+- Title + description + videothumbnail
+
+After introduction, an article title and description is shown to the user, along with a placeholder image. After going to the next step, the following three statements are made, along with a Likert scale input:
+
+- I am interested in viewing the stated video.
+	Ik ben geïnteresseerd in het bekijken van bovenstaande video.
+- I find this preview visually appealing (?)
+	Ik vind de preview een aantrekkelijke uitstraling hebben.
+- The video preview gives me a lot of information about the video
+	Ik krijg een duidelijk beeld van wat ik kan verwachten van de video.
+
+In the next step, the same article is shown, only this time a thumbnail, or video thumbnail is included. The same three statements are made along with the same Likert scales.
+
+
+Introduction text:
+In deze gebruikerstest word er onderzoek gedaan naar previews voor videos van nieuwsartikelen. De test bestaat uit twee delen van elk twee stappen: Eerst word er een preview van een video getoont, gevolgd door een aantal statements waarbij u kan aangeven of u het hier (deels) eens of (deels) oneens mee bent. Deze test duurt ongeveer 3 minuten.
