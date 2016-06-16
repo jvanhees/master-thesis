@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import sys
 
 sys.dont_write_bytecode = True
@@ -7,11 +6,11 @@ sys.dont_write_bytecode = True
 from sklearn import svm, grid_search, datasets
 from sklearn.externals import joblib
 
-from classes.metadata import Metadata
+from classes.topics import Topics
 from classes.data import DataProvider
-from classes.clip import Clip
 from classes.evaluation import Evaluation
 from classes.candidates import Candidates
+from classes.topics import Topics
 
 class Pipeline:
     
@@ -29,11 +28,7 @@ class Pipeline:
         
         self.svmFile = 'tmp/svm.pkl'
         
-        self.getMetadata()
         
-        
-    def getMetadata(self):
-        self.metadata = Metadata(self.clips, False)
     
     def setFrameInterval(self, interval):
         self.frameInterval = interval
@@ -43,12 +38,11 @@ class Pipeline:
         allClasses = []
         
         # Build data that we use to train SVM model
-        for idx, val in enumerate(self.clips):
+        for idx, clip in enumerate(self.clips):
             
             logIndicator = '('+str(idx)+'/'+str(len(self.clips))+') '
-            print logIndicator + 'Evaluating clip '+val['id']
+            print logIndicator + 'Evaluating clip '+clip.getClipId()
             
-            clip = Clip(val, "/Volumes/Jorick van Hees/video-data/files/")
             if not clip.hasVideo():
                 print logIndicator+'Clip has no video.'
                 continue
@@ -58,17 +52,15 @@ class Pipeline:
                 print logIndicator+'Unable to evaluate.'
                 continue
             
-            concepts, metadataVector = self.gatherClipData(clip)
+            vectors = self.getClipVectors(clip)
             
-            results = clipEval.eval(concepts)
+            results = clipEval.eval(vectors)
             
             # Calculate percentile from number of candidates
             classes = self.thresholdResults(results, self.percentile)
             
-            # Combine concept vectors and metadata vector
-            # We need to concatenate the metadata vector to the vectors for ALL frames 
-            for concept in concepts:
-                allVectors.append(np.concatenate([concept, metadataVectorArray]))
+            for vector in vectors:
+                allVectors.append(vector)
                 
             # Populate global data with items from this clip
             allClasses.extend(classes)
@@ -78,13 +70,7 @@ class Pipeline:
         return vectorsArray, classesArray
     
     
-    def gatherClipData(self, clip):
-        metadataVector = self.metadata.getVectorsByClip(clip)
-        if len(metadataVector) is 0:
-            raise NameError(logIndicator+'No metadata available.')
-        
-        metadataVectorArray = self.metadata.vectorsToArray(metadataVector)
-        
+    def getClipVector(self, clip):
         candidatesGen = Candidates(clip, self.kModifier)
         
         # Returns candidate starting frame numbers
@@ -96,7 +82,7 @@ class Pipeline:
             concepts[idx] = self.getFragmentConcepts(clip, candidateIndex)
             
                 
-        return concepts, metadataVectorArray, candidateList
+        return concepts, candidateList
         
     
     def getData(self):
@@ -129,6 +115,12 @@ class Pipeline:
         return grid.best_params_
     
     
+    def createClusters(self, k):
+        self.topics = Topics()
+        
+        self.topics.createClusters(k)
+    
+    
     def buildSVM(self, params):
         allVectors, allResults = self.getData()
         
@@ -150,17 +142,16 @@ class Pipeline:
             save = joblib.dump(self.SVM, self.svmFile, compress=9)
     
     
-    def predict(self, clipId):
-        clip = Clip(clipId, "/Volumes/Jorick van Hees/video-data/files/")
+    def predict(self, clip):
         if not clip.hasVideo():
             raise NameError(logIndicator+'Clip has no video.')
         
-        vectors = []        
-        concepts, metadataVector, candidateList = self.gatherClipData(clip)
-        for concept in concepts:
-            vectors.append(np.concatenate([concept, metadataVector]))
+        allVectors = []        
+        vectors, candidateList = self.gatherClipData(clip)
+        for vector in vectors:
+            allVectors.append(vector)
         
-        vectorArray = np.array(vectors)
+        vectorArray = np.array(allVectors)
         
         #for candidate in candidateList:
             #clip.videoReader.showFrame(candidate * self.frameInterval)

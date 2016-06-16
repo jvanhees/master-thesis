@@ -15,7 +15,6 @@ class Clip:
     net = CaffeNet()
     
     def __init__(self, clip=None, vidFolder=None, thumbFolder=None):
-        
         if clip != None:
             self.clipId = clip['id']
             self.clip = clip

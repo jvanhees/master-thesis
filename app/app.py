@@ -12,10 +12,6 @@ else:
 
 import sys
 import numpy as np
-import matplotlib.pyplot as plt
-import pylab
-import timeit
-import cv2
 import getopt
 
 sys.dont_write_bytecode = True
@@ -27,13 +23,13 @@ from classes.data import DataProvider
 
 pipeline = Pipeline()
 
-params = pipeline.getParams()
+pipeline.createClusters(10)
 
-data = DataProvider()
+# params = pipeline.getParams()
 
 #params = {'kernel': 'rbf', 'C': 10000, 'gamma': 100}
 #print params
 
-pipeline.loadSVM(params)
+#pipeline.loadSVM(params)
 
-print pipeline.predict(data.getClip('2521541'))
+#print pipeline.predict(data.getClip('2521541'))
