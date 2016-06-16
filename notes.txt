@@ -45,3 +45,8 @@ Compare 5 seconds parts with whole video
 
 Jan not on Friday: 15th & 29th
 Mihir second reader: 
+
+
+13/6
+Can't seem to connect to normal UvA cluster with VPN?
+Can connect with UvA MM witouth VPN
