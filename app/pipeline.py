@@ -28,7 +28,112 @@ class Pipeline:
         
         self.svmFile = 'tmp/svm.pkl'
         
+        self.params = {'kernel': 'rbf', 'C': 10, 'gamma': 100}
+    
+    
+    def loadModels(self):
+        print 'loading'
+    
+    # Create models
+    def createTopicModels(self, k):
+        # Get topics for all clips
+        self.topics = Topics()
+        clipTopicList = self.topics.createTopics(self.clips, k)
         
+        self.topicSVMs = []
+        for topicIdx in range(k):
+            indices = np.where(clipTopicList == topicIdx)
+            topicClips = np.array(self.clips)[indices]
+            
+            vectors = []
+            classes = []
+            
+            for idx, clip in enumerate(topicClips):
+                clipEval = Evaluation(clip)
+                if not clipEval.canEval():
+                    continue
+                
+                clipVectors, candidates = self.getClipCandidateVectors(clip)
+                results = clipEval.eval(clipVectors)
+                
+                classes.extend(self.thresholdResults(results, self.percentile))
+                vectors.append(clipVectors)
+
+            vectors = np.vstack(vectors)
+            classes = np.array(classes)
+            
+            self.topicSVMs.append(self.initSVM(self.params, vectors, classes))
+        
+        return self.topicSVMs
+        
+    
+    
+    def initSVM(self, params, vectors, classes):
+        allVectors, allResults = self.getData()
+        
+        params['probability'] = True
+        params['verbose'] = True
+        
+        SVM = svm.SVC()
+        SVM.set_params(**params)
+        SVM.fit(vectors, classes)
+        
+        return SVM
+
+
+    
+    def predict(self, clip=None):
+        
+        clip = self.clips[0]
+        
+        if not clip.hasVideo():
+            raise NameError(logIndicator+'Clip has no video.')
+        
+        # Get candidates for clip
+        # Decide on topic
+        # Insert candidate data in relevant model
+        # Order prediction
+        vectors, candidateList = self.getClipCandidateVectors(clip)
+        topicIdx = self.topics.getTopic(clip)
+        
+        result = self.topicSVMs[topicIdx].decision_function(vectors)
+        
+        print result
+    
+    
+    def getFragmentConcepts(self, clip, start):
+        end = start + self.fragmentLength
+        concepts = clip.getConcepts(start, end)
+        return np.mean(concepts, axis=0)
+    
+    
+    def thresholdResults(self, values, thresholdPercentage):
+        threshold = np.percentile(values, (100.0 - thresholdPercentage))
+        results = []
+        # Get top 10 percent, so get values that are bigger than the 100 - 10 = 90th percentile
+        for idx, val in enumerate(values):
+            if val > threshold:
+                results.append(1)
+            else:
+                results.append(-1)
+        
+        return results
+    
+    
+    def getParams(self, vectors, labels):   
+        
+        # Start building model with allVectors and allResults
+        # Do a grid search to the best C and gamma for both linear and rbf kernels
+        SVM = svm.SVC(cache_size=1000)
+        param_grid = [
+            {'C': [0.1, 1, 10], 'gamma': [10, 100, 1000], 'kernel': ['rbf']}, # Gaussian kernel
+        ]
+        grid = grid_search.GridSearchCV(SVM, param_grid, n_jobs=-1, verbose=1, cv=10, refit=True)
+        print 'Training SVM Model with '+str(len(vectors))+' classified frames...'
+        grid.fit(vectors, labels)
+        print 'Best params: '+str(grid.best_params_)+' with score: '+str(grid.best_score_)
+        return grid.best_params_
+    
     
     def setFrameInterval(self, interval):
         self.frameInterval = interval
@@ -70,7 +175,7 @@ class Pipeline:
         return vectorsArray, classesArray
     
     
-    def getClipVector(self, clip):
+    def getClipCandidateVectors(self, clip):
         candidatesGen = Candidates(clip, self.kModifier)
         
         # Returns candidate starting frame numbers
@@ -95,85 +200,3 @@ class Pipeline:
             np.save('tmp/allResults.npy', allResults)
         
         return allVectors, allResults
-    
-    
-    def getParams(self):
-        allVectors, allResults = self.getData()        
-        
-        # Start building model with allVectors and allResults
-        # Do a grid search to the best C and gamma for both linear and rbf kernels
-        SVM = svm.SVC(cache_size=1000)
-        param_grid = [
-            {'C': [100, 1000, 10000, 100000], 'gamma': [10, 100, 1000], 'kernel': ['rbf']}, # Gaussian kernel
-        ]
-        grid = grid_search.GridSearchCV(SVM, param_grid, n_jobs=-1, verbose=1, cv=10, refit=True)
-        print 'Training SVM Model with '+str(len(allVectors))+' classified frames...'
-        grid.fit(allVectors, allResults)
-        
-        print 'Best params: '+str(grid.best_params_)+' with score: '+str(grid.best_score_)
-        
-        return grid.best_params_
-    
-    
-    def createClusters(self, k):
-        self.topics = Topics()
-        
-        self.topics.createClusters(k)
-    
-    
-    def buildSVM(self, params):
-        allVectors, allResults = self.getData()
-        
-        params['probability'] = True
-        params['verbose'] = True
-        
-        self.SVM = svm.SVC()
-        self.SVM.set_params(**params)
-        self.SVM.fit(allVectors, allResults)
-    
-    
-    def loadSVM(self, params):
-        try:
-            self.SVM = joblib.load(self.svmFile)
-            print 'Loading SVM'
-        except (IOError):
-            print 'Building SVM'
-            self.buildSVM(params)
-            save = joblib.dump(self.SVM, self.svmFile, compress=9)
-    
-    
-    def predict(self, clip):
-        if not clip.hasVideo():
-            raise NameError(logIndicator+'Clip has no video.')
-        
-        allVectors = []        
-        vectors, candidateList = self.gatherClipData(clip)
-        for vector in vectors:
-            allVectors.append(vector)
-        
-        vectorArray = np.array(allVectors)
-        
-        #for candidate in candidateList:
-            #clip.videoReader.showFrame(candidate * self.frameInterval)
-            #raw_input("Press Enter to continue...")
-        
-        return self.SVM.decision_function(vectorArray)
-    
-    
-    def getFragmentConcepts(self, clip, start):
-        end = start + self.fragmentLength
-        concepts = clip.getConcepts(start, end)
-        return np.mean(concepts, axis=0)
-    
-    
-    def thresholdResults(self, values, thresholdPercentage):
-        threshold = np.percentile(values, (100.0 - thresholdPercentage))
-        results = []
-        # Get top 10 percent, so get values that are bigger than the 100 - 10 = 90th percentile
-        for idx, val in enumerate(values):
-            if val > threshold:
-                results.append(1)
-            else:
-                results.append(0)
-        
-        return results

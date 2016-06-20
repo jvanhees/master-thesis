@@ -18,12 +18,25 @@ class Topics:
     def gatherData(self, t):
         clips = self.dataProvider.getClips()        
         model = self.metadata.createModel(clips, t)
-        
-        allVectors = []
+    
+    
+    def getTopic(self, clip):
+        vector = self.metadata.getVectors(clip)
+        return np.argmax(vector)
+    
+    
+    def createTopics(self, clips, k):
+        self.gatherData(k)
+        topics = []
         for idx, clip in enumerate(clips):
-            allVectors.append(self.metadata.getVectors(clip))
+            topics.append(self.getTopic(clip))
         
-        return np.vstack(allVectors)
+        self.topics = np.hstack(topics)
+        return self.topics
+    
+    
+    # ------------------------------------------------
+    # K Means on topic data...
     
     def createClusters(self, k):
         
@@ -49,9 +62,7 @@ class Topics:
         plt.xlabel('# of K')
         plt.show()
     
-    # Create K Bag of Fragments
     def clusterKMeans(self, data, k):
-        # Create BOF with K-mean
         self.kmeans = KMeans(
             n_clusters=k,
             init='k-means++',
@@ -67,7 +78,3 @@ class Topics:
         self.kmeans.fit(data);
         
         return self.kmeans.inertia_
-    
-    
-    def getCluster(self, vector):
-        print 'test'

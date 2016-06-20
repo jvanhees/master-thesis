@@ -23,13 +23,22 @@ from classes.data import DataProvider
 
 pipeline = Pipeline()
 
-pipeline.createClusters(10)
+pipeline.createTopicModels(10)
 
-# params = pipeline.getParams()
+pipeline.predict()
 
-#params = {'kernel': 'rbf', 'C': 10000, 'gamma': 100}
-#print params
-
-#pipeline.loadSVM(params)
-
-#print pipeline.predict(data.getClip('2521541'))
+# np.argwhere(x>1)
+# Pipeline is as follows:
+# Build models:
+    #
+    # Get candidates for all clips in topic
+    # Evaluate candidates for clips in topic
+    #
+    # Get candidates + results for each topic
+    # Build model with all candidates for each topics
+    
+# Predict frames:
+    # Get candidates for clip
+    # Decide on topic
+    # Insert candidate data in relevant model
+    # Order prediction

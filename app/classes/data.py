@@ -8,9 +8,9 @@ from clip import Clip
 
 class DataProvider:
 
-    datafile = 'data/clips.json'
+    datafile = 'data/clean.json'
     with open(datafile) as data_file:
-        data = json.load(data_file)['items']
+        data = json.load(data_file)
     
     def __init__(self):
         self.videoFolder = '/Volumes/Jorick van Hees/video-data/files/'
