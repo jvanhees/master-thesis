@@ -31,8 +31,24 @@ class Pipeline:
         self.params = {'kernel': 'rbf', 'C': 10, 'gamma': 100}
     
     
-    def loadModels(self):
-        print 'loading'
+    def getClips(self):
+        return self.clips
+    
+    def load(self):
+        self.topics = Topics()
+        if not self.topics.load():
+            return False
+        
+        try:
+            self.topicSVMs = np.load(self.svmFile)
+            return True
+        except (IOError):
+            return False
+    
+    
+    def save(self):
+        self.topics.save()
+        np.save(self.svmFile, self.topicSVMs)
     
     # Create models
     def createTopicModels(self, k):

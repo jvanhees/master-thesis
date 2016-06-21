@@ -23,9 +23,14 @@ from classes.data import DataProvider
 
 pipeline = Pipeline()
 
-pipeline.createTopicModels(10)
+if not pipeline.load():
+    pipeline.createTopicModels(10)
+    pipeline.save()
 
-pipeline.predict()
+clips = pipeline.getClips()
+
+for idx, clip in enumerate(clips):
+    print pipeline.predict(clip)
 
 # np.argwhere(x>1)
 # Pipeline is as follows:

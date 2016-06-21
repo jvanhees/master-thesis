@@ -11,8 +11,9 @@ from data import DataProvider
 class Topics:
     
     def __init__(self):
-        self.metadata = Metadata(False, 'lda')
+        self.metadata = Metadata(True, 'lda')
         self.dataProvider = DataProvider()
+        self.topicFile = 'tmp/topics.npy'
     
     
     def gatherData(self, t):
@@ -33,6 +34,22 @@ class Topics:
         
         self.topics = np.hstack(topics)
         return self.topics
+    
+    
+    def save(self):
+        self.metadata.save()
+        np.save(self.topicFile, self.topics)
+    
+    
+    def load(self):
+        if not self.metadata.load():
+            return False
+        
+        try:
+            self.topics = np.load(self.topicFile)
+            return True
+        except (IOError):
+            return False
     
     
     # ------------------------------------------------
