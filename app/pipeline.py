@@ -24,9 +24,9 @@ class Pipeline:
         # kModifier: BOF for every kModifier * frameInterval, thus K + 1 for each kModifier seconds
         self.kModifier = 15.0
         # Percentage of candidates to set correct
-        self.percentile = 25.0
+        self.percentile = 50.0
         
-        self.svmFile = 'tmp/svm.pkl'
+        self.svmFile = 'tmp/svm.pkl.npy'
         
         self.params = {'kernel': 'rbf', 'C': 10, 'gamma': 100}
     
@@ -85,8 +85,6 @@ class Pipeline:
     
     
     def initSVM(self, params, vectors, classes):
-        allVectors, allResults = self.getData()
-        
         params['probability'] = True
         params['verbose'] = True
         
@@ -98,10 +96,7 @@ class Pipeline:
 
 
     
-    def predict(self, clip=None):
-        
-        clip = self.clips[0]
-        
+    def predict(self, clip):
         if not clip.hasVideo():
             raise NameError(logIndicator+'Clip has no video.')
         
@@ -112,10 +107,17 @@ class Pipeline:
         vectors, candidateList = self.getClipCandidateVectors(clip)
         topicIdx = self.topics.getTopic(clip)
         
-        result = self.topicSVMs[topicIdx].decision_function(vectors)
+        result = self.topicSVMs[topicIdx].predict_proba(vectors)
         
-        print result
+        return self.probabilityToRanking(result, candidateList)
+        
     
+    def probabilityToRanking(self, scores, candidates):
+        sorted = np.sort(scores[:,1], axis=0)
+        indices = np.argsort(scores[:,1], axis=0)
+        result = candidates[indices]
+        return result[::-1], sorted[::-1]
+        
     
     def getFragmentConcepts(self, clip, start):
         end = start + self.fragmentLength
@@ -131,7 +133,7 @@ class Pipeline:
             if val > threshold:
                 results.append(1)
             else:
-                results.append(-1)
+                results.append(0)
         
         return results
     
@@ -154,43 +156,6 @@ class Pipeline:
     def setFrameInterval(self, interval):
         self.frameInterval = interval
     
-    def gatherData(self):
-        allVectors = []
-        allClasses = []
-        
-        # Build data that we use to train SVM model
-        for idx, clip in enumerate(self.clips):
-            
-            logIndicator = '('+str(idx)+'/'+str(len(self.clips))+') '
-            print logIndicator + 'Evaluating clip '+clip.getClipId()
-            
-            if not clip.hasVideo():
-                print logIndicator+'Clip has no video.'
-                continue
-            
-            clipEval = Evaluation(clip)
-            if not clipEval.canEval():
-                print logIndicator+'Unable to evaluate.'
-                continue
-            
-            vectors = self.getClipVectors(clip)
-            
-            results = clipEval.eval(vectors)
-            
-            # Calculate percentile from number of candidates
-            classes = self.thresholdResults(results, self.percentile)
-            
-            for vector in vectors:
-                allVectors.append(vector)
-                
-            # Populate global data with items from this clip
-            allClasses.extend(classes)
-        
-        vectorsArray = np.array(allVectors)
-        classesArray = np.array(allClasses)
-        return vectorsArray, classesArray
-    
-    
     def getClipCandidateVectors(self, clip):
         candidatesGen = Candidates(clip, self.kModifier)
         
@@ -204,15 +169,3 @@ class Pipeline:
             
                 
         return concepts, candidateList
-        
-    
-    def getData(self):
-        try:
-            allVectors = np.load('tmp/allVectors.npy')
-            allResults = np.load('tmp/allResults.npy')
-        except (IOError):
-            allVectors, allResults = self.gatherData()
-            np.save('tmp/allVectors.npy', allVectors)
-            np.save('tmp/allResults.npy', allResults)
-        
-        return allVectors, allResults

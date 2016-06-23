@@ -24,6 +24,7 @@ class VideoReader:
         self.frames = self.cap.get(cv2.cv.CV_CAP_PROP_FRAME_COUNT)
         self.width = self.cap.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT)
+        self.length = self.cap.get(cv2.cv.CV_CAP_PROP_FRAME_COUNT)
         
         self.success, frame = self.cap.read()
         if self.success:
@@ -32,13 +33,31 @@ class VideoReader:
     
     def __del__(self):
         self.closeVideo()
+    
+    # returns a numpy array of all frames in the video
+    def getVideoFrames(self):
+        self.cap.set(cv2.cv.CV_CAP_PROP_POS_FRAMES, 0)
+        frames = []
+        while(self.cap.isOpened()):
+            success, frame = self.cap.read()
+            if success==True:
+                frames.append(frame)
+            else:
+                break
         
+        self.cap.release()
+        return np.array(frames)
+    
+    # Returns a single frame
+    def getVideoFrame(self, frameNumber):
+        self.cap.set(cv2.cv.CV_CAP_PROP_POS_FRAMES, frameNumber)
+        success, frame = self.cap.read()
+        return frame
     
     # Returns a single frame that is prepared for caffe
     def getFrame(self, frameNumber):
-        self.cap.set(cv2.cv.CV_CAP_PROP_POS_FRAMES, frameNumber)
-        success, frame = self.cap.read()
-        return self.prepareForCaffe(frame)    
+        frame = self.getVideoFrame(frameNumber)
+        return self.prepareForCaffe(frame)
     
     # Returns an array of frames prepared for use in Caffe
     def getFrames(self, interval, start=None):

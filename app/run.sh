@@ -4,5 +4,5 @@
 #$ -cwd
 
 echo "Start - `date`"
-python app.py 
+python model.py
 echo "Finish - `date`"

@@ -1,0 +1,59 @@
+.container {
+	max-width: 600px;
+}
+
+.progress {
+	margin: 0 0 20px;
+}
+
+.article-preview {
+	width: 100%;
+	max-width: 400px;
+	margin: 20px auto 40px;
+	cursor: pointer !important;
+}
+.article-preview .bb-media {
+	cursor: pointer !important;
+}
+
+.article-preview .card-image {
+	position: relative;
+}
+.article-preview .card-image::before {
+	content: " ";
+	display: block;
+	width: 100%;
+	padding-bottom: 56.25%;
+}
+.article-preview .card-image > div {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.article-preview .card-image .card-title {
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 1);
+	width: 100%;
+	
+}
+
+.likert label {
+	margin-right: 50px;
+}
+
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+.main {
+	flex: 1 0 auto;
+}
+
+.page-footer .logo {
+	max-height: 30px;
+	max-width: 100%;
+}

@@ -61,7 +61,7 @@ class Clip:
             
     
     def getConcepts(self, start=None, end=None, indexes=None):
-        fileName = self.__tmpLocation + self.clipId + '_' + str(self.interval) + '.concepts.npy'
+        fileName = self.__tmpLocation + 'concepts/' + self.clipId + '_' + str(self.interval) + '.concepts.npy'
         # Check if a file with concepts with this interval already exists
         if self.concepts == None:
             try:
@@ -140,10 +140,6 @@ class Clip:
             
         else:
             return False
-    
-    
-    def createVideoFragment(self, startTime, length):
-        self.videoReader.createVideo(startTime, length, str(self.clipId), 'output/')
         
     
     def setInterval(self, interval):

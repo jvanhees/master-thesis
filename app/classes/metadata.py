@@ -46,7 +46,7 @@ class Metadata:
         
         self.__dictionary = corpora.Dictionary.load(self.__tmpLocation + 'dictionary.dict')
         self.__corpus = corpora.MmCorpus(self.__tmpLocation + 'corpus.mm')
-        LdaModel.load(self.__tmpLocation + 'model.lda', mmap='r')
+        self.model = models.ldamodel.LdaModel.load(self.__tmpLocation + 'model.lda', mmap='r')
         return True
         
     
