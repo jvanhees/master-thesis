@@ -51,10 +51,10 @@ class Pipeline:
         np.save(self.svmFile, self.topicSVMs)
     
     # Create models
-    def createTopicModels(self, k):
+    def createTopicModels(self, t, k):
         # Get topics for all clips
         self.topics = Topics()
-        clipTopicList = self.topics.createTopics(self.clips, k)
+        clipTopicList = self.topics.createTopics(self.clips, t, k)
         
         self.topicSVMs = []
         for topicIdx in range(k):

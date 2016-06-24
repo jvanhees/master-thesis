@@ -25,7 +25,7 @@ from classes.videoWriter import VideoWriter
 pipeline = Pipeline()
 
 if not pipeline.load():
-    pipeline.createTopicModels(10)
+    pipeline.createTopicModels(25, 10)
     pipeline.save()
 
 clips = pipeline.getClips()

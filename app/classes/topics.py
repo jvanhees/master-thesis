@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from sklearn.externals import joblib
 
 from sklearn.cluster import KMeans
 from sklearn.cluster import SpectralClustering
@@ -14,31 +15,38 @@ class Topics:
         self.metadata = Metadata(True, 'lda')
         self.dataProvider = DataProvider()
         self.topicFile = 'tmp/topics.npy'
+        self.kMeansFile = 'tmp/kmeans.pkl'
     
     
     def gatherData(self, t):
-        clips = self.dataProvider.getClips()        
-        model = self.metadata.createModel(clips, t)
+        self.clips = self.dataProvider.getClips()        
+        self.model = self.metadata.createModel(self.clips, t)
     
     
     def getTopic(self, clip):
         vector = self.metadata.getVectors(clip)
-        return np.argmax(vector)
+        result = self.kmeans.predict(vector)
+        return result
+        # return np.argmax(vector)
     
     
-    def createTopics(self, clips, k):
-        self.gatherData(k)
+    def createTopics(self, clips, t, k):
+        self.gatherData(t)
+        self.createClusters(clips, k)
+        
         topics = []
         for idx, clip in enumerate(clips):
             topics.append(self.getTopic(clip))
         
         self.topics = np.hstack(topics)
+        print self.topics
         return self.topics
     
     
     def save(self):
         self.metadata.save()
         np.save(self.topicFile, self.topics)
+        joblib.dump(self.kmeans, self.kMeansFile) 
     
     
     def load(self):
@@ -47,6 +55,7 @@ class Topics:
         
         try:
             self.topics = np.load(self.topicFile)
+            self.kmeans = joblib.load(self.kMeansFile) 
             return True
         except (IOError):
             return False
@@ -55,29 +64,15 @@ class Topics:
     # ------------------------------------------------
     # K Means on topic data...
     
-    def createClusters(self, k):
+    def createClusters(self, clips, k):
+        vectors = []
+        for idx, clip in enumerate(clips):
+            vectors.append(self.metadata.getVectors(clip))
         
-        topicResults = []
-        for t in [3, 5, 10, 20]:
-            results = []
-            vectors = self.gatherData(t)
-            
-            kArray = range(2, 30)
-            for k in kArray:
-                print '('+str(t)+') Clustering with K = '+str(k)
-                results.append(self.clusterKMeans(vectors, k))
-            
-            topicResults.append(results)
-            
-        topicResults = np.vstack(topicResults)
-        normalize(topicResults, norm='l1', axis=1, copy=False)
+        self.vectors = np.vstack(vectors)
         
-        for idx, topic in enumerate(topicResults):
-            plt.plot(topic)
+        self.clusterKMeans(self.vectors, k)
         
-        plt.ylabel('Normalised K-Means inertia')
-        plt.xlabel('# of K')
-        plt.show()
     
     def clusterKMeans(self, data, k):
         self.kmeans = KMeans(
