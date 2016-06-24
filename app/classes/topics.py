@@ -15,7 +15,7 @@ class Topics:
         self.metadata = Metadata(True, 'lda')
         self.dataProvider = DataProvider()
         self.topicFile = 'tmp/topics.npy'
-        self.kMeansFile = 'tmp/kmeans.pkl'
+        self.kMeansFile = 'tmp/kmeans.pkl.npy'
     
     
     def gatherData(self, t):
@@ -25,7 +25,7 @@ class Topics:
     
     def getTopic(self, clip):
         vector = self.metadata.getVectors(clip)
-        result = self.kmeans.predict(vector)
+        result = self.kmeans.predict(vector.reshape(1, -1))
         return result
         # return np.argmax(vector)
     

@@ -37,12 +37,13 @@ class Pipeline:
     def load(self):
         self.topics = Topics()
         if not self.topics.load():
+            print 'Topics not loaded.'
             return False
-        
         try:
             self.topicSVMs = np.load(self.svmFile)
             return True
         except (IOError):
+            print 'SVM not loaded.'
             return False
     
     
@@ -98,7 +99,7 @@ class Pipeline:
     
     def predict(self, clip):
         if not clip.hasVideo():
-            raise NameError(logIndicator+'Clip has no video.')
+            raise NameError('Clip has no video.')
         
         # Get candidates for clip
         # Decide on topic

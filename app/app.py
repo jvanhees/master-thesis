@@ -3,6 +3,7 @@
 # Suppress GLOG output for python bindings
 # unless explicitly requested in environment
 import os
+
 if 'GLOG_minloglevel' not in os.environ:
     # Hide INFO and WARNING, show ERROR and FATAL
     os.environ['GLOG_minloglevel'] = '2'
@@ -12,7 +13,7 @@ else:
 
 import sys
 import numpy as np
-import getopt
+import argparse
 
 sys.dont_write_bytecode = True
 
@@ -22,6 +23,11 @@ from classes.videoWriter import VideoWriter
 
 #metadataModel = Metadata(clips, cache=False)
 
+parser = argparse.ArgumentParser()
+parser.add_argument('-s', '--start')
+parser.add_argument('-e', '--end')
+args = parser.parse_args()
+
 pipeline = Pipeline()
 
 if not pipeline.load():
@@ -30,10 +36,25 @@ if not pipeline.load():
 
 clips = pipeline.getClips()
 
-for idx, clip in enumerate(clips):
+if args.start == None:
+    start = 0
+else:
+    start = int(args.start)
+
+if args.end == None:
+    end = len(clips) - 1
+else:
+    end = args.end
+
+print start, end
+
+for idx, clip in enumerate(clips[start:end]):
     print clip.getClipId(), 'Getting prediction'
-    result, scores = pipeline.predict(clip)
-    
+    try:
+        result, scores = pipeline.predict(clip)
+    except NameError:
+        continue
+        
     print clip.getClipId(), 'Writing video thumbnail ('+ str(result[0]) +')'
     videoWriter = VideoWriter(clip, 'output/')
     filename = clip.getClipId() + '('+ str(scores[0]) +')'
