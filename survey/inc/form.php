@@ -29,19 +29,19 @@ function likert($group){
 ?>
 
 
-<form action="process.php" method="post">
+<form action="/process.php" method="post">
 	<input style="display: none;" name="formtype" value="<?php echo $formType; ?>">
 	<input style="display: none;" name="item" value="<?php echo $item; ?>">
 	<p><strong>Door bovenstaande preview ben ik geïnteresseerd in het bekijken van het nieuwsartikel.</strong></p>
 	
-	<?=likert('interest')?>
+	<?=likert('engagement')?>
 	
 	<p><strong>Door bovenstaande preview krijg ik een duidelijk beeld van wat ik van het nieuwsartikel kan verwachten.</strong></p>
 	
-	<?=likert('expectation')?>
+	<?=likert('information')?>
 	
 	<p>
-		<?php echo next_button('?p=2', 'Volgende'); ?>
+		<?php echo next_button(); ?>
 	</p>
 </form>
 

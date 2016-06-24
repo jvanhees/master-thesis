@@ -3,6 +3,8 @@
 <head>
 	<title>News article user survey</title>
 	
+	<meta charset="UTF-8">
+	
 	<!--Import Google Icon Font-->
 	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	
@@ -26,7 +28,7 @@
 		</div>
 	</nav>
 	<div class="progress blue-grey lighten-4">
-		<div class="determinate blue-grey darken-2" style="width: <?=$p * 33.33 ?>%"></div>
+		<div class="determinate blue-grey darken-2" style="width: <?=$p * (100 / $totalPages) ?>%"></div>
 	</div>
 	<div class="container main">
 		<span class="badge"><?php echo $p; ?> / <?php echo $totalPages; ?></span>

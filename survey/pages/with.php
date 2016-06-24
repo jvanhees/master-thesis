@@ -2,7 +2,7 @@
 $formType = 'with';
 ?>
 
-<h4>Voorbeeld 2</h4>
+<h4>Artikel <?=$item?>, preview 2</h4>
 
 <?php include('inc/card.php'); ?>
 

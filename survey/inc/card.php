@@ -26,7 +26,7 @@ if($page == 'without'){
 		<div class="card-image">
 			<div>
 				<?php if($_SESSION['thumbnail'] == 'static'){ ?>
-				<img src="resources/img/<?=$clip?>.jpeg">
+				<img src="/resources/img/<?=$clip?>.jpeg">
 				<?php } else { ?>
 				<script type="text/javascript" src="//jorick.bbvms.com/p/survey_thumbnail/c/<?=$videoId?>.js"></script>
 				<?php } ?>

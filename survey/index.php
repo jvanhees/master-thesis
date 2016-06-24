@@ -2,10 +2,16 @@
 include('inc/functions.php');
 session_start();
 
-if(isset($_GET['p'])){
-	$p = $_GET['p'];
+if(isset($_GET['page'])){
+	$p = $_GET['page'];
 } else {
 	$p = 0;
+	$_SESSION['page'] = 0;
+}
+
+if($_SESSION['page'] != $p && $p != 1){
+	Redirect('/');
+	die();
 }
 
 if($p == 1 || $p == 2){

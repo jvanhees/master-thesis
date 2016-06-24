@@ -1,7 +1,7 @@
 <?php
 $formType = 'without';
 ?>
-<h4>Voorbeeld 1</h4>
+<h4>Artikel <?=$item?>, preview 1</h4>
 
 <?php include('inc/card.php'); ?>
 
