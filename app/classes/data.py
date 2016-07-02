@@ -18,7 +18,7 @@ class DataProvider:
     
     def getClip(self, clipId):
         for clip in self.data:
-            if clip['id'] == clipId:
+            if int(clip['id']) == int(clipId):
                 return Clip(clip, self.videoFolder)
         
         return False

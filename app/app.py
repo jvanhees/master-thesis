@@ -29,6 +29,7 @@ parser.add_argument('-e', '--end')
 args = parser.parse_args()
 
 pipeline = Pipeline()
+data = DataProvider()
 
 if not pipeline.load():
     pipeline.createTopicModels(25, 10)
@@ -48,13 +49,19 @@ else:
 
 print start, end
 
-for idx, clip in enumerate(clips[start:end]):
-    print clip.getClipId(), 'Getting prediction'
-    try:
-        result, scores = pipeline.predict(clip)
-    except NameError:
+clips = [2551267, 2653625, 2486497, 2465955, 2526352, 2553815, 2560692, 2547450, 2516436]
+
+
+for idx, clipId in enumerate(clips):
+    clip = data.getClip(clipId)
+    
+    if clip == False:
         continue
-        
+
+    print clip.getClipId(), 'Getting prediction'
+    
+    result, scores = pipeline.predict(clip)
+    
     print clip.getClipId(), 'Writing video thumbnail ('+ str(result[0]) +')'
     videoWriter = VideoWriter(clip, 'output/')
     filename = clip.getClipId() + '('+ str(scores[0]) +')'
