@@ -28,15 +28,22 @@ function likert($group){
 	
 ?>
 
-
+<?php
+if(isset($_SESSION['message']) && $_SESSION['message'] != ''){
+	?>
+	<blockquote class="message deep-orange-text"><p><?=$_SESSION['message']?></p></blockquote>
+	<?php
+}
+	
+?>
 <form action="/process.php" method="post">
 	<input style="display: none;" name="formtype" value="<?php echo $formType; ?>">
 	<input style="display: none;" name="item" value="<?php echo $item; ?>">
-	<p><strong>Door bovenstaande preview ben ik geïnteresseerd in het bekijken van het nieuwsartikel.</strong></p>
+	<p><strong>Door bovenstaande preview ben ik geïnteresseerd in het bekijken van de video.</strong></p>
 	
 	<?=likert('engagement')?>
 	
-	<p><strong>Door bovenstaande preview krijg ik een duidelijk beeld van wat ik van het nieuwsartikel kan verwachten.</strong></p>
+	<p><strong>Door bovenstaande preview krijg ik een duidelijk beeld van wat ik van de video kan verwachten.</strong></p>
 	
 	<?=likert('information')?>
 	

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-	<title>News article user survey</title>
+	<title>Onderzoek naar previews van videos</title>
 	
 	<meta charset="UTF-8">
 	
@@ -20,11 +20,7 @@
 	<script type="text/javascript" src="js/materialize.min.js"></script>
 	<nav class="white-text blue-grey">
 		<div class="nav-wrapper container">
-			<a href="/" class="title">Onderzoek naar previews van nieuwsartikelen</a>
-			
-			<ul id="nav-mobile" class="right">
-				<li><a href="#!" class="link">Over</a></li>
-			</ul>
+			<span class="title">Onderzoek naar previews van videos</span>
 		</div>
 	</nav>
 	<div class="progress blue-grey lighten-4">

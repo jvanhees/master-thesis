@@ -1,6 +1,6 @@
 <?php
 session_unset();
-include('connect.php');
+include('../connect.php');
 
 $sql = "SELECT imagetype AS id, COUNT(imagetype) AS count FROM sessions GROUP BY imagetype ORDER BY count DESC LIMIT 1";
 
@@ -19,6 +19,7 @@ if(!$result = $db->query($sql)){
 		$_SESSION['imagetype'] = 'static';
 	}
 }
+echo $_SESSION['imagetype'];
 ?>
 
 <h4>Introductie</h4>

@@ -8,7 +8,7 @@ $formType = 'with';
 
 <hr />
 
-<p>Naar aanleiding van bovenstaande preview van een nieuwsartikel, geef aan of je het eens of oneens bent met onderstaande stellingen:</p>
+<p>Naar aanleiding van bovenstaande preview van een video, geef aan of je het eens of oneens bent met onderstaande stellingen:</p>
 <?php
 include('inc/form.php');
 ?>

@@ -1,4 +1,4 @@
-<h3>Klaar!</h3>
+<h3>Bedankt!</h3>
 <p>Het onderzoek is afgerond, bedankt voor uw deelname.</p>
 
 <h5>Meer informatie</h5>

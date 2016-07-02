@@ -18,10 +18,20 @@ if(!isset($_SESSION['id'])){
 	}
 }
 
+if(!isset($_SESSION['page'])){
+	$_SESSION['page'] = 1;
+}
+
 $formtype = $db->escape_string($_POST['formtype']);
 $item = $db->escape_string($_POST['item']);
 $engagement = $db->escape_string($_POST['engagement']);
 $information = $db->escape_string($_POST['information']);
+
+if($engagement == '' || $information == ''){
+	$_SESSION['message'] = "Niet alle vragen zijn ingevuld.";
+	Redirect('/'.$_SESSION['page']);
+	die();
+}
 
 // If without image, create a new entry
 if($formtype == 'without'){
