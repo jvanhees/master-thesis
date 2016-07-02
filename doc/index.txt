@@ -11,10 +11,10 @@
 *	4.2 Implementation (frameworks, Caffe, Gensim, SVM, etc)
 	4.3 Evaluation for supervised learning
 	4.4 Implementation
-5. User experiments
-	5.1 Internal experiments
-	5.2 User surver
-	5.3 Real-world test
+5. User experiment
+	5.1 Introduction
+	5.2 Test setup
+	5.3 Responses
 6. Results
 	6.1 Automatic evaluation results
 	6.2 User study results
