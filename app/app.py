@@ -14,6 +14,7 @@ else:
 import sys
 import numpy as np
 import argparse
+import matplotlib.pyplot as plt
 
 sys.dont_write_bytecode = True
 
@@ -31,23 +32,21 @@ args = parser.parse_args()
 pipeline = Pipeline()
 data = DataProvider()
 
-if not pipeline.load():
-    pipeline.createTopicModels(25, 10)
-    pipeline.save()
+# if not pipeline.load():
+#     pipeline.createTopicModels(25, 10)
+#     pipeline.save()
 
-clips = pipeline.getClips()
+# T = 25
+# K = 10
 
-if args.start == None:
-    start = 0
-else:
-    start = int(args.start)
+scores = []
 
-if args.end == None:
-    end = len(clips) - 1
-else:
-    end = args.end
+scores.append(pipeline.createTopicModels(25, 10))
 
-print start, end
+plt.plot(scores)
+plt.show()
+
+
 
 clips = [2551267, 2653625, 2486497, 2465955, 2526352, 2553815, 2560692, 2547450, 2516436]
 

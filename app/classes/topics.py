@@ -39,7 +39,7 @@ class Topics:
             topics.append(self.getTopic(clip))
         
         self.topics = np.hstack(topics)
-        print self.topics
+        
         return self.topics
     
     

@@ -30,10 +30,6 @@ class EventEvaluation:
     # Evaluate an array of frames
     # Returns: corrosponding array of boolean values, corrosponding array of vectors from CaffeNet
     
-    # TODO:
-    # Use frames over timespan (thus: frame n, n+1, n+2, n+3, n+4)
-    # Create a bag-of-fragments from all frames
-    # Compare normalized frame to max-pooled of entire video
     def eval(self, vectors):
         maxVector = self.getMax(vectors)
         

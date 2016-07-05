@@ -29,6 +29,8 @@ class Pipeline:
         self.svmFile = 'tmp/svm.pkl.npy'
         
         self.params = {'kernel': 'rbf', 'C': 10, 'gamma': 100}
+        
+        self.scores = []
     
     
     def getClips(self):
@@ -81,17 +83,21 @@ class Pipeline:
             
             self.topicSVMs.append(self.initSVM(self.params, vectors, classes))
         
-        return self.topicSVMs
+        return self.scores
         
     
     
     def initSVM(self, params, vectors, classes):
         params['probability'] = True
-        params['verbose'] = True
+        params['verbose'] = False
         
         SVM = svm.SVC()
         SVM.set_params(**params)
         SVM.fit(vectors, classes)
+        
+        score = SVM.score(vectors, classes)
+        
+        self.scores.append(np.mean(score))
         
         return SVM
 
@@ -151,7 +157,7 @@ class Pipeline:
         print 'Training SVM Model with '+str(len(vectors))+' classified frames...'
         grid.fit(vectors, labels)
         print 'Best params: '+str(grid.best_params_)+' with score: '+str(grid.best_score_)
-        return grid.best_params_
+        return grid.best_params_, grid.best_score
     
     
     def setFrameInterval(self, interval):
