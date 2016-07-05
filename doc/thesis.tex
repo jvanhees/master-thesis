@@ -37,7 +37,11 @@ Jorick van Hees \\
 
 \category{Computing methodologies}{Computer vision}{Video thumbnails}
 
+\todo[inline]{Abstract}
+
 \section{Introduction}
+
+\todo[inline]{Rewrite with feedback}
 
 Thumbnail images for videos are used all over the web. They are small, static representations of videos, and provide a visual preview of the video itself. In combination with a title and description, they form one of the most common interfaces when dealing with a collection of videos. They increase the accuracy when conducting searches in video databases, improve the aesthetics of an overview page, and can increase engagement when using appealing thumbnails.
 
@@ -50,6 +54,7 @@ In order to use video thumbnails in current production workflows as a replacemen
 \todo[inline]{Specifically include research question and subquestions?}
 
 \todo[inline]{Do I need to explain this in the introduction?}
+
 Manually analysing a video in order to find a proper thumbnail is a time consuming task which an editor doesn't want to be bothered (todo: right word?) with. This is especially true when multiple videos are published each hour. To improve workflow and convenience when selecting a thumbnail, a machine can propose multiple candidates to the editor. This will save time and increases convenience. Such a workflow currently exists for static thumbnails using various algorithms.
 
 
@@ -65,23 +70,39 @@ One could argue that the results from video summarisation could be used in some 
 Existing systems for video event detection based on the TRECVID Media Event Detection Task often use the provided training data. In our system, no training data is available. However, we can use a number of techniques in order to extract the most characteristic frames from the video.
 
 \section{Dataset}
-(todo)
 
+\todo[inline]{Dataset source}
+\label{dataset}
+
+The dataset that is used in the system is retrieved from an online Irish newspaper publisher. The websites that publishes the videos reports news articles on a broad number of domains like world news, sports, business, life and local news. The videos are often published alongside an article that could be categorised in any domain. The dataset, however, does not contain any references to the related articles or domains.
+
+The videos in the dataset are accompanied by metadata in the form of a title, description and an unspecified number of (free-form) tags. This (editor created) metadata is primarily used for search engine optimisation and does not contain any structure other than the three values specified. Since these values are created by a professional news editor, we can assume that the data in these fields are a good representation of the content (in the eyes of the editor?).
+
+Another resource in the dataset is an image that is selected from the video by an editor of the news publisher to use as a thumbnail. This thumbnail is often used as an image to visually promote the video on the website, and is used as a static image before the video begins playing. The video platform from which the dataset was acquired, automatically selects a frame in the video on a fixed time to use as thumbnail. An editor has the ability to select a different image, by choosing a frame from the video, or uploading a custom image.
+
+\todo[inline]{Perhaps to fuzzy written?}
+We cannot assume that the automatically generated thumbnail is a good representation of the video: The thumbnail wasn't used because the video always automatically started playing, or the editors didn't think the thumbnail was important enough for that specific video. This means that we only treat the manually selected thumbnails as relevant data for our system. The advantage of this filtering is that we can use the contents of the available thumbnails as ground-truth for our data, since those thumbnails are picked for the specific purpose of the thumbnail.
+
+\todo[inline]{Insert table data}
+The number of videos which contain a ground-truth thumbnail is displayed in table . 
+
+\todo[inline]{Dataset statistics / analysis}
 
 \section{Generating video thumbnails}
 \label{system description}
 \todo[inline]{good vs bad / positive vs negative samples?}
-The main body of this paper consists of the design of a system that is able to generate video thumbnails, based on metadata, an editor-selected static thumbnails and the video itself. The system can be divided into four major stages: Candidate selection, candidate evaluation and topic-based model training. In the first stage, a number of moments in the video are selected and labeled as candidates. In the second stage, candidates are labeled with a ground truth value (?) based on their similarity to the editor-selected thumbnail. In the third stage, we cluster all videos in the dataset based on topics derived from their metadata. In the fourth and final stage, an SVM is trained for each cluster using the labeled candidates from each video in that cluster.
+The main body of this paper consists of the design of a system that is able to generate video thumbnails, based on metadata, an editor-selected static thumbnails and the video itself. The system can be divided into five major stages: Feature extraction, candidate selection, candidate evaluation and topic-based model training. In the first stage, a number of moments in the video are selected and labeled as candidates. In the second stage, candidates are labeled with a ground truth value (?) based on their similarity to the editor-selected thumbnail. In the third stage, we cluster all videos in the dataset based on topics derived from their metadata. In the fourth and final stage, an SVM is trained for each cluster using the labeled candidates from each video in that cluster.
 
 
+\subsection{Feature extraction}
+\label{feature extraction}
+Features from the video are extracted from individual frames with 1 frame per second using a convolutional neural network, trained on the ImageNet dataset \cite{Krizhevsky:2012wl} using CaffeNet \cite{Jia:2014cm}. The result is a high-level sparse feature representation of the frame with 1000 dimensions. This representation is used throughout the system as a representation of the frame. This method of extracting features proves to be very effective compared to low-level feature extraction for event-detection \cite{Habibian:2013ks, Althoff:2012gf} and object recognition.
+\todo[inline]{References to object detection.}
 
 \subsection{Candidate selection}
 \label{candidate selection}
 
 Instead of evaluating all possible frames in a video using a sliding window, a number of candidates are selected from the video. The selection algorithm is inspired by the bag-of-fragments as described in \cite{Mettes:2015vg}. \todo[inline]{More intro}
-
-Features from the video are extracted from individual frames with 1 frame per second using a convolutional neural network, trained on the ImageNet dataset \cite{Krizhevsky:2012wl} using CaffeNet \cite{Jia:2014cm}. The result is a high-level sparse feature representation of the frame with 1000 dimensions. This representation is used throughout the system as a representation of the frame. This method of extracting features proves to be very effective compared to low-level feature extraction for event-detection \cite{Habibian:2013ks, Althoff:2012gf} and object recognition.
-\todo[inline]{References to object detection.}
 
 \todo[inline]{better explanation of slinding window}
 A comprehensive list of video thumbnail candidates is generated using a brute-force sliding window method. The video frames in the window are max-pooled into a vector representation to catch every concept in the video thumbnail. In order to prune the list of candidates, the video thumbnail is compared to a bag-of-fragments representation of the full video. The bag-of-fragments are created with the features extracted from all frames, clustered using K-means. The number K is calculated using the length of the video $K = \frac{frames}{20 * fps}$. The similarity between the video thumbnail and each bag-of-fragments is measured using cosine similarity. The resulting similarity vector (with K dimensions) is then normalised, to prioritise the most representing video thumbnail for each bag-of-fragments. Finally, a ranking is made for each bag-of-fragments where the top result in each ranking is selected as thumbnail candidate.
@@ -97,28 +118,33 @@ The resulting list of candidates is ranked based on the human-selected static th
 Since the resulting similarity values are very diverse across the dataset, a top N \% percentile selection is used to determine positive (+1) and negative (-1) values which can later be used to train the SVM models. The N is selected based on the graph in figure (insert figure).
 \todo[inline]{Graph about N percentile in candidate evaluation}
 
-\subsection{Topic clustering}
-
+\subsection{Topic clustering using metadata}
+\label{topic clustering}
 % Data gathering and processing
 
 % Topic clustering using kmeans
 
 % Selecting K
+As described in section \ref{dataset}, the videos in the dataset are not limited to a single domain and manually selected thumbnails vary in contents throughout the whole dataset. In order to improve the accuracy of the system and provide a better prediction of positive video thumbnails, the dataset is clustered into specific topics using the metadata available. Since specific topic categorisation is not available, and the tags available in the metadata are not discriminative, a 
 
-Since the tags available in the metadata are not discriminative and mainly used for web search engine optimisation, it is not possible to categorise the videos based on these tags. Instead, the videos are clustered using all available metadata. The title, description and tags are concatenated and a stoplist is used to remove regular words. A bag-of-words corpus is formed with the resulting documents, which is used to create a latent Dirichlet allocation model.
+. In order to categorise our videos and avoid a \textit{one size fits all} approach, the videos are clustered using available textual metadata. The title, description and tags are concatenated and a stoplist is used to remove regular words. A bag-of-words corpus is formed with the resulting documents, which is used to create a latent Dirichlet allocation model.
 
 With the LDA model, a sparse vector representation of the video metadata is generated which can be used to cluster the videos in the dataset. Clustering is done using K-means, where K is selected based on the graph in figure (insert figure). A larger K would mean more specific topics and more accurate SVM predictions, but will also reduce the number of samples for each topic. We found that the ideal value of K would be around 10, where we wouldn't overfit the data and still gain a reasonable accuracy of the SVM's (insert figure about SVM accuracy versus number of K?).
 \todo[inline]{insert figure about SVM accuracy versus number of K}
 
 
-
 \subsection{Model training}
-
+\label{model training}
 % Selecting videos based on topic
 
 For each topic created in the topic clustering, an SVM is trained in order to rank new video thumbnail candidates. The data used for training an SVM consists of all the videos that are classified in that specific cluster, along with the labels generated in \ref{candidate evaluation}. In order to avoid overfitting the data, we use the same parameters for each SVM. An RBF kernel is used with $C = 10$ and $\gamma = 100$ on an average dataset of X training samples. The average accuracy of all SVM's was around 0.75.
 
 \todo[inline]{insert avg number of training samples \& check average accuracy}
+
+\subsection{Predicting new videos}
+
+New videos with related textual metadata can be processed by the system in order to generate a video thumbnail. First, the frames are analysed with 1 fps to concept vectors as described in \ref{feature extraction}. These frames are then used to create a list of candidates as described in \ref{candidate selection}. The textual metadata is converted to a bag-of-words, which is then converted to an LDA vector with the model generated in \ref{topic clustering}. This vector can then be used to decide on the model to use. The concept vector representation of the video thumbnail candidates are then applied to the model (trained in \ref{model training}), which classifies the vectors. The final ranking is based on the scores that are associated with the classification.
+
 
 
 \section{User study}
@@ -127,7 +153,7 @@ The video thumbnails generated by the system described in \ref{system descriptio
 
 \subsection{Survey setup}
 
-For each video, two previews were shown in successive order: The first preview contained only a title and description, while the second preview contained a title, description and a (static or video) thumbnail. An example of the latter preview is shown in figure... \todo[inline]{include figure with preview}
+For each video, two previews were shown in successive order: The first preview contained only a title and description, while the second preview contained a title, description and a (static or video) thumbnail. An example of the preview with thumbnail is shown in figure... \todo[inline]{include figure with preview}
 After each preview, two statements were made about the video preview to measure the engagement of the participant towards the video, and wether the participant felt informed about the contents of the video:
 
 \begin{itemize}
@@ -137,7 +163,7 @@ After each preview, two statements were made about the video preview to measure 
 
 By comparing the difference in answers between the version with thumbnail and without thumbnail, we are able to measure the impact of using a thumbnail in the preview. This difference can then be compared between the static thumbnail and video thumbnail, allowing us to analyse the effect of a video thumbnail. This way, any preconception from the user about certain topics or videos can be taken into account.
 
-The videos used in this survey were manually picked from the dataset based on number of views. Early feedback on the survey setup revealed that randomly selected videos would be uninteresting, regardless of the form of the video preview. The difference in target audience between the dataset source and survey respondents would be the primary explanation. The age of most of the videos is a second, since most of the news videos are outdated at the point of conducting the survey.
+The videos used in this survey were manually picked from the dataset based on number of views. Early feedback on the survey setup revealed that randomly selected videos would be uninteresting, regardless of the form of the video preview. The difference in target audience between the dataset source and survey respondents would be the primary explanation. The age of most of the videos is a second explanation, since most of the news videos are outdated at the point of conducting the survey. Static thumbnails for the videos were manually picked at the time of publishing, while the video thumbnails were generated by the system described in \ref{system description}.
 
 \subsection{Responses}
 
@@ -145,9 +171,14 @@ A total of (??) respondents participated, of which (??) received the version wit
 
 \subsection{Result analysis}
 
+\todo[inline]{Statistical relevance}
+\todo[inline]{Graphs}
+
 \section{Conclusion}
 
 \section{Future work}
+
+\section{References}
 
 \end{document}
 
