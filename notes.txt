@@ -50,3 +50,8 @@ Mihir second reader:
 13/6
 Can't seem to connect to normal UvA cluster with VPN?
 Can connect with UvA MM witouth VPN
+
+
+
+5/7
+Explain the choice for every value using graphs and proof? Or is 'logic' enough?
