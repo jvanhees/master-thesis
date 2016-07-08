@@ -60,9 +60,12 @@ class VideoReader:
         return self.prepareForCaffe(frame)
     
     # Returns an array of frames prepared for use in Caffe
-    def getFrames(self, interval, start=None):
+    def getFrames(self, interval, start=None, prepare=None):
         if start is None:
             start = 0
+        
+        if prepare is None:
+            prepare = True
                     
         # Return empty array if we can't read video
         # if self.success is False:
@@ -77,7 +80,10 @@ class VideoReader:
             success, frame = self.cap.read()
             
             if success:
-                frames[i] = self.prepareForCaffe(frame)
+                if prepare:
+                    frames[i] = self.prepareForCaffe(frame)
+                else:
+                    frames[i] = frame
         
         return frames
         

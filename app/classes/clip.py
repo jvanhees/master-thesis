@@ -54,6 +54,9 @@ class Clip:
     def getVideoFile(self):
         return self.vidFolder + self.clipId + '.mp4'
     
+    def getRawFrames(self):
+        self.videoReader = VideoReader(self.getVideoFile())
+        return self.videoReader.getFrames(self.interval, self.start, False)
     
     def getFrames(self):
         self.videoReader = VideoReader(self.getVideoFile())

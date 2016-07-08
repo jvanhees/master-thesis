@@ -12,15 +12,18 @@ else:
     _unset_glog_level = False
 
 import sys
+sys.dont_write_bytecode = True
+
 import numpy as np
 import argparse
 import matplotlib.pyplot as plt
-
-sys.dont_write_bytecode = True
+from PIL import Image  
 
 from pipeline import Pipeline
 from classes.data import DataProvider
 from classes.videoWriter import VideoWriter
+
+from classes.helpers import BGRtoRGB
 
 #metadataModel = Metadata(clips, cache=False)
 
@@ -32,19 +35,19 @@ args = parser.parse_args()
 pipeline = Pipeline()
 data = DataProvider()
 
-# if not pipeline.load():
-#     pipeline.createTopicModels(25, 10)
-#     pipeline.save()
+if not pipeline.load():
+    pipeline.createTopicModels(25, 10)
+    pipeline.save()
 
 # T = 25
 # K = 10
 
-scores = []
-
-scores.append(pipeline.createTopicModels(25, 10))
-
-plt.plot(scores)
-plt.show()
+# scores = []
+#
+# scores.append(pipeline.createTopicModels(25, 10))
+#
+# plt.plot(scores)
+# plt.show()
 
 
 
@@ -56,7 +59,15 @@ for idx, clipId in enumerate(clips):
     
     if clip == False:
         continue
-
+    
+    vectors, candidateList = pipeline.getClipCandidateVectors(clip)
+    frames = clip.getRawFrames()
+    
+    for idx, candidate in enumerate(candidateList):
+        print BGRtoRGB(frames[candidate])
+        img = Image.fromarray(BGRtoRGB(frames[candidate]))
+        img.show()
+    
     print clip.getClipId(), 'Getting prediction'
     
     result, scores = pipeline.predict(clip)

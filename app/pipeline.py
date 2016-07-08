@@ -26,7 +26,7 @@ class Pipeline:
         # Percentage of candidates to set correct
         self.percentile = 50.0
         
-        self.svmFile = 'tmp/svm.pkl.npy'
+        self.svmFile = 'tmp/svm.pkl'
         
         self.params = {'kernel': 'rbf', 'C': 10, 'gamma': 100}
         
@@ -42,7 +42,7 @@ class Pipeline:
             print 'Topics not loaded.'
             return False
         try:
-            self.topicSVMs = np.load(self.svmFile)
+            self.topicSVMs = joblib.load(self.svmFile)
             return True
         except (IOError):
             print 'SVM not loaded.'
@@ -51,7 +51,7 @@ class Pipeline:
     
     def save(self):
         self.topics.save()
-        np.save(self.svmFile, self.topicSVMs)
+        joblib.dump(self.topicSVMs, self.svmFile)
     
     # Create models
     def createTopicModels(self, t, k):
@@ -73,6 +73,7 @@ class Pipeline:
                     continue
                 
                 clipVectors, candidates = self.getClipCandidateVectors(clip)
+                
                 results = clipEval.eval(clipVectors)
                 
                 classes.extend(self.thresholdResults(results, self.percentile))
