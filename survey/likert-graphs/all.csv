@@ -1,0 +1,144 @@
+imagetype	engagement_without	engagement_with	information_without	information_with
+static	Agree	Neutral	Disagree	Neutral
+static	Neutral	Neutral	Disagree	Agree
+static	Agree	Agree	Neutral	Agree
+static	Neutral	Agree	Neutral	Agree
+static	Disagree	Agree	Agree	Agree
+static	Strongly disagree	Neutral	Disagree	Agree
+static	Disagree	Neutral	Agree	Strongly agree
+static	Neutral	Agree	Disagree	Agree
+static	Neutral	Agree	Agree	Strongly agree
+video	Disagree	Neutral	Agree	Strongly agree
+video	Neutral	Neutral	Disagree	Agree
+video	Agree	Strongly agree	Agree	Strongly agree
+static	Disagree	Disagree	Agree	Agree
+static	Strongly disagree	Strongly disagree	Strongly disagree	Neutral
+static	Strongly disagree	Strongly disagree	Neutral	Disagree
+static	Neutral	Neutral	Neutral	Agree
+static	Disagree	Neutral	Strongly disagree	Disagree
+static	Disagree	Neutral	Strongly disagree	Agree
+video	Agree	Strongly agree	Neutral	Strongly agree
+video	Agree	Strongly agree	Disagree	Strongly agree
+video	Agree	Strongly agree	Disagree	Strongly agree
+static	Agree	Agree	Agree	Agree
+static	Disagree	Neutral	Disagree	Neutral
+static	Neutral	Neutral	Agree	Neutral
+static	Disagree	Neutral	Agree	Agree
+static	Disagree	Disagree	Disagree	Agree
+static	Agree	Agree	Disagree	Disagree
+static	Agree	Strongly agree	Disagree	Neutral
+static	Strongly disagree	Agree	Disagree	Neutral
+static	Neutral	Agree	Neutral	Strongly agree
+video	Neutral	Agree	Agree	Strongly agree
+video	Strongly disagree	Disagree	Strongly agree	Strongly agree
+video	Neutral	Neutral	Neutral	Agree
+video	Disagree	Agree	Agree	Agree
+video	Strongly disagree	Strongly disagree	Agree	Strongly agree
+video	Strongly disagree	Disagree	Neutral	Strongly agree
+video	Strongly disagree	Disagree	Disagree	Agree
+video	Strongly disagree	Strongly disagree	Strongly disagree	Neutral
+video	Strongly disagree	Strongly disagree	Strongly disagree	Strongly agree
+video	Agree	Disagree	Strongly agree	Strongly agree
+video	Agree	Agree	Agree	Strongly agree
+video	Disagree	Agree	Agree	Strongly agree
+video	Disagree	Agree	Agree	Strongly agree
+video	Agree	Neutral	Strongly agree	Strongly agree
+video	Agree	Disagree	Agree	Agree
+video	Disagree	Agree	Disagree	Strongly agree
+video	Disagree	Strongly agree	Strongly disagree	Strongly agree
+video	Strongly disagree	Agree	Strongly disagree	Strongly agree
+static	Agree	Agree	Agree	Agree
+static	Neutral	Agree	Disagree	Disagree
+static	Disagree	Neutral	Disagree	Disagree
+video	Disagree	Agree	Agree	Agree
+video	Strongly disagree	Agree	Disagree	Agree
+video	Neutral	Agree	Disagree	Disagree
+static	Disagree	Disagree	Neutral	Agree
+static	Agree	Agree	Strongly disagree	Neutral
+video	Agree	Agree	Agree	Agree
+static	Agree	Agree	Disagree	Agree
+video	Disagree	Neutral	Agree	Agree
+static	Strongly agree	Strongly agree	Agree	Agree
+static	Neutral	Disagree	Disagree	Disagree
+static	Strongly disagree	Agree	Strongly disagree	Agree
+video	Neutral	Agree	Agree	Agree
+video	Disagree	Disagree	Disagree	Agree
+video	Disagree	Strongly disagree	Neutral	Agree
+static	Disagree	Disagree	Agree	Agree
+static	Strongly disagree	Agree	Disagree	Agree
+static	Disagree	Agree	Agree	Agree
+video	Neutral	Neutral	Agree	Strongly agree
+video	Disagree	Disagree	Strongly disagree	Disagree
+video	Strongly disagree	Agree	Neutral	Agree
+static	Disagree	Disagree	Disagree	Disagree
+static	Strongly disagree	Neutral	Strongly disagree	Neutral
+static	Disagree	Neutral	Disagree	Neutral
+video	Disagree	Disagree	Agree	Agree
+video	Agree	Neutral	Agree	Agree
+video	Agree	Agree	Neutral	Strongly agree
+video	Agree	Disagree	Agree	Agree
+video	Strongly agree	Agree	Strongly agree	Strongly agree
+video	Disagree	Strongly agree	Disagree	Agree
+static	Agree	Agree	Agree	Strongly agree
+static	Strongly disagree	Disagree	Strongly disagree	Disagree
+static	Neutral	Disagree	Disagree	Agree
+video	Agree	Strongly agree	Strongly agree	Strongly agree
+video	Disagree	Disagree	Disagree	Strongly agree
+video	Disagree	Disagree	Disagree	Agree
+static	Agree	Agree	Strongly agree	Agree
+static	Disagree	Agree	Strongly disagree	Agree
+static	Disagree	Disagree	Disagree	Strongly disagree
+video	Agree	Agree	Agree	Disagree
+video	Disagree	Agree	Strongly disagree	Disagree
+video	Agree	Disagree	Disagree	Disagree
+video	Agree	Agree	Agree	Agree
+video	Neutral	Neutral	Strongly disagree	Agree
+video	Strongly disagree	Strongly disagree	Neutral	Neutral
+video	Disagree	Disagree	Disagree	Disagree
+video	Neutral	Neutral	Disagree	Agree
+static	Agree	Agree	Agree	Strongly agree
+static	Disagree	Neutral	Disagree	Neutral
+static	Neutral	Agree	Neutral	Strongly agree
+video	Neutral	Disagree	Strongly disagree	Agree
+static	Disagree	Disagree	Agree	Agree
+static	Strongly disagree	Disagree	Neutral	Agree
+video	Disagree	Disagree	Agree	Disagree
+static	Strongly disagree	Strongly disagree	Disagree	Strongly agree
+video	Strongly disagree	Neutral	Disagree	Strongly agree
+video	Disagree	Agree	Disagree	Strongly agree
+static	Disagree	Agree	Agree	Agree
+static	Disagree	Disagree	Disagree	Neutral
+static	Disagree	Neutral	Disagree	Disagree
+video	Agree	Strongly agree	Strongly agree	Strongly agree
+video	Neutral	Agree	Strongly agree	Strongly agree
+video	Agree	Strongly agree	Strongly agree	Strongly agree
+static	Disagree	Disagree	Agree	Strongly agree
+static	Strongly disagree	Agree	Disagree	Agree
+static	Strongly disagree	Disagree	Strongly disagree	Disagree
+video	Disagree	Agree	Disagree	Disagree
+video	Disagree	Disagree	Disagree	Agree
+video	Disagree	Agree	Agree	Agree
+static	Agree	Agree	Strongly disagree	Disagree
+static	Strongly disagree	Strongly agree	Strongly disagree	Agree
+static	Strongly disagree	Agree	Strongly disagree	Neutral
+static	Disagree	Agree	Agree	Agree
+static	Disagree	Neutral	Disagree	Agree
+static	Disagree	Agree	Disagree	Agree
+static	Agree	Agree	Agree	Agree
+static	Disagree	Agree	Strongly disagree	Agree
+static	Neutral	Strongly agree	Disagree	Agree
+video	Strongly disagree	Strongly disagree	Strongly disagree	Strongly disagree
+static	Strongly agree	Strongly agree	Agree	Agree
+static	Disagree	Agree	Agree	Strongly agree
+video	Strongly agree	Strongly agree	Agree	Strongly agree
+video	Disagree	Strongly agree	Neutral	Strongly agree
+video	Agree	Strongly agree	Disagree	Strongly agree
+video	Disagree	Agree	Agree	Strongly agree
+video	Strongly disagree	Disagree	Strongly disagree	Agree
+video	Disagree	Strongly agree	Strongly disagree	Agree
+static	Neutral	Agree	Agree	Disagree
+static	Disagree	Neutral	Disagree	Neutral
+static	Neutral	Neutral	Neutral	Agree
+static	Neutral	Neutral	Agree	Agree
+static	Disagree	Disagree	Disagree	Neutral
+static	Neutral	Disagree	Disagree	Agree

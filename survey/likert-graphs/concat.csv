@@ -1,0 +1,287 @@
+imagetype	thumbnail	engagement	information
+static	without	Agree	Disagree
+static	without	Neutral	Disagree
+static	without	Agree	Neutral
+static	without	Neutral	Neutral
+static	without	Disagree	Agree
+static	without	Strongly disagree	Disagree
+static	without	Disagree	Agree
+static	without	Neutral	Disagree
+static	without	Neutral	Agree
+video	without	Disagree	Agree
+video	without	Neutral	Disagree
+video	without	Agree	Agree
+static	without	Disagree	Agree
+static	without	Strongly disagree	Strongly disagree
+static	without	Strongly disagree	Neutral
+static	without	Neutral	Neutral
+static	without	Disagree	Strongly disagree
+static	without	Disagree	Strongly disagree
+video	without	Agree	Neutral
+video	without	Agree	Disagree
+video	without	Agree	Disagree
+static	without	Agree	Agree
+static	without	Disagree	Disagree
+static	without	Neutral	Agree
+static	without	Disagree	Agree
+static	without	Disagree	Disagree
+static	without	Agree	Disagree
+static	without	Agree	Disagree
+static	without	Strongly disagree	Disagree
+static	without	Neutral	Neutral
+video	without	Neutral	Agree
+video	without	Strongly disagree	Strongly agree
+video	without	Neutral	Neutral
+video	without	Disagree	Agree
+video	without	Strongly disagree	Agree
+video	without	Strongly disagree	Neutral
+video	without	Strongly disagree	Disagree
+video	without	Strongly disagree	Strongly disagree
+video	without	Strongly disagree	Strongly disagree
+video	without	Agree	Strongly agree
+video	without	Agree	Agree
+video	without	Disagree	Agree
+video	without	Disagree	Agree
+video	without	Agree	Strongly agree
+video	without	Agree	Agree
+video	without	Disagree	Disagree
+video	without	Disagree	Strongly disagree
+video	without	Strongly disagree	Strongly disagree
+static	without	Agree	Agree
+static	without	Neutral	Disagree
+static	without	Disagree	Disagree
+video	without	Disagree	Agree
+video	without	Strongly disagree	Disagree
+video	without	Neutral	Disagree
+static	without	Disagree	Neutral
+static	without	Agree	Strongly disagree
+video	without	Agree	Agree
+static	without	Agree	Disagree
+video	without	Disagree	Agree
+static	without	Strongly agree	Agree
+static	without	Neutral	Disagree
+static	without	Strongly disagree	Strongly disagree
+video	without	Neutral	Agree
+video	without	Disagree	Disagree
+video	without	Disagree	Neutral
+static	without	Disagree	Agree
+static	without	Strongly disagree	Disagree
+static	without	Disagree	Agree
+video	without	Neutral	Agree
+video	without	Disagree	Strongly disagree
+video	without	Strongly disagree	Neutral
+static	without	Disagree	Disagree
+static	without	Strongly disagree	Strongly disagree
+static	without	Disagree	Disagree
+video	without	Disagree	Agree
+video	without	Agree	Agree
+video	without	Agree	Neutral
+video	without	Agree	Agree
+video	without	Strongly agree	Strongly agree
+video	without	Disagree	Disagree
+static	without	Agree	Agree
+static	without	Strongly disagree	Strongly disagree
+static	without	Neutral	Disagree
+video	without	Agree	Strongly agree
+video	without	Disagree	Disagree
+video	without	Disagree	Disagree
+static	without	Agree	Strongly agree
+static	without	Disagree	Strongly disagree
+static	without	Disagree	Disagree
+video	without	Agree	Agree
+video	without	Disagree	Strongly disagree
+video	without	Agree	Disagree
+video	without	Agree	Agree
+video	without	Neutral	Strongly disagree
+video	without	Strongly disagree	Neutral
+video	without	Disagree	Disagree
+video	without	Neutral	Disagree
+static	without	Agree	Agree
+static	without	Disagree	Disagree
+static	without	Neutral	Neutral
+video	without	Neutral	Strongly disagree
+static	without	Disagree	Agree
+static	without	Strongly disagree	Neutral
+video	without	Disagree	Agree
+static	without	Strongly disagree	Disagree
+video	without	Strongly disagree	Disagree
+video	without	Disagree	Disagree
+static	without	Disagree	Agree
+static	without	Disagree	Disagree
+static	without	Disagree	Disagree
+video	without	Agree	Strongly agree
+video	without	Neutral	Strongly agree
+video	without	Agree	Strongly agree
+static	without	Disagree	Agree
+static	without	Strongly disagree	Disagree
+static	without	Strongly disagree	Strongly disagree
+video	without	Disagree	Disagree
+video	without	Disagree	Disagree
+video	without	Disagree	Agree
+static	without	Agree	Strongly disagree
+static	without	Strongly disagree	Strongly disagree
+static	without	Strongly disagree	Strongly disagree
+static	without	Disagree	Agree
+static	without	Disagree	Disagree
+static	without	Disagree	Disagree
+static	without	Agree	Agree
+static	without	Disagree	Strongly disagree
+static	without	Neutral	Disagree
+video	without	Strongly disagree	Strongly disagree
+static	without	Strongly agree	Agree
+static	without	Disagree	Agree
+video	without	Strongly agree	Agree
+video	without	Disagree	Neutral
+video	without	Agree	Disagree
+video	without	Disagree	Agree
+video	without	Strongly disagree	Strongly disagree
+video	without	Disagree	Strongly disagree
+static	without	Neutral	Agree
+static	without	Disagree	Disagree
+static	without	Neutral	Neutral
+static	without	Neutral	Agree
+static	without	Disagree	Disagree
+static	without	Neutral	Disagree
+static	with	Neutral	Neutral
+static	with	Neutral	Agree
+static	with	Agree	Agree
+static	with	Agree	Agree
+static	with	Agree	Agree
+static	with	Neutral	Agree
+static	with	Neutral	Strongly agree
+static	with	Agree	Agree
+static	with	Agree	Strongly agree
+video	with	Neutral	Strongly agree
+video	with	Neutral	Agree
+video	with	Strongly agree	Strongly agree
+static	with	Disagree	Agree
+static	with	Strongly disagree	Neutral
+static	with	Strongly disagree	Disagree
+static	with	Neutral	Agree
+static	with	Neutral	Disagree
+static	with	Neutral	Agree
+video	with	Strongly agree	Strongly agree
+video	with	Strongly agree	Strongly agree
+video	with	Strongly agree	Strongly agree
+static	with	Agree	Agree
+static	with	Neutral	Neutral
+static	with	Neutral	Neutral
+static	with	Neutral	Agree
+static	with	Disagree	Agree
+static	with	Agree	Disagree
+static	with	Strongly agree	Neutral
+static	with	Agree	Neutral
+static	with	Agree	Strongly agree
+video	with	Agree	Strongly agree
+video	with	Disagree	Strongly agree
+video	with	Neutral	Agree
+video	with	Agree	Agree
+video	with	Strongly disagree	Strongly agree
+video	with	Disagree	Strongly agree
+video	with	Disagree	Agree
+video	with	Strongly disagree	Neutral
+video	with	Strongly disagree	Strongly agree
+video	with	Disagree	Strongly agree
+video	with	Agree	Strongly agree
+video	with	Agree	Strongly agree
+video	with	Agree	Strongly agree
+video	with	Neutral	Strongly agree
+video	with	Disagree	Agree
+video	with	Agree	Strongly agree
+video	with	Strongly agree	Strongly agree
+video	with	Agree	Strongly agree
+static	with	Agree	Agree
+static	with	Agree	Disagree
+static	with	Neutral	Disagree
+video	with	Agree	Agree
+video	with	Agree	Agree
+video	with	Agree	Disagree
+static	with	Disagree	Agree
+static	with	Agree	Neutral
+video	with	Agree	Agree
+static	with	Agree	Agree
+video	with	Neutral	Agree
+static	with	Strongly agree	Agree
+static	with	Disagree	Disagree
+static	with	Agree	Agree
+video	with	Agree	Agree
+video	with	Disagree	Agree
+video	with	Strongly disagree	Agree
+static	with	Disagree	Agree
+static	with	Agree	Agree
+static	with	Agree	Agree
+video	with	Neutral	Strongly agree
+video	with	Disagree	Disagree
+video	with	Agree	Agree
+static	with	Disagree	Disagree
+static	with	Neutral	Neutral
+static	with	Neutral	Neutral
+video	with	Disagree	Agree
+video	with	Neutral	Agree
+video	with	Agree	Strongly agree
+video	with	Disagree	Agree
+video	with	Agree	Strongly agree
+video	with	Strongly agree	Agree
+static	with	Agree	Strongly agree
+static	with	Disagree	Disagree
+static	with	Disagree	Agree
+video	with	Strongly agree	Strongly agree
+video	with	Disagree	Strongly agree
+video	with	Disagree	Agree
+static	with	Agree	Agree
+static	with	Agree	Agree
+static	with	Disagree	Strongly disagree
+video	with	Agree	Disagree
+video	with	Agree	Disagree
+video	with	Disagree	Disagree
+video	with	Agree	Agree
+video	with	Neutral	Agree
+video	with	Strongly disagree	Neutral
+video	with	Disagree	Disagree
+video	with	Neutral	Agree
+static	with	Agree	Strongly agree
+static	with	Neutral	Neutral
+static	with	Agree	Strongly agree
+video	with	Disagree	Agree
+static	with	Disagree	Agree
+static	with	Disagree	Agree
+video	with	Disagree	Disagree
+static	with	Strongly disagree	Strongly agree
+video	with	Neutral	Strongly agree
+video	with	Agree	Strongly agree
+static	with	Agree	Agree
+static	with	Disagree	Neutral
+static	with	Neutral	Disagree
+video	with	Strongly agree	Strongly agree
+video	with	Agree	Strongly agree
+video	with	Strongly agree	Strongly agree
+static	with	Disagree	Strongly agree
+static	with	Agree	Agree
+static	with	Disagree	Disagree
+video	with	Agree	Disagree
+video	with	Disagree	Agree
+video	with	Agree	Agree
+static	with	Agree	Disagree
+static	with	Strongly agree	Agree
+static	with	Agree	Neutral
+static	with	Agree	Agree
+static	with	Neutral	Agree
+static	with	Agree	Agree
+static	with	Agree	Agree
+static	with	Agree	Agree
+static	with	Strongly agree	Agree
+video	with	Strongly disagree	Strongly disagree
+static	with	Strongly agree	Agree
+static	with	Agree	Strongly agree
+video	with	Strongly agree	Strongly agree
+video	with	Strongly agree	Strongly agree
+video	with	Strongly agree	Strongly agree
+video	with	Agree	Strongly agree
+video	with	Disagree	Agree
+video	with	Strongly agree	Agree
+static	with	Agree	Disagree
+static	with	Neutral	Neutral
+static	with	Neutral	Agree
+static	with	Neutral	Agree
+static	with	Disagree	Neutral
+static	with	Disagree	Agree
