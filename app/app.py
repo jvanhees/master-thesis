@@ -36,8 +36,21 @@ pipeline = Pipeline()
 data = DataProvider()
 
 #if not pipeline.load():
-pipeline.createTopicModels(25, 10)
-pipeline.save()
+
+scores = []
+for k in range(1, 15):
+    print 'K = ' + str(k)
+    pipeline.createTopicModels(25, k)
+    score = pipeline.scores
+    mean = sum(score) / float(len(score))
+    scores.append(mean)
+    
+    print 'Mean: ' + str(mean)
+    
+
+plt.plot(scores, color='#4189C2', linewidth=0.2)
+plt.show()
+#pipeline.save()
 
 # T = 25
 # K = 10

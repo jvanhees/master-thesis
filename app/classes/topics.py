@@ -82,7 +82,7 @@ class Topics:
             max_iter=300,
             tol=0.0001,
             precompute_distances='auto',
-            verbose=0,
+            verbose=1,
             random_state=None,
             copy_x=True,
             n_jobs=1)

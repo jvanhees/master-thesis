@@ -3,6 +3,7 @@ import numpy as np
 from scipy import spatial
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import normalize
+from sklearn.externals import joblib
 
 from clip import Clip
 
@@ -10,13 +11,15 @@ class Candidates:
     
     def __init__(self, clip, kModifier):
         self.clip = clip
-        
+        self.kmeansfile = 'tmp/clipkmeans/'+str(clip.getClipId())+'.pkl'
         self.concepts = self.clip.getConcepts()
         # k = length of clip in seconds / kModifier
         
         self.k = int(math.ceil(len(self.concepts) / kModifier))
         
-        self.bofs = self.createBOF(self.k)
+        if not self.load():
+            self.bofs = self.createBOF(self.k)
+            self.save()
         
     
     def get(self, fragmentLength):
@@ -41,7 +44,21 @@ class Candidates:
         candidateIndexes = np.argmax(normFragmentDistances, axis=1)
         
         return candidateIndexes
-            
+    
+    def load(self):
+        try:
+            self.kmeans = joblib.load(self.kmeansfile)
+            self.bofs = self.kmeans.cluster_centers_
+            print 'Clip candidate Kmeans loaded.'
+            return True
+        except (IOError):
+            print 'Clip candidate Kmeans NOT loaded.'
+            return False
+    
+    
+    def save(self):
+        joblib.dump(self.kmeans, self.kmeansfile)
+    
     
     # Create K Bag of Fragments
     def createBOF(self, k):

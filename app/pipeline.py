@@ -78,15 +78,6 @@ class Pipeline:
                 
                 results = clipEval.eval(clipVectors)
                 
-                fig = plt.figure()
-                plt.bar(np.arange(len(results)), results, align='center', color='#4189C2', linewidth=0.0)
-                
-                axes = plt.gca()
-                axes.set_ylim([0,1])
-                axes.set_xlim([-0.5,len(results) - 0.5])
-                
-                fig.savefig(str(idx)+'.png', dpi=fig.dpi)
-                
                 classes.extend(self.thresholdResults(results, self.percentile))
                 vectors.append(clipVectors)
 
@@ -96,12 +87,10 @@ class Pipeline:
             self.topicSVMs.append(self.initSVM(self.params, vectors, classes))
         
         return self.scores
-        
-    
     
     def initSVM(self, params, vectors, classes):
         params['probability'] = True
-        params['verbose'] = False
+        params['verbose'] = True
         
         SVM = svm.SVC()
         SVM.set_params(**params)
@@ -109,7 +98,7 @@ class Pipeline:
         
         score = SVM.score(vectors, classes)
         
-        self.scores.append(np.mean(score))
+        self.scores.append(score)
         
         return SVM
 

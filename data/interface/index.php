@@ -2,6 +2,9 @@
 $file = file_get_contents('data.json');
 $data = json_decode($file);
 
+$file = file_get_contents('thumbnails.json');
+$thumbnails = json_decode($file);
+
 $hasTitle = 0;
 $hasDescription = 0;
 $hasTags = 0;
@@ -52,6 +55,10 @@ print_r(json_decode($data->items[0]->assets));
 	<tr>
 		<td>With tags</td>
 		<td><?=$hasTags?></td>
+	</tr>
+	<tr>
+		<td>With thumbnail</td>
+		<td><?=count($thumbnails)?></td>
 	</tr>
 </table>
 <h2>Longest clips</h2>
