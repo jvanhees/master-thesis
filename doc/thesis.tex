@@ -154,7 +154,7 @@ A comprehensive list of video thumbnail candidates is generated using a sliding 
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.8\linewidth]{resources/candidate-selection}
+	\includegraphics[width=\linewidth]{resources/candidate-selection}
 	\caption{A schematic overview of the candidate selection.}
 	\label{figure: candidate selection scheme}
 \end{figure}
@@ -165,6 +165,13 @@ A comprehensive list of video thumbnail candidates is generated using a sliding 
 
 The resulting list of candidates is ranked based on the human-selected static thumbnail for that specific video. The same method of extracting features from the video is used on the static thumbnail, which results in a concept vector that can be compared to concept vectors extracted from the video frames. For every candidate, the cosine similarity between the candidate vector representation (as described in section \ref{section: candidate selection}) and the thumbnail concept vector is calculated. 
 
+
+\begin{figure}[h]
+  \label{figure: candidate evaluation scheme}
+  \includegraphics[width=\linewidth]{resources/candidate-evaluation}
+  \caption{Evaluation the generated candidates using thumbnails selected by an editor.}
+\end{figure}
+
 Since the resulting similarity values are very diverse across the dataset, a top $N$ \% percentile selection is used to determine positive ($+1$) and negative ($-1$) values which can later be used to train the SVM models. As shown in figure \ref{figure: thumbnail similarity}, the similarity values between candidates and the thumbnail are highly irregular across different videos. A threshold based on a percentile is therefor more suited to create a balanced training set that includes data from all videos. The $N$ value is selected at 20, since it provides a balanced distribution of positive and negative examples used as training data.
 
 \begin{figure}[h]
@@ -173,11 +180,6 @@ Since the resulting similarity values are very diverse across the dataset, a top
   \label{figure: thumbnail similarity}
 \end{figure}
 
-\begin{figure}[h]
-  \label{figure: candidate evaluation scheme}
-  \includegraphics[width=\linewidth]{resources/candidate-evaluation}
-  \caption{Evaluation the generated candidates using thumbnails selected by an editor.}
-\end{figure}
 
 \subsection{Topic clustering using metadata}
 \label{topic clustering}
@@ -193,25 +195,22 @@ With the LDA model, a sparse vector representation of the video metadata is gene
 
 \todo[inline]{insert figure about SVM accuracy versus number of K}
 
-\subsection{section: model training}
+\subsection{Model training}
 \label{section: model training}
 % Selecting videos based on topic
 
 For each topic created in the topic clustering, an SVM is trained in order to rank new video thumbnail candidates. The data used for training an SVM consists of all the videos that are classified in that specific cluster (as described in section \ref{topic clustering}), along with the labels generated in section \ref{section: candidate evaluation}. In order to avoid overfitting the data, we use the same parameters for each SVM. An RBF kernel is used with $C = 10$ and $\gamma = 100$ on an average dataset of X training samples. The average accuracy of all SVMs was around 0.75.
 
-\todo[inline]{insert avg number of training samples \& check average accuracy}
-
-\begin{figure*}[ht]
-  \label{figure: topic clustering scheme}
-  \includegraphics[width=\textwidth]{resources/topic-clustering}
-  \caption{Clustering videos in the dataset based on metadata using KMeans clustering on LDA topic vectors.}
+\begin{figure*}[htb!]
+	\centering
+	\label{figure: topic clustering scheme}
+	\includegraphics[width=0.9\textwidth]{resources/topic-clustering}
+	\caption{Clustering videos in the dataset based on metadata using KMeans clustering on LDA topic vectors.}
 \end{figure*}
 
 \subsection{Predicting new videos}
 
 New videos with related textual metadata can be processed by the system in order to generate a video thumbnail. First, the frames are analysed with 1 fps to concept vectors as described in section \ref{section: feature extraction}. These frames are then used to create a list of candidates as described in section \ref{section: candidate selection}. The textual metadata is converted to a bag-of-words, which is then converted to an LDA vector with the model generated in \ref{topic clustering}. This vector can then be used to decide on the model to use. The concept vector representation of the video thumbnail candidates are then applied to the model (trained in section \ref{section: model training}), which classifies the vectors. The final ranking is based on the scores that are associated with the classification.
-
-
 
 \section{Experimental setup}
 \label{experimental setup dataset}
@@ -222,11 +221,22 @@ The TRECVID Multimedia Event Detection track provides a number of datasets that 
 The dataset that is used in our experimental setup is retrieved from the Irish online publisher `Landmark Digital'. The websites that publishes the videos reports news articles on a broad number of domains like world news, sports, business, life and local news. The videos are often published alongside an article that could be categorised in any domain. The dataset, however, does not contain any references to the related articles or domains.
 
 % Dataset values
-The videos in the dataset are accompanied by metadata in the form of a title, description and an unspecified number of (free-form) tags. This (editor created) metadata is primarily used for search engine optimisation and does not contain any structure other than the three values specified. Since these values are created by a professional news editor, we can assume that the data in these fields are a good representation of the content (in the eyes of the editor?).
+The videos in the dataset are accompanied by metadata in the form of a title, description and an unspecified number of (free-form) tags. This (editor created) metadata is primarily used for search engine optimisation and does not contain any structure other than the three values specified. Since these values are created by a professional news editor, we can assume that the data in these fields is a good representation of the content.
 
 % Dataset thumbnail
-As stated in section \ref{section: dataset requirements}, the system requires thumbnails associated with the videos in the dataset to serve as positive examples for training purposes. All videos in our dataset contain a thumbnail, of which only a portion of these thumbnails is manually selected. The remaining thumbnails are automatically generated and cannot serve as reliable training examples, since an editor hasn't made a conscious decision about the contents in the thumbnail. This means that only a portion of our dataset can be used in the training stage of our system. These statistics can be viewed in table...
-\todo[inline]{Insert table with dataset numbers and statistics.}
+As stated in section \ref{section: dataset requirements}, the system requires thumbnails associated with the videos in the dataset to serve as positive examples for training purposes. All videos in our dataset contain a thumbnail, of which only a portion of these thumbnails is manually selected. The remaining thumbnails are automatically generated and cannot serve as reliable training examples, since an editor hasn't made a conscious decision about the contents in the thumbnail. This means that only a portion of our dataset can be used in the training stage of our system. These statistics can be viewed in table \ref{table:dataset}.
+
+\begin{table}[h]
+\caption{Overview of the dataset used in the experimental setup.}
+\label{table:dataset}
+\begin{tabular}{ll}
+Total clips                    & 2162 \\ \hline
+With title                     & 2162 \\
+With description               & 1912 \\
+With tags                      & 1690 \\
+With editor selected thumbnail & 956 
+\end{tabular}
+\end{table}
 
 
 \section{section: user study}
@@ -320,8 +330,6 @@ The data is gathered from two tests, one with static thumbnails and one with vid
 
 \subsubsection{Excluding thumbnail versus including thumbnail}
 \label{section:excluding vs including}
-
-\todo[inline]{Reference to engagement}
 
 Using the Wilcoxon signed-rank test for ordinal, paired data, a highly significant difference is found between previews including thumbnails and excluding thumbnails regarding information and engagement. The P-values are depicted in table \ref{table:significance}.
 
