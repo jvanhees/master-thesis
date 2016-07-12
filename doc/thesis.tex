@@ -21,7 +21,7 @@ doi=false,isbn=false,url=false
 
 \begin{document}
 
-\title{Generating video thumbnails, a replacement for static thumbnail images}
+\title{Generating semantic video thumbnails}
 \subtitle{Master Thesis Information Studies}
 
 \author{
@@ -35,7 +35,7 @@ Jorick van Hees \\
 \maketitle
 
 \todo[inline]{Abstract: Conclusion in abstract}
-\abstract{We present a novel way to provide a visual preview of a video in the form of video thumbnails. This video thumbnail is an alternative to the static image thumbnail, which is much used in todays interfaces. These thumbnails are often the only visual clue for the user to get a sense of the contents of the video. The video thumbnail is designed to improve the user experience of video navigation structures. We present a method that automatically generates these video thumbnails in an ambiguous domain using clustering techniques on concept features, metadata analysis to generate topics and a comparison to manually selected static thumbnails in order to evaluate the results. The resulting video thumbnails are tested against static thumbnails in a user study. We conclude that the video thumbnails perform very similar to the static variants and that this new concept is an interesting and viable interface element in certain scenarios.}
+\abstract{We present a novel way to provide a visual preview of a video in the form of video thumbnails. This video thumbnail is an alternative to the static image thumbnail, which is much used in todays interfaces. These thumbnails are often the only visual clue for the user to get a sense of the contents of the video. The video thumbnail is designed to improve the user experience of video navigation structures. We present a method that automatically generates these video thumbnails in an ambiguous domain using clustering techniques on concept features, metadata analysis to generate topics and a comparison to manually selected static thumbnails in order to evaluate the results. The resulting video thumbnails are tested against static thumbnails in a user study where we measure information and engagement in user experience. Based on the significant improvement in information perceived by the user, we consider video summarisation techniques to provide a solid groundwork when generating video thumbnails. The characteristic intent of the video thumbnail emphasises the need for alterations to these techniques in order to improve engagement toward the audience.}
 
 \begin{CCSXML}
 <ccs2012>
@@ -83,11 +83,18 @@ Thumbnail images for videos are used all over the web. They are static represent
 % Video thumbnail
 The video thumbnail is a preview of the full video in the form of a five-second excerpt containing no audio, which conveys the contents of the video in a more expressive manner. In this work, we describe a method that automatically generates these video thumbnails using state-of-the-art techniques like concept feature extraction and topic-dependent metadata analysis. With the addition of manually-selected static thumbnails as training data, we provide a novel way of conveying the purposes of the static thumbnail to the video thumbnail. This way, our approach has the ability to adjust to the specific requirements in engagement and information regarding the end-user, providing drop-in replacements for existing thumbnails.
 
+In this paper, we analyse the effect of video thumbnails on user experience, and discuss the use of video summarisation techniques in the automatic video thumbnail generation. We hypothesise that the use of a video thumbnail instead of a static thumbnail will improve the user experience on two fronts. The user is more engaged to watch the full video, and will be more informed about the contents of the video. Furthermore, we hypothesise that video summarisation techniques will provide solid ground to generate a thumbnail, but require adjustments to better suit the intent of a video thumbnail. In order to test these hypothesis, two research questions are formulated:
+
+\begin{itemize}
+	\item How can we build a system that automatically generates video thumbnails that have a positive effect on the user?
+	\item How do video thumbnails created by the system affect users regarding engagement and information?
+\end{itemize}
+
 % What did we do with this
 Using a real world dataset in an ambiguous domain, the video thumbnail results of our method are challenged in a user survey against their static counterparts, where we test video previews with and without a variant of the thumbnail. These video previews are tested on information and engagement towards the user.
 
 % What are the results and why are they awesome
-We show that the results of the user study highlight the fact that the video thumbnail can match the performance of a static thumbnail without any problems. In addition, the results also point out that our approach of using a static thumbnails as training data is very effective in conveying the essence of the video, compared to a manually selected static thumbnail by a professional news editor. Finally, we conclude that our findings pose interesting opportunities in interface design and video analysis.
+The user study highlight the fact that the video thumbnail can match the performance of a static thumbnail without any problems. In addition, the results also point out that our approach of using a static thumbnails as training data is very effective in conveying the essence of the video, compared to a manually selected static thumbnail by a professional news editor. Finally, we conclude that our findings pose interesting opportunities in interface design and video analysis.
 
 \subsection{Basic concepts \& related work}
 
@@ -99,42 +106,25 @@ Work in the field of video summarisation has a lot of common ground with the gen
 
 One could argue that the results from video summarisation could be used in some implementations of the video thumbnails. However, the use cases in both domains are vastly different in terms of user engagement. In general, a summary tries to accurately describe the contents of the video, which eliminates the need to view the full video. In turn, the goal of the thumbnail is to engage the user to view the full video. It tries to show just enough to trigger the user to view the remaining content. Since the implementation scenario and intention of the video thumbnail are different from video summaries, the methods used to generate video summarisation require alterations to meet the specific demands of the video thumbnail.
 
-\subsection{Event detection}
+\paragraph{User engagement}
+\label{section: user engagement}
 
+\paragraph{Event detection}
 Existing methods for video event detection based on the TRECVID Media Event Detection Task often use the provided training data. In our approach, no training data is available. However, we can use a number of techniques in order to extract the most characteristic frames from the video. Clustering frame vectors is a technique that is used by many in order to find related parts of the video. Concept features are extracted from frames with a standard frame interval, which are then clustered using unsupervised algorithms like K-means or a hierarchical variant of K-means. These clusters can be used in video summarisations to show a variety of video contents. 
 
-\subsection{Video navigation}
-\label{video navigation}
+\paragraph{Video navigation}
+\label{section: video navigation}
+There are a lot of interfaces designed to assist humans in navigating a video library. A summary by \textcite{Schoeffmann:2010iw} describes over 40 different interfaces that use different techniques to allow convenient browsing through a collection of videos. These range from displaying a key frame best describing the video, or a collection of keyframes with their sizes related to the importance of the frame. Most of these interfaces feature a system that automatically determines what to display on the screen, taken into consideration the different conditions in which the system is used. A study by \textcite{Hurst:2011jx} describes a user study to the recognition of video using different thumbnail sizes, numbers and various movement in the thumbnails. The study shows that users are able to handle multiple small thumbnails on mobile devices, especially when the thumbnails included motion. Since one of the goals of the video thumbnail is to improve the navigation of users in a news media website, video navigation literature could especially prove useful in the design and implementation of video thumbnails in overview pages.
 
-There are a lot of interfaces designed to assist humans in navigating a video library. A summary by \textcite{Schoeffmann:2010iw} describes over 40 different interfaces that use different techniques to allow convenient browsing through a collection of videos. These range from displaying a key frame best describing the video, or a collection of keyframes with their sizes related to the importance of the frame. Most of these interfaces feature a system that automatically determines what to display on the screen, taken into consideration the different conditions in which the system is used. A study by \textcite{Hurst:2011jx} describes a user study to the recognition of video using different thumbnail sizes, numbers and various movement in the thumbnails. The study shows that users are able to handle multiple small thumbnails on mobile devices, especially when the thumbnails included motion. Since one of the goals of the moving thumbnail is to improve the navigation of users in a news media website, video navigation literature could especially prove useful in the design and implementation of moving thumbnails in overview pages.
+\paragraph{Static thumbnail generation}
+\label{section: static thumbnails}
+The issue of video navigation using thumbnails has been an active topic of research. A \citeyear{Kim:2015co} study by \textcite{Kim:2015co} describes a method of automatically combining video frames to generate a thumbnail containing more information that a single frame. Another study describes thumbnail candidate selection using image quality evaluation \cite{Zhang:2014jg}. A combination of internal and external analysis of the video content to select thumbnails is used by a study by \textcite{Liu:2015ux}. The techniques and analysation methods that are featured in these methods can possibly be of use when evaluating the generated video thumbnails.
 
-\subsection{Static thumbnail generation}
-\label{static thumbnails}
-The issue of video navigation using thumbnails has been an active topic of research. A \citeyear{Kim:2015co} study by \textcite{Kim:2015co} describes a method of automatically combining video frames to generate a thumbnail containing more information that a single frame. Another study describes thumbnail candidate selection using image quality evaluation \cite{Zhang:2014jg}. A combination of internal and external analysis of the video content to select thumbnails is used by a study by \textcite{Liu:2015ux}. The techniques and analysation methods that are featured in these methods can possibly be of use when evaluating the generated moving thumbnails.
+Many approaches to generating thumbnails use a ranking of different frames to propose a suitable thumbnail \cite{Choi:2015gm,Zhang:2012eo,Gao:2009dx}. In static thumbnail generation, this ranking can be used to select the best thumbnail. In video thumbnail generation (or other video navigation interfaces) the ranking can be used to create a composition of the video. This creates opportunities to generate video thumbnails that consist of different shots from the original video.
 
-Many approaches to generating thumbnails use a ranking of different frames to propose a suitable thumbnail \cite{Choi:2015gm,Zhang:2012eo,Gao:2009dx}. In static thumbnail generation, this ranking can be used to select the best thumbnail. In moving thumbnail generation (or other video navigation interfaces) the ranking can be used to create a composition of the video. This creates opportunities to generate moving thumbnails that consist of different shots from the original video.
-
-\section{Research question}
-% Hypothesis thumbnail effects on users
-
-Based on the research mentioned in section \ref{related work}, thumbnails have a number of effects on users when used in an interface as video preview. Engagement towards the videos is increased when a visual preview is used, and users tend to have a better understanding of the video content when a thumbnail is present. Our hypothesis regarding the effect on users is that video thumbnails further improve the amount of information about the video, and video thumbnails are more engaging than their static variants.
-
-Techniques for video summarisation is available and seems promising to use in the generation of video thumbnails. Thus, we hypothesise that a system that generates video thumbnails can be build using video summarisation techniques. An important addition to our hypothesis is that there have to be some alterations to fit the system for the different intention of a video thumbnail compared to a video summarisation.
-
-To test these hypothesis, two research questions are formulated:
-
-\begin{itemize}
-	\item How can we build a system that automatically generates moving thumbnails that invite the user to view the full video?
-	\item How do video thumbnails created by the system affect users in a real world scenario regarding engagement and information?
-\end{itemize}
-
-In order to answer these research questions, a system is designed that can automatically generate video thumbnails based on a real-world dataset (section \ref{system description}). The resulting video thumbnails are implemented in video previews, which are tested in a user study where engagement and information is measured (section \ref{user study}. The video thumbnail preview is tested against previews without a thumbnail, and previews that contain a static thumbnails.
-
-\todo[inline]{This seems appropriate here, but feels like the same content from the introduction.}
 
 \section{Generating video thumbnails}
-\label{system description}
-
+\label{section: system description}
 The main body of this paper consists of the design of a system that is able to generate video thumbnails, based on textual metadata, an editor-selected static thumbnails and the video itself. There are a number of requirements set for system:
 
 \begin{itemize}
@@ -145,16 +135,16 @@ The main body of this paper consists of the design of a system that is able to g
 
 The system can be divided into five major stages: Feature extraction, candidate selection, candidate evaluation and topic-based model training. In the first stage, a number of moments in the video are selected and labeled as candidates. In the second stage, candidates are labeled with a positive or negative value based on their similarity to the editor-selected thumbnail. In the third stage, all videos in the dataset are clustered based on topics derived from their metadata. In the fourth and final stage, an SVM is trained for each cluster using the labeled candidates from each video in that cluster.
 
-\subsection{Dataset requirements}
-\label{dataset requirements}
+\subsection{section: dataset requirements}
+\label{section: dataset requirements}
 In order to generate a meaningful video thumbnail, training examples in the form of static thumbnails are required in the dataset to train models that can evaluate and rank video thumbnail candidates. We use human-selected images that are used as a thumbnail for each video, since they contain the concepts that represent the video best from a human perspective. Another advantage of using the static thumbnail as evaluation data in the system, is that it has the same purpose as the video thumbnail the system generates. Since our approach should be suitable for all sorts of news videos, the dataset is not limited to a single domain. The required size of the dataset should be around the hundreds of videos, based on earlier research in video summarisation \cite{Almeida:2012be,Christel:2004in,Money:2008fn} and the fact that we are clustering our samples based on topics (section \ref{topic clustering}).
 
-\subsection{Feature extraction}
-\label{feature extraction}
+\subsection{section: feature extraction}
+\label{section: feature extraction}
 Features from the video are extracted from individual frames with 1 frame per second using a convolutional neural network, trained on the ImageNet dataset \cite{Krizhevsky:2012wl} using CaffeNet \cite{Jia:2014cm}. The result is a high-level sparse feature representation of the frame with 1000 dimensions. This representation is used throughout the system as a representation of the frame. This method of extracting features proves to be very effective for event-detection \cite{Habibian:2013ks,Althoff:2012gf,Jiang:2012fy} and video summarisation \cite{Ajmal:2012hi,Mazloom:2015el}.
 
-\subsection{Candidate selection}
-\label{candidate selection}
+\subsection{section: candidate selection}
+\label{section: candidate selection}
 
 Instead of evaluating all possible frames in a video using a sliding window, a number of candidates are selected from the video. The selection algorithm is inspired by the bag-of-fragments as described in \cite{Mettes:2015vg}. Work in video summarisation and event detection use similar clustering techniques in order to establish a semantic structure in the video \cite{Yuan:2011fu,Habibian:2014dc}. This semantic structure can be utilised to discover the most representing window for every cluster, which can be used as candidates.
 
@@ -163,30 +153,28 @@ A comprehensive list of video thumbnail candidates is generated using a sliding 
 \todo[inline]{Include visual explaining the clustering of similar frames using real example}
 
 \begin{figure}[h]
-  \label{candidate selection scheme}
-  \includegraphics[width=\linewidth]{resources/candidate-selection}
-  \caption{A schematic overview of the candidate selection.}
+	\centering
+	\includegraphics[width=0.8\linewidth]{resources/candidate-selection}
+	\caption{A schematic overview of the candidate selection.}
+	\label{figure: candidate selection scheme}
 \end{figure}
 
-\subsection{Candidate evaluation}
-\label{candidate evaluation}
-% Thumbnail vector creation
+\subsection{section: candidate evaluation}
+\label{section: candidate evaluation}
 
-% Concept
 
-The resulting list of candidates is ranked based on the human-selected static thumbnail for that specific video. The same method of extracting features from the video is used on the static thumbnail, which results in a concept vector that can be compared to concept vectors extracted from the video frames. For every candidate, the cosine similarity between the candidate vector representation (as described in section \ref{candidate selection}) and the thumbnail concept vector is calculated. 
+The resulting list of candidates is ranked based on the human-selected static thumbnail for that specific video. The same method of extracting features from the video is used on the static thumbnail, which results in a concept vector that can be compared to concept vectors extracted from the video frames. For every candidate, the cosine similarity between the candidate vector representation (as described in section \ref{section: candidate selection}) and the thumbnail concept vector is calculated. 
 
-Since the resulting similarity values are very diverse across the dataset, a top $N$ \% percentile selection is used to determine positive (+1) and negative (-1) values which can later be used to train the SVM models. As shown in figure \ref{thumbnail similarity}, the average similarity value between frames and the thumbnail is highly irregular across the different videos. A threshold based on a percentile is therefor more suited to create a balanced training set. The $N$ value is selected at 20, since it provides a balanced distribution of positive and negative examples used as training data.
+Since the resulting similarity values are very diverse across the dataset, a top $N$ \% percentile selection is used to determine positive ($+1$) and negative ($-1$) values which can later be used to train the SVM models. As shown in figure \ref{figure: thumbnail similarity}, the similarity values between candidates and the thumbnail are highly irregular across different videos. A threshold based on a percentile is therefor more suited to create a balanced training set that includes data from all videos. The $N$ value is selected at 20, since it provides a balanced distribution of positive and negative examples used as training data.
 
-\todo[inline]{Include graphs of multiple clips to support claim in candidate evaluation}
 \begin{figure}[h]
-  \label{thumbnail similarity}
-  \includegraphics[width=\linewidth]{resources/thumbnail-similarity}
-  \caption{Cosine similarity of frame concepts between the editor selected thumbnail and video frames with 1 fps.}
+  \includegraphics[width=\linewidth]{resources/candidate-similarity.png}
+  \caption{Visualisation of the cosine similarity between the editor selected thumbnail and candidates for multiple videos.}
+  \label{figure: thumbnail similarity}
 \end{figure}
 
 \begin{figure}[h]
-  \label{candidate evaluation scheme}
+  \label{figure: candidate evaluation scheme}
   \includegraphics[width=\linewidth]{resources/candidate-evaluation}
   \caption{Evaluation the generated candidates using thumbnails selected by an editor.}
 \end{figure}
@@ -196,7 +184,7 @@ Since the resulting similarity values are very diverse across the dataset, a top
 % Data gathering and processing
 
 % Selecting K
-As described in section \ref{dataset requirements}, the videos in the dataset are not limited to a single domain and manually selected thumbnails vary in contents throughout the whole dataset. In order to improve the accuracy of the system and provide a better prediction of positive video thumbnails, the dataset is clustered into specific topics using the metadata available.
+As described in section \ref{section: dataset requirements}, the videos in the dataset are not limited to a single domain and manually selected thumbnails vary in contents throughout the whole dataset. In order to improve the accuracy of the system and provide a better prediction of positive video thumbnails, the dataset is clustered into specific topics using the metadata available.
 
 Since specific topic categorisation is not available and the tags available in the metadata are not discriminative, a textual analysis of all metadata is used. The title, description and tags are concatenated and a stoplist is used to remove regular words. A bag-of-words corpus is formed with the resulting documents, which is used to create a latent Dirichlet allocation model with a number of topics $T = 25$. This value for $T$ is chosen because our domain only includes news related documents, while a value of 100 is reasonable for the whole Wikipedia dataset \cite{Newman:2009uk,Blei:2003tn}.
 
@@ -205,24 +193,23 @@ With the LDA model, a sparse vector representation of the video metadata is gene
 
 \todo[inline]{insert figure about SVM accuracy versus number of K}
 
-
-\subsection{Model training}
-\label{model training}
+\subsection{section: model training}
+\label{section: model training}
 % Selecting videos based on topic
 
-For each topic created in the topic clustering, an SVM is trained in order to rank new video thumbnail candidates. The data used for training an SVM consists of all the videos that are classified in that specific cluster (as described in section \ref{topic clustering}), along with the labels generated in section \ref{candidate evaluation}. In order to avoid overfitting the data, we use the same parameters for each SVM. An RBF kernel is used with $C = 10$ and $\gamma = 100$ on an average dataset of X training samples. The average accuracy of all SVMs was around 0.75.
+For each topic created in the topic clustering, an SVM is trained in order to rank new video thumbnail candidates. The data used for training an SVM consists of all the videos that are classified in that specific cluster (as described in section \ref{topic clustering}), along with the labels generated in section \ref{section: candidate evaluation}. In order to avoid overfitting the data, we use the same parameters for each SVM. An RBF kernel is used with $C = 10$ and $\gamma = 100$ on an average dataset of X training samples. The average accuracy of all SVMs was around 0.75.
 
 \todo[inline]{insert avg number of training samples \& check average accuracy}
 
 \begin{figure*}[ht]
-  \label{topic clustering scheme}
+  \label{figure: topic clustering scheme}
   \includegraphics[width=\textwidth]{resources/topic-clustering}
   \caption{Clustering videos in the dataset based on metadata using KMeans clustering on LDA topic vectors.}
 \end{figure*}
 
 \subsection{Predicting new videos}
 
-New videos with related textual metadata can be processed by the system in order to generate a video thumbnail. First, the frames are analysed with 1 fps to concept vectors as described in section \ref{feature extraction}. These frames are then used to create a list of candidates as described in section \ref{candidate selection}. The textual metadata is converted to a bag-of-words, which is then converted to an LDA vector with the model generated in \ref{topic clustering}. This vector can then be used to decide on the model to use. The concept vector representation of the video thumbnail candidates are then applied to the model (trained in section \ref{model training}), which classifies the vectors. The final ranking is based on the scores that are associated with the classification.
+New videos with related textual metadata can be processed by the system in order to generate a video thumbnail. First, the frames are analysed with 1 fps to concept vectors as described in section \ref{section: feature extraction}. These frames are then used to create a list of candidates as described in section \ref{section: candidate selection}. The textual metadata is converted to a bag-of-words, which is then converted to an LDA vector with the model generated in \ref{topic clustering}. This vector can then be used to decide on the model to use. The concept vector representation of the video thumbnail candidates are then applied to the model (trained in section \ref{section: model training}), which classifies the vectors. The final ranking is based on the scores that are associated with the classification.
 
 
 
@@ -238,14 +225,14 @@ The dataset that is used in our experimental setup is retrieved from the Irish o
 The videos in the dataset are accompanied by metadata in the form of a title, description and an unspecified number of (free-form) tags. This (editor created) metadata is primarily used for search engine optimisation and does not contain any structure other than the three values specified. Since these values are created by a professional news editor, we can assume that the data in these fields are a good representation of the content (in the eyes of the editor?).
 
 % Dataset thumbnail
-As stated in section \ref{dataset requirements}, the system requires thumbnails associated with the videos in the dataset to serve as positive examples for training purposes. All videos in our dataset contain a thumbnail, of which only a portion of these thumbnails is manually selected. The remaining thumbnails are automatically generated and cannot serve as reliable training examples, since an editor hasn't made a conscious decision about the contents in the thumbnail. This means that only a portion of our dataset can be used in the training stage of our system. These statistics can be viewed in table...
+As stated in section \ref{section: dataset requirements}, the system requires thumbnails associated with the videos in the dataset to serve as positive examples for training purposes. All videos in our dataset contain a thumbnail, of which only a portion of these thumbnails is manually selected. The remaining thumbnails are automatically generated and cannot serve as reliable training examples, since an editor hasn't made a conscious decision about the contents in the thumbnail. This means that only a portion of our dataset can be used in the training stage of our system. These statistics can be viewed in table...
 \todo[inline]{Insert table with dataset numbers and statistics.}
 
 
-\section{User study}
-\label{user study}
+\section{section: user study}
+\label{section: user study}
 
-The video thumbnails generated by the system described in section \ref{system description} have been tested in an A/B user survey against a baseline in the form of static thumbnails: 50\% of the respondents received the survey which included video thumbnails, while the other 50\% received a version with static thumbnails. The survey was conducted via a custom built website to ensure compatibility across multiple devices.
+The video thumbnails generated by the system described in section \ref{section: system description} have been tested in an A/B user survey against a baseline in the form of static thumbnails: 50\% of the respondents received the survey which included video thumbnails, while the other 50\% received a version with static thumbnails. The survey was conducted via a custom built website to ensure compatibility across multiple devices.
 
 The user study is conducted to answer the following questions about the use of thumbnails in video previews:
 
@@ -256,36 +243,43 @@ The user study is conducted to answer the following questions about the use of t
 	\item \textbf{Q2.2} What is the effect of a video thumbnail compared to a static thumbnail on the engagement of the user?
 \end{itemize}
 
-With the answers to Q1.1 and Q1.2, we can confirm that our survey aligns with our rationale based on related work on thumbnails described in \ref{video navigation}. We then can evaluate the answers to Q2.1 and Q2.2 and depict a conclusion on the effect of a video thumbnail in comparison to a static thumbnail.
+With the answers to Q1.1 and Q1.2, we can confirm that our survey aligns with our rationale based on related work on thumbnails described in \ref{section: video navigation}. We then can evaluate the answers to Q2.1 and Q2.2 and depict a conclusion on the effect of a video thumbnail in comparison to a static thumbnail.
 
 \subsection{Hypothesis}
 
-The following hypotheses can be formulated for the questions stated in section \ref{user study}.
+The following hypotheses can be formulated for the questions stated in section \ref{section: user study}:
 
-\textbf{H1.1} The use of a thumbnail in a video preview increases the information received by the user.
+\begin{itemize}
+	\item \textbf{H1.1} The use of a thumbnail in a video preview increases the information received by the user.
+\end{itemize}
 
-Based on the related work in section \ref{video navigation}, a visual preview increases the accuracy of the user finding relevant content. Thus, we expect that the addition of the only visual element in our survey (either a video thumbnail or static thumbnail) has a positive effect on the information that a user receives from the thumbnail.
+Based on the related work in section \ref{section: video navigation}, a visual preview increases the accuracy of the user finding relevant content. Thus, we expect that the addition of the only visual element in our survey (either a video thumbnail or static thumbnail) has a positive effect on the information that a user receives from the thumbnail.
 
-\textbf{H1.2} The use of a thumbnail in a video preview increases the engagement of a user.
+\begin{itemize}
+	\item \textbf{H1.2} The use of a thumbnail in a video preview increases the engagement of a user.
+\end{itemize}
 
-\todo[inline]{Add reference to related work about user engagement}
-Research on interfaces and websites for online news shows a high influence of images on the engagement of users, as described in (??). We expect that a similar influence is visible in our experiment by the introduction of any thumbnail.
+Research on interfaces and websites for online news shows a high influence of images on the engagement of users, as described in section \ref{section: user engagement}. We expect that a similar influence is visible in our experiment by the introduction of any thumbnail.
 
-\textbf{H2.1} The use of a video thumbnail increases the information received by the user compared to the use of a static thumbnail.
+\begin{itemize}
+	\item \textbf{H2.1} The use of a video thumbnail increases the information received by the user compared to the use of a static thumbnail.
+\end{itemize}
 
-The addition of moving images to the thumbnail increases the amount of raw information displayed in the preview, so one could argue that the amount of information conveyed to the user is also increased. Related work discussed in (??) also highlights an improvement of user accuracy in search results when comparing video summaries to a series of static video frames.
+The addition of moving images to the thumbnail increases the amount of raw information displayed in the preview, so one could argue that the amount of information conveyed to the user is also increased. Related work discussed in section \ref{section: video navigation} also highlights an improvement of user accuracy in search results when comparing video summaries to a series of static video frames.
 
-\textbf{H2.2} The use of a video thumbnail increases the engagement of a user compared to the use of a static thumbnail.
+\begin{itemize}
+	\item \textbf{H2.2} The use of a video thumbnail increases the engagement of a user compared to the use of a static thumbnail.
+\end{itemize}
 
-Based on the increased attention and interest towards certain items caused by visual elements as described in (??), we hypothesise that the addition of motion in the thumbnail increases the interest of a user even further.
+Based on the increased attention and interest towards certain items caused by visual elements as described in \ref{section: video navigation}, we hypothesise that the addition of motion in the thumbnail increases the interest of a user even further.
 
 \subsection{Survey setup}
-For each video, two previews were shown in successive order: The first preview contained only a title and description, while the second preview contained a title, description and a (static or video) thumbnail. An example of the preview with thumbnail is shown in figure \ref{survey preview}.
+For each video, two previews were shown in successive order: The first preview contained only a title and description, while the second preview contained a title, description and a (static or video) thumbnail. An example of the preview with thumbnail is shown in figure \ref{figure: survey preview}.
 
 \begin{figure}[h]
-  \label{survey preview}
-  \includegraphics[width=\linewidth]{resources/preview-combined.png}
   \caption{An example of a video preview. A version without thumbnail is displayed on the left, while a version with thumbnail is displayed on the right.}
+  \label{figure: survey preview}
+  \includegraphics[width=\linewidth]{resources/preview-combined.png}
 \end{figure}
 
 After each preview, two statements were made about the video preview to measure the engagement of the participant towards the video, and wether the participant felt informed about the contents of the video (we will refer to these statements as \textit(context):
@@ -297,16 +291,16 @@ After each preview, two statements were made about the video preview to measure 
 
 By comparing the difference in answers between the version with thumbnail and without thumbnail, we are able to measure the impact of using a thumbnail in the preview. This difference can then be compared between the static thumbnail and video thumbnail, allowing us to analyse the effect of a video thumbnail. This way, any preconception from the user about certain topics or videos can be taken into account.
 
-The videos used in this survey were manually picked from the dataset based on number of views. Early feedback on the survey setup revealed that randomly selected videos would be uninteresting and yield no change in response, regardless of the form of the video preview. The difference in target audience between the dataset source and survey respondents would be the primary explanation. The age of most of the videos is a second explanation, since most of the news videos are outdated at the point of conducting the survey. Static thumbnails for the videos were manually picked at the time of publishing, while the video thumbnails were generated by the system described in section \ref{system description}.
+The videos used in this survey were manually picked from the dataset based on number of views. Early feedback on the survey setup revealed that randomly selected videos would be uninteresting and yield no change in response, regardless of the form of the video preview. The difference in target audience between the dataset source and survey respondents would be the primary explanation. The age of most of the videos is a second explanation, since most of the news videos are outdated at the point of conducting the survey. Static thumbnails for the videos were manually picked at the time of publishing, while the video thumbnails were generated by the system described in section \ref{section: system description}.
 
 \subsection{Responses}
 
-A total of 54 respondents participated, of which 27 received the version with video thumbnails, and 26 received the version with static thumbnails. Each participant received previews for a total of three videos, resulting in a total of 137 responses, of which 68 refer to the static thumbnail and 69 refer for the video thumbnail. An overview of these numbers can be found in table \ref{number of responses table}.
+A total of 54 respondents participated, of which 27 received the version with video thumbnails, and 26 received the version with static thumbnails. Each participant received previews for a total of three videos, resulting in a total of 137 responses, of which 68 refer to the static thumbnail and 69 refer for the video thumbnail. An overview of these numbers can be found in table \ref{table: number of responses table}.
 
 \begin{table}[h]
 \centering
 \caption{Response overview}
-\label{number of responses table}
+\label{table: number of responses table}
 \begin{tabular}{@{}llll@{}}
 \textbf{}             & \textbf{Total} & \textbf{Static} & \textbf{Video} \\ \toprule
 \textbf{Participants} & 54             & 26              & 27             \\ \midrule
@@ -329,7 +323,7 @@ The data is gathered from two tests, one with static thumbnails and one with vid
 
 \todo[inline]{Reference to engagement}
 
-Using the Wilcoxon signed-rank test for ordinal, paired data, a highly significant difference is found between previews including thumbnails and excluding thumbnails  regarding information and engagement. The P-values are depicted in table \ref{table:significance}.
+Using the Wilcoxon signed-rank test for ordinal, paired data, a highly significant difference is found between previews including thumbnails and excluding thumbnails regarding information and engagement. The P-values are depicted in table \ref{table:significance}.
 
 \begin{table}[h]
 \centering
@@ -342,7 +336,7 @@ Engagement (Q1.2)  & \num{3.19e-10}
 \end{tabular}
 \end{table}
 
-The responses reveal an overal increase in engagement when using thumbnails. These results align with the findings in other work described in \ref{video navigation}, and allow us to further investigate the differences between the static thumbnail and the video thumbnail in this topic in \ref{static versus video}. The responses are visualised in figure \ref{figure:information including excluding}.
+The responses reveal an overal increase in engagement when using thumbnails. These results align with the findings in other work described in \ref{section: video navigation}, and allow us to further investigate the differences between the static thumbnail and the video thumbnail in this topic in \ref{section: static versus video}. The responses are visualised in figure \ref{figure:information including excluding}.
 
 \begin{figure}[h]
 	\includegraphics[width=\linewidth]{resources/information_including_excluding}
@@ -359,6 +353,7 @@ The same Wilcoxon signed-rank test is used for the responses regarding engagemen
 \end{figure}
 
 \subsubsection{Static thumbnail versus video thumbnail}
+\label{section: static versus video}
 
 With the highly significant differences between static thumbnails and video thumbnails found in \ref{section:excluding vs including}, we can further investigate the differences between them. We use a Mann-Whitney U test on the ordinal data from these unpaired groups.
 
@@ -369,8 +364,9 @@ In order to analyse the responses in an objective manner, we need to compare the
 \caption{Significance of the differences between static thumbnails versus video thumbnails, including and excluding the thumbnail.}
 \label{table: q2 significance}
 \begin{tabular}{@{}llll@{}}
+% 0.00065254
 \textbf{P-value}   & \textbf{Including} & \textbf{Excluding} \\ \hline
-Information (Q2.1) & \num{0.00065254}   & 0.0414             \\
+Information (Q2.1) & 0.0006             & 0.0414             \\
 Engagement (Q2.2)  & 0.7641             & 0.3935
 \end{tabular}
 \end{table}
@@ -408,7 +404,7 @@ New interfaces that facilitate video thumbnail selection for editors will allow 
 %
 %Further testing the video thumbnail is an important next step in the evolution of this new interface element. We expect that a moving thumbnail can improve the visual attractiveness of an interface, when implemented in a correct way. The video thumbnail may sparsely be used in an interface that uses static thumbnails to focus the attention of the user to a specific videos. The effect of the video thumbnail on these topics can be tested in a practical scenario, but are hard to objectively test in an isolated survey.
 %
-%The system that we designed and described in section \ref{system description} contains much of the techniques from video summarisation. We believe that a system that automatically generates video thumbnails can much be improved by implementing techniques created specifically for the tast of video thumbnail generation. A big first step in the improvements would be the creation of a benchmark dataset, which can be used to train and test new systems. A repetition of the user study described in section \ref{user study} using generated video thumbnails from improved system might show a significant difference.
+%The system that we designed and described in section \ref{section: system description} contains much of the techniques from video summarisation. We believe that a system that automatically generates video thumbnails can much be improved by implementing techniques created specifically for the tast of video thumbnail generation. A big first step in the improvements would be the creation of a benchmark dataset, which can be used to train and test new systems. A repetition of the user study described in section \ref{section: user study} using generated video thumbnails from improved system might show a significant difference.
 
 
 
