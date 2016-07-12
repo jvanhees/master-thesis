@@ -26,7 +26,7 @@ class Evaluation:
     
     # Evaluate frames
     # Evaluate an array of frames
-    # Returns: corrosponding array of boolean values, corrosponding array of vectors from CaffeNet
+    # Returns: corrosponding array of values, corrosponding array of vectors from CaffeNet
     def eval(self, vectors):
         results = []
         if self.noEval:

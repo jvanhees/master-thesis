@@ -35,9 +35,9 @@ args = parser.parse_args()
 pipeline = Pipeline()
 data = DataProvider()
 
-if not pipeline.load():
-    pipeline.createTopicModels(25, 10)
-    pipeline.save()
+#if not pipeline.load():
+pipeline.createTopicModels(25, 10)
+pipeline.save()
 
 # T = 25
 # K = 10
@@ -63,10 +63,10 @@ for idx, clipId in enumerate(clips):
     vectors, candidateList = pipeline.getClipCandidateVectors(clip)
     frames = clip.getRawFrames()
     
-    for idx, candidate in enumerate(candidateList):
-        print BGRtoRGB(frames[candidate])
-        img = Image.fromarray(BGRtoRGB(frames[candidate]))
-        img.show()
+    # for idx, candidate in enumerate(candidateList):
+#         print BGRtoRGB(frames[candidate])
+#         img = Image.fromarray(BGRtoRGB(frames[candidate]))
+#         img.show()
     
     print clip.getClipId(), 'Getting prediction'
     

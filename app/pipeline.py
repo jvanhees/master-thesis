@@ -1,6 +1,8 @@
 import numpy as np
 import sys
 
+import matplotlib.pyplot as plt
+
 sys.dont_write_bytecode = True
 
 from sklearn import svm, grid_search, datasets
@@ -75,6 +77,15 @@ class Pipeline:
                 clipVectors, candidates = self.getClipCandidateVectors(clip)
                 
                 results = clipEval.eval(clipVectors)
+                
+                fig = plt.figure()
+                plt.bar(np.arange(len(results)), results, align='center', color='#4189C2', linewidth=0.0)
+                
+                axes = plt.gca()
+                axes.set_ylim([0,1])
+                axes.set_xlim([-0.5,len(results) - 0.5])
+                
+                fig.savefig(str(idx)+'.png', dpi=fig.dpi)
                 
                 classes.extend(self.thresholdResults(results, self.percentile))
                 vectors.append(clipVectors)
