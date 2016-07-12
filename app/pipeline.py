@@ -28,9 +28,10 @@ class Pipeline:
         # Percentage of candidates to set correct
         self.percentile = 50.0
         
-        self.svmFile = 'tmp/svm.pkl'
+        self.svmFile = 'tmp/svm'
         
         self.params = {'kernel': 'rbf', 'C': 10, 'gamma': 100}
+        self.params = {'kernel': 'linear', 'C': 10}
         
         self.scores = []
     
@@ -44,7 +45,7 @@ class Pipeline:
             print 'Topics not loaded.'
             return False
         try:
-            self.topicSVMs = joblib.load(self.svmFile)
+            self.topicSVMs = joblib.load(self.svmFile + '.pkl')
             return True
         except (IOError):
             print 'SVM not loaded.'
@@ -53,7 +54,7 @@ class Pipeline:
     
     def save(self):
         self.topics.save()
-        joblib.dump(self.topicSVMs, self.svmFile)
+        joblib.dump(self.topicSVMs, self.svmFile + '.pkl')
     
     # Create models
     def createTopicModels(self, t, k):

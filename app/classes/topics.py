@@ -71,7 +71,7 @@ class Topics:
         
         self.vectors = np.vstack(vectors)
         
-        self.clusterKMeans(self.vectors, k)
+        print self.clusterKMeans(self.vectors, k)
         
     
     def clusterKMeans(self, data, k):

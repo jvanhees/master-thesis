@@ -35,22 +35,27 @@ args = parser.parse_args()
 pipeline = Pipeline()
 data = DataProvider()
 
-#if not pipeline.load():
+if not pipeline.load():
+    pipeline.save()
 
-scores = []
-for k in range(1, 15):
-    print 'K = ' + str(k)
-    pipeline.createTopicModels(25, k)
-    score = pipeline.scores
-    mean = sum(score) / float(len(score))
-    scores.append(mean)
-    
-    print 'Mean: ' + str(mean)
-    
+# scores = []
+# for k in range(15, 16):
+#     print 'K = ' + str(k)
+#     pipeline.createTopicModels(25, k)
+#     score = pipeline.scores
+#     scores.append(np.mean(score))
+#
+#     print 'Mean: ' + str(np.mean(score))
 
-plt.plot(scores, color='#4189C2', linewidth=0.2)
-plt.show()
-#pipeline.save()
+
+# fig = plt.figure()
+# plt.bar(np.arange(len(scores)), scores, align='center', color='#D6B16D', linewidth=0.0)
+#
+# axes = plt.gca()
+# axes.set_ylim([0.5,1])
+# axes.set_xlim([-0.5,len(scores) - 0.5])
+#
+# fig.savefig('svm accuracy.png', dpi=300)
 
 # T = 25
 # K = 10
@@ -64,7 +69,8 @@ plt.show()
 
 
 
-clips = [2551267, 2653625, 2486497, 2465955, 2526352, 2553815, 2560692, 2547450, 2516436]
+# clips = [2551267, 2653625, 2486497, 2465955, 2526352, 2553815, 2560692, 2547450, 2516436, 2487045]
+clips = [2487045]
 
 
 for idx, clipId in enumerate(clips):
@@ -75,6 +81,8 @@ for idx, clipId in enumerate(clips):
     
     vectors, candidateList = pipeline.getClipCandidateVectors(clip)
     frames = clip.getRawFrames()
+    
+    print candidateList
     
     # for idx, candidate in enumerate(candidateList):
 #         print BGRtoRGB(frames[candidate])

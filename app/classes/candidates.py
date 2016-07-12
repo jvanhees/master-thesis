@@ -75,7 +75,7 @@ class Candidates:
             copy_x=True,
             n_jobs=1)
             
-        self.kmeans.fit(self.concepts);
+        print self.kmeans.fit_predict(self.concepts);
         
         return self.kmeans.cluster_centers_
         
