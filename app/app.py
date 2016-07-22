@@ -36,6 +36,8 @@ pipeline = Pipeline()
 data = DataProvider()
 
 if not pipeline.load():
+    print "Error, not loaded"
+    sys.exit()
     pipeline.save()
 
 # scores = []
@@ -83,20 +85,20 @@ for idx, clipId in enumerate(clips):
     frames = clip.getRawFrames()
     
     print candidateList
-    
-    # for idx, candidate in enumerate(candidateList):
-#         print BGRtoRGB(frames[candidate])
-#         img = Image.fromarray(BGRtoRGB(frames[candidate]))
-#         img.show()
-    
-    print clip.getClipId(), 'Getting prediction'
-    
-    result, scores = pipeline.predict(clip)
-    
-    print clip.getClipId(), 'Writing video thumbnail ('+ str(result[0]) +')'
+
     videoWriter = VideoWriter(clip, 'output/')
-    filename = clip.getClipId() + '('+ str(scores[0]) +')'
-    videoWriter.createVideo(result[0], result[0]+5, filename)
+    for idx, candidate in enumerate(candidateList):
+        filename = clip.getClipId() + '('+ str(idx) +')'
+        videoWriter.createVideo(candidate, candidate+5, filename)
+    
+    # print clip.getClipId(), 'Getting prediction'
+#
+#     result, scores = pipeline.predict(clip)
+#
+#     print clip.getClipId(), 'Writing video thumbnail ('+ str(result[0]) +')'
+#     videoWriter = VideoWriter(clip, 'output/')
+#     filename = clip.getClipId() + '('+ str(scores[0]) +')'
+#     videoWriter.createVideo(result[0], result[0]+5, filename)
     
     
 

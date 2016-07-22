@@ -9,7 +9,13 @@ from clip import Clip
 
 class Candidates:
     
-    def __init__(self, clip, kModifier):
+    def __init__(self, clip, kModifier, cache = None):
+        if cache is None:
+            cache = True
+        else:
+            cache = False
+        
+        
         self.clip = clip
         self.kmeansfile = 'tmp/clipkmeans/'+str(clip.getClipId())+'.pkl'
         self.concepts = self.clip.getConcepts()
@@ -17,7 +23,7 @@ class Candidates:
         
         self.k = int(math.ceil(len(self.concepts) / kModifier))
         
-        if not self.load():
+        if cache is not True or not self.load():
             self.bofs = self.createBOF(self.k)
             self.save()
         

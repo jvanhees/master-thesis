@@ -166,7 +166,7 @@ class Pipeline:
         self.frameInterval = interval
     
     def getClipCandidateVectors(self, clip):
-        candidatesGen = Candidates(clip, self.kModifier)
+        candidatesGen = Candidates(clip, self.kModifier, False)
         
         # Returns candidate starting frame numbers
         candidateList = candidatesGen.get(self.fragmentLength)
